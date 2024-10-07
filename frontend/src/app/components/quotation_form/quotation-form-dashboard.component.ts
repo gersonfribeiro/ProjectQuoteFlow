@@ -30,20 +30,10 @@ export class FormDashboardComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private toastr: ToastrService) {
     this.quotationForm = this.fb.group({
-      skuCode: ['', [Validators.required, this.skuValidator()]], // Corrigido para chamar o método corretamente
+      skuCode: ['', [Validators.required]], // Corrigido para chamar o método corretamente
       quantity: [null, [Validators.required, Validators.min(1)]],
       observation: [''],
     });
-  }
-
-  // Validador personalizado para SKU
-  skuValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const sku = control.value;
-      // Defina sua expressão regular aqui
-      const skuPattern = /^[A-Z]{2,}[0-9]{1,}$/;
-      return sku && !skuPattern.test(sku) ? { invalidSku: true } : null;
-    };
   }
 
   ngOnInit(): void {
