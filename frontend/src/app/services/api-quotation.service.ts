@@ -20,4 +20,9 @@ export class ApiQuotationService {
 
   constructor(private http: HttpClient) {}
   // O construtor injeta uma instância do 'HttpClient' no serviço, permitindo que o serviço faça requisições HTTP para a API.
+
+  // Método para registrar o usuário
+  registerUser(user: any): Observable<any> {
+    return this.http.post(this.apiUrl, usuario);
+  }
 }
