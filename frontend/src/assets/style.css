@@ -1,0 +1,5 @@
+@import "ngx-toastr/toastr";
+
+* {
+  font-family: "Poppins", system-ui;
+}

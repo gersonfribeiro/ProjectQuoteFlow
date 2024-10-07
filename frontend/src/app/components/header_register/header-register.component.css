@@ -1,0 +1,40 @@
+.btn-custom {
+  background-color: #0b5389;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-custom:hover {
+  background-color: #0b5289c5 !important;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+@media only screen and (max-width: 320px) {
+  .btn-custom {
+    font-size: 0.75rem;
+    max-width: 80%;
+  }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 768px) {
+  .btn-custom {
+    font-size: 0.875rem;
+    max-width: 90%;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .btn-custom {
+    font-size: 1rem;
+    max-width: none;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}

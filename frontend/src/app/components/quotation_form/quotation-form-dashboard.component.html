@@ -1,0 +1,263 @@
+<div class="container-fluid main p-3">
+  <div>
+    <div>
+      <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Cotações</li>
+          <li class="breadcrumb-item"><a href="">Histórico de cotações</a></li>
+        </ol>
+      </nav>
+
+      <div
+        *ngIf="showNotificationAlert"
+        #notificationAlert
+        class="alert alert-success d-flex align-items-center justify-content-between"
+        role="alert"
+      >
+        Você pode visualizar todo o seu histórico de notificações clicando na
+        aba "Histórico de notificações" logo acima. ☝
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="closeButton()"
+        ></button>
+      </div>
+
+      <h1 class="px-5"><strong>Solicitar cotação:</strong></h1>
+
+      <ul class="nav nav-tabs ms-5 mb-2" id="quotationTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="quotation-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#quotation"
+            type="button"
+            role="tab"
+            aria-controls="quotation"
+            aria-selected="true"
+          >
+            Cotações
+          </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="product-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#product"
+            type="button"
+            role="tab"
+            aria-controls="product"
+            aria-selected="false"
+          >
+            Produtos
+          </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="supplier-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#supplier"
+            type="button"
+            role="tab"
+            aria-controls="supplier"
+            aria-selected="false"
+          >
+            Fornecedores
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="quotationTabsContent">
+        <!-- Aba de Cotações -->
+        <div
+          class="tab-pane fade show active"
+          id="quotation"
+          role="tabpanel"
+          aria-labelledby="quotation-tab"
+        >
+          <div class="ps-5 pt-0">
+            <form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
+              <div
+                class="p-4 rounded"
+                style="
+                  background-color: #e8e8e8;
+                  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+                    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+                "
+              >
+                <div class="d-flex flex-column">
+                  <div class="d-flex flex-wrap gap-3 mb-3">
+                    <div class="d-flex flex-column flex-grow-1 mb-3">
+                      <label for="productName" class="form-label"
+                        ><strong> * </strong>Código SKU:</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="skuCode"
+                        class="form-control mb-2"
+                        placeholder="YYLIC16"
+                      />
+                      <div
+                        *ngIf="
+                          quotationForm.get('skuCode')?.touched &&
+                          quotationForm.get('skuCode')?.invalid
+                        "
+                        class="alert alert-danger alert-small"
+                        role="alert"
+                      >
+                        Código SKU é <strong>obrigatório</strong>.
+                        <span
+                          *ngIf="quotationForm.get('skuCode')?.errors?.['invalidSku']"
+                          >O código SKU deve seguir o formato: letras maiúsculas
+                          seguidas por números (ex: YYLIC16).</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-grow-1 mb-3">
+                      <label for="quantity" class="form-label"
+                        ><strong> * </strong>Quantidade:</label
+                      >
+                      <input
+                        type="number"
+                        formControlName="quantity"
+                        class="form-control mb-2"
+                        placeholder="100"
+                      />
+                      <div
+                        *ngIf="
+                          quotationForm.get('quantity')?.touched &&
+                          quotationForm.get('quantity')?.invalid
+                        "
+                        class="alert alert-danger alert-small"
+                        role="alert"
+                      >
+                        Quantidade deve ser maior que zero.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-success">
+                      <i class="bi bi-bag-plus-fill"></i>
+                      Adicionar
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-info"
+                      (click)="showSuppliersTab()"
+                    >
+                      <i class="bi bi-binoculars-fill"></i>
+                      Visualizar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Aba de Fornecedores -->
+        <div
+          class="tab-pane fade"
+          id="supplier"
+          role="tabpanel"
+          aria-labelledby="supplier-tab"
+        >
+          <div class="ps-5 pt-0">
+            <form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
+              <div
+                class="p-4 rounded"
+                style="
+                  background-color: #e8e8e8;
+                  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+                    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+                "
+              >
+                <div class="form-floating">
+                  <p>Tabela de fornecedores:</p>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fornecedor</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let supplier of suppliers">
+                        <td>{{ supplier.name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="form-floating mt-4">
+                    <textarea
+                      class="form-control"
+                      placeholder="Deixe um comentário"
+                      formControlName="observation"
+                    ></textarea>
+                    <label>Observação:</label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn btn-success mt-5"
+                    [disabled]="quotationForm.invalid"
+                  >
+                    <i class="bi bi-send-plus-fill"></i>
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Aba de Produtos -->
+        <div
+          class="tab-pane fade"
+          id="product"
+          role="tabpanel"
+          aria-labelledby="product-tab"
+        >
+          <div class="ps-5 pt-0">
+            <form [formGroup]="productForm" (ngSubmit)="onProductSubmit()">
+              <div
+                class="p-4 rounded"
+                style="
+                  background-color: #e8e8e8;
+                  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+                    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+                "
+              >
+                <div class="form-floating">
+                  <p>Tabela de Produtos:</p>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Código SKU</th>
+                        <th scope="col">Quantidade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of products">
+                        <td>{{ product.skuCode }}</td>
+                        <td>{{ product.quantity }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

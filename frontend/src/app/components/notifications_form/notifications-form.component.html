@@ -1,0 +1,112 @@
+<div class="container-fluid main p-3">
+  <!-- Navegação breadcrumb -->
+  <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Notificações</li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/dashboard/notifications_historic']">
+          Histórico de notificações
+        </a>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Alerta adicional com botão de fechar, visível com base na variável showNotificationAlert -->
+  <div
+    *ngIf="showNotificationAlert"
+    class="alert alert-success d-flex align-items-center justify-content-between"
+    role="alert"
+    #notificationAlert
+  >
+    <!-- Instrução para o usuário sobre como visualizar o histórico de notificações -->
+    Você pode visualizar todo o seu histórico de notificações clicando na aba
+    "Histórico de notificações" logo acima. ☝️
+    <!-- Botão para fechar o alerta, ao clicar executa a função closeButton() -->
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="closeButton()"
+    ></button>
+  </div>
+
+  <!-- Notificações -->
+  <h1 class="px-5"><strong>Notificações:</strong></h1>
+
+  <div class="p-5">
+    <div class="d-flex flex-row flex-wrap">
+      <!-- Card de notificação 1 -->
+      <div
+        class="card m-2 d-inline-flex flex-column"
+        style="
+          width: auto;
+          max-width: 18rem;
+          box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+            rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        "
+      >
+        <div class="card-header">
+          {{ Dates[0] }}
+        </div>
+        <div class="card-body d-flex flex-column">
+          <p class="card-text">{{ Notifications[0] }}</p>
+          <a
+            [routerLink]="['/dashboard/profile']"
+            class="btn btn-danger mt-auto"
+          >
+            Atualizar <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card de notificação 2 -->
+      <div
+        class="card m-2 d-inline-flex flex-column"
+        style="
+          width: auto;
+          max-width: 18rem;
+          box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+            rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        "
+      >
+        <div class="card-header">
+          {{ Dates[1] }}
+        </div>
+        <div class="card-body d-flex flex-column">
+          <p class="card-text">{{ Notifications[1] }}</p>
+          <a
+            [routerLink]="['/dashboard/profile']"
+            class="btn btn-danger mt-auto"
+          >
+            Atualizar <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card de notificação 3 -->
+      <div
+        class="card m-2 d-inline-flex flex-column"
+        style="
+          width: auto;
+          max-width: 18rem;
+          box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+            rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        "
+      >
+        <div class="card-header">
+          {{ Dates[2] }}
+        </div>
+        <div class="card-body d-flex flex-column">
+          <p class="card-text">{{ Notifications[2] }}</p>
+          <a
+            [routerLink]="['/dashboard/profile']"
+            class="btn btn-danger mt-auto"
+          >
+            Atualizar <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-notifications></app-modal-notifications>

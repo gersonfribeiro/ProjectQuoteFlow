@@ -1,0 +1,13 @@
+{
+  "routes": [
+    "/",
+    "/dashboard/configurations",
+    "/dashboard/notifications",
+    "/dashboard/notifications_historic",
+    "/dashboard/profile",
+    "/dashboard/quotation",
+    "/forgot_password",
+    "/login",
+    "/register"
+  ]
+}

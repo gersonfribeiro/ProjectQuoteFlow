@@ -1,0 +1,41 @@
+<div class="container-fluid main p-3">
+  <div>
+    <div>
+      <nav style="--bs-breadcrumb-divider: '<'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/dashboard/notifications']">Notificações</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Histórico de notificações
+          </li>
+        </ol>
+      </nav>
+
+      <h1 class="px-5"><strong>Histórico:</strong></h1>
+      <div class="p-5">
+        <form class="rounded d-flex flex-column">
+          <div class="card">
+            <div class="card-header">Notificação</div>
+            <div class="card-body">
+              <!-- <h5 class="card-title">Special title treatment</h5> -->
+              <p class="card-text">
+                Para realizar cotações em nosso sistema, primeiro é necessário
+                cadastrar o seu CNPJ no seu perfil.
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

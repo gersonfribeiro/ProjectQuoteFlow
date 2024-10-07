@@ -1,0 +1,18 @@
+# Configura��es inicias da nossa aplica��o
+
+spring:
+  application:
+    name: apiQuoteFlow
+  main:
+    web-application-type: servlet
+  web:
+    resources:
+      add-mappings: false
+  datasource:
+    name: quoteflow
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/quoteflow
+    username: gersin
+    password: Gersin4282
+server:
+  port: 8080

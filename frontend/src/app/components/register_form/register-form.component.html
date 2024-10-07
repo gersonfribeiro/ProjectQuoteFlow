@@ -1,0 +1,143 @@
+<div
+  class="container d-flex flex-column flex-md-row justify-content-center align-items-center gap-4"
+  style="min-height: calc(100vh - 100px)"
+>
+  <img
+    src="images/undraw_create.svg"
+    class="img-thumbnail d-none d-md-block"
+    style="height: 386px; max-width: 100%"
+    width="450px"
+  />
+
+  <form
+    [formGroup]="registerForm"
+    class="p-4 bg-white rounded"
+    style="width: 100%; max-width: 350px; border: 1px solid #dee2e6"
+    (ngSubmit)="register()"
+  >
+    <div class="mb-3">
+      <label class="form-label text-dark">Nome:</label>
+      <input
+        type="text"
+        class="form-control mb-2"
+        placeholder="Digite seu nome"
+        formControlName="name"
+      />
+      <div
+        *ngIf="
+          registerForm.get('name')?.invalid && registerForm.get('name')?.touched
+        "
+        class="text-danger"
+      >
+        <div
+          class="alert alert-danger alert-small mb-2"
+          role="alert"
+          *ngIf="registerForm.get('name')?.errors?.['required']"
+        >
+          O nome é <strong>obrigatório.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-dark">Email:</label>
+      <input
+        type="email"
+        class="form-control mb-2"
+        placeholder="Digite seu e-mail"
+        formControlName="email"
+      />
+      <div
+        *ngIf="
+          registerForm.get('email')?.invalid &&
+          registerForm.get('email')?.touched
+        "
+        class="text-danger"
+      >
+        <div
+          class="alert alert-danger alert-small mb-2"
+          role="alert"
+          *ngIf="registerForm.get('email')?.errors?.['required']"
+        >
+          O email é <strong>obrigatório.</strong>
+        </div>
+
+        <div
+          class="alert alert-danger alert-small"
+          role="alert"
+          *ngIf="registerForm.get('email')?.errors?.['email']"
+        >
+          Digite um email válido.
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-dark">Senha:</label>
+      <input
+        type="password"
+        class="form-control mb-2"
+        placeholder="Digite sua senha"
+        formControlName="password"
+      />
+      <div
+        *ngIf="
+          registerForm.get('password')?.invalid &&
+          registerForm.get('password')?.touched
+        "
+        class="text-danger"
+      >
+        <div
+          class="alert alert-danger alert-small mb-2"
+          role="alert"
+          *ngIf="registerForm.get('password')?.errors?.['required']"
+        >
+          A senha é <strong>obrigatória.</strong>
+        </div>
+
+        <div
+          class="alert alert-danger alert-small"
+          role="alert"
+          *ngIf="registerForm.get('password')?.errors?.['minlength']"
+        >
+          A senha deve ter no mínimo 6 caracteres.
+        </div>
+      </div>
+    </div>
+
+    <span class="pb-3 d-block">Registrar-se com:</span>
+
+    <div class="d-flex flex-row gap-2">
+      <button
+        [disabled]="isLoading"
+        class="btn w-50"
+        type="submit"
+        style="background-color: #0b5389; color: #fff"
+      >
+        <i *ngIf="!isLoading" class="bi bi-envelope-fill"></i>
+        <div
+          *ngIf="isLoading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+        >
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </button>
+      <button
+        [disabled]="isLoading"
+        class="btn w-50"
+        type="button"
+        style="background-color: #0b5389; color: #fff"
+      >
+        <i *ngIf="!isLoading" class="bi bi-google"></i>
+        <div
+          *ngIf="isLoading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+        >
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </button>
+    </div>
+  </form>
+</div>

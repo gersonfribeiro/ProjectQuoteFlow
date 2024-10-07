@@ -1,0 +1,16 @@
+/* Estilo aplicado quando o alerta está sendo fechado */
+.alert-closing {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.card {
+  /* Aplica uma transição suave na transformação (transform) de 0.3 segundos com uma curva de facilidade (ease) */
+  transition: transform 0.2s ease;
+}
+
+/* Ao passar o mouse sobre o card, aumenta o tamanho usando a transformação 'scale'
+O valor 1.05 aumenta o card em 5% em relação ao seu tamanho original */
+.card:hover {
+  transform: scale(1.05);
+}
