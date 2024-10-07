@@ -49,6 +49,7 @@ public class EmpresasController {
         return empresasHandler.modificarEmpresa(empresasUpdateCommand, id_empresa);
     }
 
+    //  Método de exclusão das empresas
     @DeleteMapping("/empresas/{id_empresa}")
     public ResponseEntity<String> deletarEmpresa(@PathVariable String id_empresa) throws Exception {
         return empresasHandler.deleteEmpresaById(id_empresa);
