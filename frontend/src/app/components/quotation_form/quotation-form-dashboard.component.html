@@ -102,6 +102,7 @@
                         formControlName="skuCode"
                         class="form-control mb-2"
                         placeholder="YYLIC16"
+                        maxlength="16"
                       />
                       <div
                         *ngIf="
@@ -112,11 +113,6 @@
                         role="alert"
                       >
                         Código SKU é <strong>obrigatório</strong>.
-                        <span
-                          *ngIf="quotationForm.get('skuCode')?.errors?.['invalidSku']"
-                          >O código SKU deve seguir o formato: letras maiúsculas
-                          seguidas por números (ex: YYLIC16).</span
-                        >
                       </div>
                     </div>
 
