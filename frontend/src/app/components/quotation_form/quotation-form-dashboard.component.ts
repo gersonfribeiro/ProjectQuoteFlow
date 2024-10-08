@@ -98,4 +98,13 @@ export class FormDashboardComponent implements OnInit {
       this.productForm.reset();
     }
   }
+
+  onInputChange() {
+    const skuCodeControl = this.quotationForm.get('skuCode');
+    if (skuCodeControl) {
+      // Transforma o valor do campo em letras maiúsculas
+      skuCodeControl.setValue(skuCodeControl.value.toUpperCase(), { emitEvent: false });
+    }
+  }
+  
 }
