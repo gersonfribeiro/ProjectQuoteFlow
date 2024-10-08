@@ -48,7 +48,7 @@ export class RegisterFormComponent {
   }
 
   // Método para registrar usuário
-  errorMessage: string;
+  errorMessage: any;
 
   register() {
     if (this.registerForm.valid) {

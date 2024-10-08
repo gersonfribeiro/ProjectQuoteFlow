@@ -4,7 +4,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 // Importa o serviço de cliente HTTP para fazer requisições HTTP na aplicação
-import { provideHttpClient } from '@angular/common/http';
+import {provideHttpClient, withFetch} from '@angular/common/http';
 // Importa as rotas definidas no arquivo 'app.routes.ts', que mapeiam os caminhos da aplicação
 import { routes } from './app.routes';
 // Importa a função que otimiza o carregamento da página fornecendo hidratação no cliente,
@@ -45,6 +45,6 @@ export const appConfig: ApplicationConfig = {
     // Fornece suporte para animações assíncronas, aumentando o desempenho em cenários que demandam animações complexas
     provideAnimationsAsync(),
     // Fornece o serviço de cliente HTTP para realizar requisições HTTP dentro da aplicação
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
   ],
 };
