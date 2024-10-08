@@ -42,10 +42,23 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
         params.addValue("nome_usuario", usuario.getNome_usuario());
         params.addValue("email_usuario", usuario.getEmail_usuario());
         params.addValue("senha_usuario", usuario.getSenha_usuario());
-        params.addValue("telefone_usuario", usuario.getTelefone_usuario());
-        params.addValue("id_empresa_usuario", usuario.getId_empresa_usuario());
+
+        // Campos opcionais
+        if (usuario.getTelefone_usuario() != null) {
+            params.addValue("telefone_usuario", usuario.getTelefone_usuario());
+        } else {
+            params.addValue("telefone_usuario", null);
+        }
+
+        if (usuario.getId_empresa_usuario() != null) {
+            params.addValue("id_empresa_usuario", usuario.getId_empresa_usuario());
+        } else {
+            params.addValue("id_empresa_usuario", null);
+        }
+
         return params;
     }
+
 
     @Override
     public List<Usuarios> findAll() {

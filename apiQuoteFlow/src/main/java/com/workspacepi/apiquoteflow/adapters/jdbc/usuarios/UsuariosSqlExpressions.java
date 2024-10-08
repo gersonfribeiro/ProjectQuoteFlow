@@ -32,16 +32,12 @@ public class UsuariosSqlExpressions {
                     id_usuario,
                     email_usuario,
                     nome_usuario,
-                    senha_usuario,
-                    telefone_usuario,
-                    id_empresa_usuario)
+                    senha_usuario)
                     values (
                         :id_usuario,
                         :email_usuario,
                         :nome_usuario,
-                        :senha_usuario,
-                        :telefone_usuario,
-                        :id_empresa_usuario)
+                        :senha_usuario)
            """;
     }
 
