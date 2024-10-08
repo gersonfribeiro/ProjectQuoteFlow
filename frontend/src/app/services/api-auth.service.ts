@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiUsersService {
+export class ApiAuthService {
   private apiUrlUsers = 'http://localhost:8080/usuarios';
   // Esta propriedade armazena a URL base da API de usuários, que será utilizada nas requisições HTTP para registrar e deletar usuários.
 

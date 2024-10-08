@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ApiQuotationService } from "../../services/api-quotation.service";
 import { FormsModule } from "@angular/forms";
-import {ApiUsersService} from "../../services/api-users.service";
+import {ApiAuthService} from "../../services/api-auth.service";
 
 @Component({
   selector: 'app-configurations-form',
@@ -15,7 +15,7 @@ import {ApiUsersService} from "../../services/api-users.service";
 export class ConfigurationsFormComponent {
   showNotificationAlert: boolean;
 
-  constructor(private apiService: ApiUsersService) {
+  constructor(private apiService: ApiAuthService) {
     const notificationConfigurationsPage = localStorage.getItem('notificationConfigurationsPage');
     this.showNotificationAlert = !notificationConfigurationsPage;
   }
