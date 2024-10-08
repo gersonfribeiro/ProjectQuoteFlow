@@ -15,4 +15,3 @@ public abstract class CotacaoExceptions extends Exception {
         return id_cotacao;
     }
 }
-
