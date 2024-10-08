@@ -13,26 +13,21 @@
           rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
       "
     >
-      <form>
+      <form (ngSubmit)="delete()"> <!-- Adicione (ngSubmit) para vincular o botão ao método delete -->
+        <button type="button" class="btn btn-primary" (click)="delete()">Apagar conta</button>
+        <!-- Use type="button" para evitar que o formulário seja enviado ao clicar -->
+        <br />
+        <br />
+
         <button class="btn btn-primary">Trocar idioma para EN-US</button>
         <i class="bi bi-toggle-off"></i>
-
         <i class="bi bi-toggle-on"></i>
         <button class="btn btn-primary">Trocar idioma para BR</button>
-
         <br />
         <br />
-
-        <button class="btn btn-primary">Apagar minha conta</button>
-
-        <br />
-        <br />
-
         <button class="btn btn-primary">Visualizar termos e condições</button>
-
         <br />
         <br />
-
         <span>QuoteFlow 2024 &copy;</span>
       </form>
     </div>

@@ -7,7 +7,7 @@ import { DashboardNotificationsComponent } from './components/dashboard_notifica
 import { DashboardProfileComponent } from './components/dashboard_profile/dashboard-profile.component';
 import { NotificationsHistoricComponent } from './components/notifications_historic/notifications-historic.component';
 import { DashboardConfigurationsComponent } from './components/dashboard_configurations/dashboard-configurations.component';
-import { DashboardChartComponent } from './components/dashboard-chart/dashboard-chart.component';
+import { DashboardChartComponent } from './components/dashboard_chart/dashboard-chart.component';
 
 export const routes: Routes = [
   { path: '', component: LoginPageComponent }, // Home
