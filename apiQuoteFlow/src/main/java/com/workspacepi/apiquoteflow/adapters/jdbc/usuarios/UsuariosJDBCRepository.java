@@ -1,6 +1,5 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.usuarios;
 
-import com.workspacepi.apiquoteflow.adapters.http.enderecos.error.EnderecosErrorHandler;
 import com.workspacepi.apiquoteflow.adapters.http.usuarios.error.UsuarioErrorHandler;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
@@ -29,9 +28,18 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
             UUID id_usuario = UUID.fromString(rs.getString("id_usuario"));
             String nome_usuario = rs.getString("nome_usuario");
             String email_usuario = rs.getString("email_usuario");
-            String senha_usuario = rs.getString("senha_usuario");
-            String telefone_usuario = rs.getString("telefone_usuario");
-            UUID id_empresa_usuario = UUID.fromString(rs.getString("id_empresa_usuario"));
+            String senha_usuario = rs.getString("senha_usuario");        String telefone_usuario = rs.getString("telefone_usuario");
+            if (telefone_usuario == null || telefone_usuario.trim().isEmpty()) {
+                telefone_usuario = null;
+            }
+
+            String idEmpresaStr = rs.getString("id_empresa_usuario");
+            UUID id_empresa_usuario;
+            if (idEmpresaStr != null && !idEmpresaStr.trim().isEmpty()) {
+                id_empresa_usuario = UUID.fromString(idEmpresaStr);
+            } else {
+                id_empresa_usuario = null;
+            }
             return new Usuarios(id_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, id_empresa_usuario);
         };
     }
@@ -58,7 +66,6 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
 
         return params;
     }
-
 
     @Override
     public List<Usuarios> findAll() {

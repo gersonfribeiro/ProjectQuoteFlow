@@ -20,6 +20,14 @@ public class Usuarios {
         this.id_empresa_usuario = id_empresa_usuario;
     }
 
+//  Construtor para o RowMapper
+    public Usuarios(UUID id_usuario, String nome_usuario, String email_usuario, String senha_usuario) {
+        this.id_usuario = id_usuario;
+        this.nome_usuario = nome_usuario;
+        this.email_usuario = email_usuario;
+        this.senha_usuario = senha_usuario;
+    }
+
 //  Construtor para inserção no banco de dados
     public Usuarios(String nome_usuario, String email_usuario, String senha_usuario, String telefone_usuario, UUID id_empresa_usuario) {
         this.id_usuario = UUID.randomUUID();
