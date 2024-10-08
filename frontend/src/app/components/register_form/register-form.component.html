@@ -16,25 +16,25 @@
     (ngSubmit)="register()"
   >
     <div class="mb-3">
-      <label class="form-label text-dark">Nome:</label>
+      <label class="form-label text-dark">Usuário:</label>
       <input
         type="text"
         class="form-control mb-2"
-        placeholder="Digite seu nome"
-        formControlName="name"
+        placeholder="Digite um nome de usuário"
+        formControlName="user"
       />
       <div
         *ngIf="
-          registerForm.get('name')?.invalid && registerForm.get('name')?.touched
+          registerForm.get('user')?.invalid && registerForm.get('user')?.touched
         "
         class="text-danger"
       >
         <div
           class="alert alert-danger alert-small mb-2"
           role="alert"
-          *ngIf="registerForm.get('name')?.errors?.['required']"
+          *ngIf="registerForm.get('user')?.errors?.['required']"
         >
-          O nome é <strong>obrigatório.</strong>
+          O usuário é <strong>obrigatório.</strong>
         </div>
       </div>
     </div>
@@ -103,6 +103,10 @@
           A senha deve ter no mínimo 6 caracteres.
         </div>
       </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
     </div>
 
     <span class="pb-3 d-block">Registrar-se com:</span>
