@@ -101,8 +101,9 @@
                         type="text"
                         formControlName="skuCode"
                         class="form-control mb-2"
-                        placeholder="YYLIC16"
-                        maxlength="16"
+                        placeholder="YYY.Y.YY"
+                        mask="AAA.A.AA"
+                        (input)="onInputChange()"
                       />
                       <div
                         *ngIf="
