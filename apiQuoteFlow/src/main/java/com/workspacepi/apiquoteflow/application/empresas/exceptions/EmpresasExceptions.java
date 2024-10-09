@@ -1,8 +1,11 @@
 package com.workspacepi.apiquoteflow.application.empresas.exceptions;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
 // Classe base para exceções de empresa
+@Getter
 public abstract class EmpresasExceptions extends Exception {
     private final UUID id_empresa;
 
@@ -11,7 +14,4 @@ public abstract class EmpresasExceptions extends Exception {
         this.id_empresa = id_empresa;
     }
 
-    public UUID getId_empresa() {
-        return id_empresa;
-    }
 }

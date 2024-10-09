@@ -6,29 +6,29 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.enderecos;
 public class EnderecosSqlExpressions {
     public static String sqlSelectAllEnderecos() {
         return """
-                    SELECT bairro_endereco,
-                        cep_endereco,
-                        complemento_endereco, 
-                        localidade_endereco,
-                        logradouro_endereco,
-                        numero_endereco,
-                        uf_endereco,
-                        id_empresa_endereco,
+                    SELECT bairro,
+                        cep,
+                        complemento,
+                        localidade,
+                        logradouro,
+                        numero,
+                        uf,
+                        id_empresa,
                         id_endereco
                     FROM endereco
-                """;
+               """;
     }
 
     public static String sqlSelectEnderecosById() {
         return """
-                    SELECT bairro_endereco,
-                        cep_endereco,
-                        complemento_endereco, 
-                        localidade_endereco,
-                        logradouro_endereco,
-                        numero_endereco,
-                        uf_endereco,
-                        id_empresa_endereco,
+                    SELECT bairro,
+                        cep,
+                        complemento,
+                        localidade,
+                        logradouro,
+                        numero,
+                        uf,
+                        id_empresa,
                         id_endereco
                     FROM endereco
                     WHERE id_endereco = :id_endereco
@@ -38,24 +38,24 @@ public class EnderecosSqlExpressions {
     public static String sqlCadastrarEndereco() {
         return """
                     INSERT INTO endereco(
-                        bairro_endereco,
-                        cep_endereco,
-                        complemento_endereco, 
-                        localidade_endereco,
-                        logradouro_endereco,
-                        numero_endereco,
-                        uf_endereco,
-                        id_empresa_endereco,
+                        bairro,
+                        cep,
+                        complemento, 
+                        localidade,
+                        logradouro,
+                        numero,
+                        uf,
+                        id_empresa,
                         id_endereco)
                         values (
-                            :bairro_endereco,
-                            :cep_endereco,
-                            :complemento_endereco, 
-                            :localidade_endereco,
-                            :logradouro_endereco,
-                            :numero_endereco,
-                            :uf_endereco,
-                            :id_empresa_endereco,
+                            :bairro,
+                            :cep,
+                            :complemento, 
+                            :localidade,
+                            :logradouro,
+                            :numero,
+                            :uf,
+                            :id_empresa,
                             :id_endereco)    
                 """;
     }
@@ -63,14 +63,14 @@ public class EnderecosSqlExpressions {
     public static String sqlModificarEndereco() {
         return """
                     UPDATE endereco
-                    SET bairro_endereco = :bairro_endereco,
-                        cep_endereco = :cep_endereco,
-                        complemento_endereco = :complemento_endereco,
-                        localidade_endereco = :localidade_endereco,
-                        logradouro_endereco = :logradouro_endereco,
-                        numero_endereco = :numero_endereco,
-                        uf_endereco = :uf_endereco,
-                        id_empresa_endereco = :id_empresa_endereco,
+                    SET bairro = :bairro,
+                        cep = :cep,
+                        complemento = :complemento,
+                        localidade = :localidade,
+                        logradouro = :logradouro,
+                        numero = :numero,
+                        uf = :uf,
+                        id_empresa = :id_empresa,
                         id_endereco = :id_endereco
                     WHERE id_endereco = :id_endereco
                 """;

@@ -26,14 +26,16 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
     private RowMapper<Usuarios> createUsuariosRowMapper() {
         return (rs, rowNum) -> {
             UUID id_usuario = UUID.fromString(rs.getString("id_usuario"));
-            String nome_usuario = rs.getString("nome_usuario");
-            String email_usuario = rs.getString("email_usuario");
-            String senha_usuario = rs.getString("senha_usuario");        String telefone_usuario = rs.getString("telefone_usuario");
+            String nome_usuario = rs.getString("nome");
+            String email_usuario = rs.getString("email");
+            String senha_usuario = rs.getString("senha");
+
+            String telefone_usuario = rs.getString("telefone");
             if (telefone_usuario == null || telefone_usuario.trim().isEmpty()) {
                 telefone_usuario = null;
             }
 
-            String idEmpresaStr = rs.getString("id_empresa_usuario");
+            String idEmpresaStr = rs.getString("id_empresa");
             UUID id_empresa_usuario;
             if (idEmpresaStr != null && !idEmpresaStr.trim().isEmpty()) {
                 id_empresa_usuario = UUID.fromString(idEmpresaStr);
@@ -47,21 +49,21 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
     private MapSqlParameterSource parameterSource(Usuarios usuario) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id_usuario", usuario.getId_usuario());
-        params.addValue("nome_usuario", usuario.getNome_usuario());
-        params.addValue("email_usuario", usuario.getEmail_usuario());
-        params.addValue("senha_usuario", usuario.getSenha_usuario());
+        params.addValue("nome", usuario.getNome_usuario());
+        params.addValue("email", usuario.getEmail_usuario());
+        params.addValue("senha", usuario.getSenha_usuario());
 
         // Campos opcionais
         if (usuario.getTelefone_usuario() != null) {
-            params.addValue("telefone_usuario", usuario.getTelefone_usuario());
+            params.addValue("telefone", usuario.getTelefone_usuario());
         } else {
-            params.addValue("telefone_usuario", null);
+            params.addValue("telefone", null);
         }
 
         if (usuario.getId_empresa_usuario() != null) {
-            params.addValue("id_empresa_usuario", usuario.getId_empresa_usuario());
+            params.addValue("id_empresa", usuario.getId_empresa_usuario());
         } else {
-            params.addValue("id_empresa_usuario", null);
+            params.addValue("id_empresa", null);
         }
 
         return params;

@@ -1,4 +1,4 @@
-package com.workspacepi.apiquoteflow.domain.cotacao;
+package com.workspacepi.apiquoteflow.domain.produtos;
 
 // Uma enum class criada apenas para definir alguma propriedade
 public enum Categoria {

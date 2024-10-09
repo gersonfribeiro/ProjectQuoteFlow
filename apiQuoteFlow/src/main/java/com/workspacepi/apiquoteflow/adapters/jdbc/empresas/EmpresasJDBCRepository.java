@@ -26,10 +26,10 @@ public class EmpresasJDBCRepository implements EmpresaRepository {
     private RowMapper<Empresa> createEmpresaRowMapper() {
         return (rs, rowNum) -> {
             UUID id_empresa = UUID.fromString(rs.getString("id_empresa"));
-            String cpnj_empresa = rs.getString("cnpj_empresa");
-            String email_empresa = rs.getString("email_empresa");
-            String nome_empresa = rs.getString("nome_empresa");
-            String senha_empresa = rs.getString("senha_empresa");
+            String cpnj_empresa = rs.getString("cnpj");
+            String email_empresa = rs.getString("email");
+            String nome_empresa = rs.getString("nome");
+            String senha_empresa = rs.getString("senha");
             return new Empresa(id_empresa, cpnj_empresa, email_empresa, nome_empresa, senha_empresa);
         };
     }
@@ -37,10 +37,10 @@ public class EmpresasJDBCRepository implements EmpresaRepository {
     private MapSqlParameterSource parameterSource(Empresa empresa) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id_empresa", empresa.getId_empresa());
-        params.addValue("cnpj_empresa", empresa.getCnpj_empresa());
-        params.addValue("email_empresa", empresa.getEmail_empresa());
-        params.addValue("nome_empresa", empresa.getNome_empresa());
-        params.addValue("senha_empresa", empresa.getSenha_empresa());
+        params.addValue("cnpj", empresa.getCnpj_empresa());
+        params.addValue("email", empresa.getEmail_empresa());
+        params.addValue("nome", empresa.getNome_empresa());
+        params.addValue("senha", empresa.getSenha_empresa());
         return params;
     }
 

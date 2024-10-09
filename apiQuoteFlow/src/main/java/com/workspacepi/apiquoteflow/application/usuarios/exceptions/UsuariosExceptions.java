@@ -1,8 +1,11 @@
 package com.workspacepi.apiquoteflow.application.usuarios.exceptions;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
 // Classe base para exceções de usuario
+@Getter
 public abstract class UsuariosExceptions extends Exception {
     private final UUID id_usuario;
 
@@ -11,7 +14,4 @@ public abstract class UsuariosExceptions extends Exception {
         this.id_usuario = id_usuario;
     }
 
-    public UUID getid_usuario() {
-        return id_usuario;
-    }
 }

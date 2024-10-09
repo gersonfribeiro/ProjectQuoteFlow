@@ -6,11 +6,11 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.produtos;
 public class ProdutoSQLRepository {
     public static String sqlSelectAllProdutos() {
         return """
-                    SELECT categoria_produto,
-                        descricao_produto,
-                        observacao_produto,
-                        sku_produto,
-                        id_empresa_produto,
+                    SELECT categoria,
+                        descricao,
+                        observacao,
+                        sku,
+                        id_empresa,
                         id_produto
                     FROM produto
                 """;
@@ -18,11 +18,11 @@ public class ProdutoSQLRepository {
 
     public static String sqlSelectProdutoById() {
         return """
-                    SELECT categoria_produto,
-                         descricao_produto,
-                         observacao_produto,
-                         sku_produto,
-                         id_empresa_produto,
+                    SELECT categoria,
+                         descricao,
+                         observacao,
+                         sku,
+                         id_empresa,
                          id_produto
                     FROM produto
                     WHERE id_produto = :id_produto
@@ -32,18 +32,18 @@ public class ProdutoSQLRepository {
     public static String sqlCadastrarProduto() {
         return """
                      INSERT INTO produto(
-                         categoria_produto,
-                         descricao_produto,
-                         observacao_produto,
-                         sku_produto,
-                         id_empresa_produto,
+                         categoria,
+                         descricao,
+                         observacao,
+                         sku,
+                         id_empresa,
                          id_produto)
                          values (
-                             :categoria_produto,
-                             :descricao_produto,
-                             :observacao_produto,
-                             :sku_produto,
-                             :id_empresa_produto,
+                             :categoria,
+                             :descricao,
+                             :observacao,
+                             :sku,
+                             :id_empresa,
                              :id_produto)
                 """;
     }
@@ -51,11 +51,11 @@ public class ProdutoSQLRepository {
     public static String sqlModificarProduto() {
         return """
                     UPDATE produto
-                    SET categoria_produto = :categoria_produto,
-                         descricao_produto = :descricao_produto,
-                         observacao_produto = :observacao_produto,
-                         sku_produto = sku_produto,
-                         id_empresa_produto = :id_empresa_produto,
+                    SET categoria = :categoria,
+                         descricao = :descricao,
+                         observacao = :observacao,
+                         sku = sku,
+                         id_empresa = :id_empresa,
                          id_produto = :id_produto
                     WHERE id_produto = :id_produto
                 """;

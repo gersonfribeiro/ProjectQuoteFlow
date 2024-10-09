@@ -43,11 +43,11 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
 
     private RowMapper<Produtos> createProdutoRowMapper() {
         return (rs, rowNum) -> {
-            String categoria_produto = rs.getString("categoria_produto");
-            String descricao_produto = rs.getString("descricao_produto");
-            String observacao_produto = rs.getString("observacao_produto");
-            String sku_produto = rs.getString("sku_produto");
-            UUID id_empresa_produto = UUID.fromString(rs.getString("id_empresa_produto"));
+            String categoria_produto = rs.getString("categoria");
+            String descricao_produto = rs.getString("descricao");
+            String observacao_produto = rs.getString("observacao");
+            String sku_produto = rs.getString("sku");
+            UUID id_empresa_produto = UUID.fromString(rs.getString("id_empresa"));
             UUID id_produto = UUID.fromString(rs.getString("id_produto"));
 
             return new Produtos(categoria_produto, descricao_produto, observacao_produto,
@@ -59,11 +59,11 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
 
     private MapSqlParameterSource parameterSource(Produtos produto) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("categoria_produto", produto.getCategoria_produto());
-        params.addValue("descricao_produto", produto.getDescricao_produto());
-        params.addValue("observacao_produto", produto.getObservacao_produto());
-        params.addValue("sku_produto", produto.getSku_produto());
-        params.addValue("id_empresa_produto", produto.getId_empresa_produto());
+        params.addValue("categoria", produto.getCategoria_produto());
+        params.addValue("descricao", produto.getDescricao_produto());
+        params.addValue("observacao", produto.getObservacao_produto());
+        params.addValue("sku", produto.getSku_produto());
+        params.addValue("id_empresa", produto.getId_empresa_produto());
         params.addValue("id_produto", produto.getId_produto());
         return params;
     }

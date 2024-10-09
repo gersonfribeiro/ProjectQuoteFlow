@@ -7,10 +7,10 @@ public class CotacoesSqlExpressions {
     public static String sqlSelectAllQuotations() {
         return """
                     SELECT id_cotacao,
-                        data_cotacao,
+                        data,
                         numero_cotacao,
-                        status_cotacao,
-                        id_empresa_cotacao
+                        status,
+                        id_empresa
                     FROM cotacao
                 """;
     }
@@ -18,10 +18,10 @@ public class CotacoesSqlExpressions {
     public static String sqlSelectQuotationById() {
         return """
                     SELECT id_cotacao,
-                        data_cotacao,
-                        numero_cotacao,
-                        status_cotacao,
-                        id_empresa_cotacao
+                        data,
+                        numero,
+                        status,
+                        id_empresa
                     FROM cotacao
                     WHERE id_cotacao = :id_cotacao
                 """;
@@ -31,16 +31,16 @@ public class CotacoesSqlExpressions {
         return """
                      INSERT INTO cotacao(
                             id_cotacao,
-                            data_cotacao,
-                            numero_cotacao,
-                            status_cotacao,
-                            id_empresa_cotacao)
+                            data,
+                            numero,
+                            status,
+                            id_empresa)
                          values (
                             :id_cotacao,
-                            :data_cotacao,
-                            :numero_cotacao,
-                            :status_cotacao,
-                            :id_empresa_cotacao)
+                            :data,
+                            :numero,
+                            :status,
+                            :id_empresa)
                 """;
     }
 
@@ -48,10 +48,10 @@ public class CotacoesSqlExpressions {
         return """
                     UPDATE cotacao
                     SET id_cotacao = :id_cotacao,
-                        data_cotacao = :data_cotacao,
+                        data = :data,
                         numero_cotacao = :numero_cotacao,
-                        status_cotacao = :status_cotacao,
-                        id_empresa_cotacao  = :id_empresa_cotacao
+                        status = :status,
+                        id_empresa  = :id_empresa
                     WHERE id_cotacao = :id_cotacao
                 """;
     }

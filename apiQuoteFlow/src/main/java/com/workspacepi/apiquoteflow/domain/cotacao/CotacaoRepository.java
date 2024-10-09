@@ -18,5 +18,6 @@ public interface CotacaoRepository {
 //  Modificação
     Boolean modificarCotacao(Cotacao cotacao);
 
+//  Delete
     Boolean deleteCotacaoById(UUID id_cotacao);
 }

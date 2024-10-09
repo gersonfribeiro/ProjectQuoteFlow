@@ -4,11 +4,11 @@ public class UsuariosSqlExpressions {
     public static String sqlSelectAllUsers() {
         return """
                SELECT id_usuario,
-                    email_usuario,
-                    nome_usuario,
-                    senha_usuario,
-                    telefone_usuario,
-                    id_empresa_usuario
+                    email,
+                    nome,
+                    senha,
+                    telefone,
+                    id_empresa
                FROM usuarios
             """;
     }
@@ -16,11 +16,11 @@ public class UsuariosSqlExpressions {
     public static String sqlSelectUserById() {
         return """
                SELECT id_usuario,
-                    email_usuario,
-                    nome_usuario,
-                    senha_usuario,
-                    telefone_usuario,
-                    id_empresa_usuario
+                    email,
+                    nome,
+                    senha,
+                    telefone,
+                    id_empresa
                FROM usuarios
                WHERE id_usuario = :id_usuario
            """;
@@ -30,25 +30,25 @@ public class UsuariosSqlExpressions {
         return """
                 INSERT INTO usuarios(
                     id_usuario,
-                    email_usuario,
-                    nome_usuario,
-                    senha_usuario)
+                    email,
+                    nome,
+                    senha)
                     values (
                         :id_usuario,
-                        :email_usuario,
-                        :nome_usuario,
-                        :senha_usuario)
+                        :email,
+                        :nome,
+                        :senha)
            """;
     }
 
     public static String sqlUpdateUser() {
         return """
                UPDATE usuarios
-               SET email_usuario = :email_usuario,
-                    nome_usuario = :nome_usuario,
-                    senha_usuario = :senha_usuario,
-                    telefone_usuario = :telefone_usuario,
-                    id_empresa_usuario = :id_empresa_usuario
+               SET email = :email,
+                    nome = :nome,
+                    senha = :senha,
+                    telefone = :telefone,
+                    id_empresa = :id_empresa
                WHERE id_usuario = :id_usuario
            """;
     }

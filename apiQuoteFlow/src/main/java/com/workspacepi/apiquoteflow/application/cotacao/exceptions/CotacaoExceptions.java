@@ -1,8 +1,11 @@
 package com.workspacepi.apiquoteflow.application.cotacao.exceptions;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
 // Classe base para exceções de cotação
+@Getter
 public abstract class CotacaoExceptions extends Exception {
     private final UUID id_cotacao;
 
@@ -11,7 +14,4 @@ public abstract class CotacaoExceptions extends Exception {
         this.id_cotacao = id_cotacao;
     }
 
-    public UUID getid_cotacao() {
-        return id_cotacao;
-    }
 }

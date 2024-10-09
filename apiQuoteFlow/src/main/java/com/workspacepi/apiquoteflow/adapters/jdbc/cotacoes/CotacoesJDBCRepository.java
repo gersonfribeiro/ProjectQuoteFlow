@@ -45,10 +45,10 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
     private RowMapper<Cotacao> createCotacaoRowMapper() {
         return (rs, rowNum) -> {
             UUID id_cotacao = UUID.fromString(rs.getString("id_cotacao"));
-            Timestamp data_cotacao = rs.getTimestamp("data_cotacao");
+            Timestamp data_cotacao = rs.getTimestamp("data");
             int numero_cotacao = rs.getRow();
-            CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status_cotacao"));
-            UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa_cotacao"));
+            CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
+            UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
             return new Cotacao(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null);
         };
@@ -59,10 +59,10 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
     private MapSqlParameterSource parameterSource(Cotacao cotacao) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id_cotacao", cotacao.getId_cotacao());
-        params.addValue("data_cotacao", cotacao.getData_cotacao());
+        params.addValue("data", cotacao.getData_cotacao());
         params.addValue("numero_cotacao", cotacao.getNumero_cotacao());
-        params.addValue("status_cotacao", cotacao.getStatus_cotacao().name());
-        params.addValue("id_empresa_cotacao", cotacao.getId_empresa_cotacao());
+        params.addValue("status", cotacao.getStatus_cotacao().name());
+        params.addValue("id_empresa", cotacao.getId_empresa_cotacao());
         params.addValue("itens", cotacao.getItens());
         return params;
     }

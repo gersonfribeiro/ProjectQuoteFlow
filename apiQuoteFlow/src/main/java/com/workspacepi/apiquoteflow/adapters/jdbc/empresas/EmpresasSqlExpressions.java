@@ -4,10 +4,10 @@ public class EmpresasSqlExpressions {
     public static String sqlSelectAllEmpresas() {
         return """
                SELECT id_empresa,
-                    cnpj_empresa,
-                    email_empresa,
-                    nome_empresa,
-                    senha_empresa
+                    cnpj,
+                    email,
+                    nome,
+                    senha
                FROM empresa
             """;
     }
@@ -15,10 +15,10 @@ public class EmpresasSqlExpressions {
     public static String sqlSelectEmpresaById() {
         return """
                SELECT id_empresa,
-                    cnpj_empresa,
-                    email_empresa,
-                    nome_empresa,
-                    senha_empresa
+                    cnpj,
+                    email,
+                    nome,
+                    senha
                FROM empresa
                WHERE id_empresa = :id_empresa
            """;
@@ -28,16 +28,16 @@ public class EmpresasSqlExpressions {
         return """
                 INSERT INTO empresa(
                     id_empresa,
-                    cnpj_empresa,
-                    email_empresa,
-                    nome_empresa,
-                    senha_empresa)
+                    cnpj,
+                    email,
+                    nome,
+                    senha)
                     values (
                         :id_empresa,
-                        :cnpj_empresa,
-                        :email_empresa,
-                        :nome_empresa,
-                        :senha_empresa)
+                        :cnpj,
+                        :email,
+                        :nome,
+                        :senha)
            """;
     }
 
@@ -45,10 +45,10 @@ public class EmpresasSqlExpressions {
         return """
                UPDATE empresa
                SET id_empresa = :id_empresa,
-                    cnpj_empresa = :cnpj_empresa,
-                    email_empresa = :email_empresa,
-                    nome_empresa = :nome_empresa,
-                    senha_empresa = :senha_empresa
+                    cnpj = :cnpj,
+                    email = :email,
+                    nome = :nome,
+                    senha = :senha
                WHERE id_empresa = :id_empresa
            """;
     }

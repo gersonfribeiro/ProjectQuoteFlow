@@ -17,7 +17,7 @@ public class DotenvConfig {
         System.setProperty("DOTENV_PASSWORD", dotenv.get("DOTENV_PASSWORD"));
 
         // Opcional: Verifique se as variáveis estão sendo carregadas corretamente
-        System.out.println("DOTENV_URL: " + dotenv.get("DOTENV_URL"));
+//        System.out.println("DOTENV_URL: " + dotenv.get("DOTENV_URL"));
     }
 }
 
