@@ -29,7 +29,7 @@ public class EnderecosUpdateCommand {
     @JsonProperty("logradouro")
     private String logradouro_endereco;
 
-    @JsonProperty("nuero")
+    @JsonProperty("numero")
     private int numero_endereco;
 
     @JsonProperty("uf")

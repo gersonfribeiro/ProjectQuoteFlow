@@ -27,12 +27,12 @@ public class CotacaoUpdateCommand {
     @JsonProperty("status")
     private CotacaoStatus status_cotacao;
 
+    // id da empresa autora da cotação
     @JsonProperty("id_empresa")
     private UUID id_empresa_cotacao;
 
     @JsonProperty("itens")
     private Set<ItensCotacao> itens;
-
 
 //  Conversão para cotacao
     public Cotacao toCotacao(UUID id_cotacao) {
