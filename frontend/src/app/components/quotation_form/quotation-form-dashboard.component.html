@@ -45,21 +45,6 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link"
-            id="product-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#product"
-            type="button"
-            role="tab"
-            aria-controls="product"
-            aria-selected="false"
-          >
-            Produtos
-          </button>
-        </li>
-
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
             id="supplier-tab"
             data-bs-toggle="tab"
             data-bs-target="#supplier"
@@ -74,7 +59,6 @@
       </ul>
 
       <div class="tab-content" id="quotationTabsContent">
-        <!-- Aba de Cotações -->
         <div
           class="tab-pane fade show active"
           id="quotation"
@@ -91,6 +75,7 @@
                     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
                 "
               >
+                <!-- Formulário de Cotações -->
                 <div class="d-flex flex-column">
                   <div class="d-flex flex-wrap gap-3 mb-3">
                     <div class="d-flex flex-column flex-grow-1 mb-3">
@@ -141,7 +126,7 @@
                   </div>
 
                   <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-success" (click)="addProduct()">
                       <i class="bi bi-bag-plus-fill"></i>
                       Adicionar
                     </button>
@@ -158,6 +143,32 @@
                 </div>
               </div>
             </form>
+
+            <!-- Tabela de Produtos -->
+            <div class="p-4 mt-4 rounded"
+              *ngIf="products.length > 0"
+              style="
+                background-color: #e8e8e8;
+                box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+                  rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+              "
+            >
+              <p><strong>Produtos adicionados:</strong></p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Código SKU</th>
+                    <th scope="col">Quantidade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of products">
+                    <td>{{ product.skuCode }}</td>
+                    <td>{{ product.quantity }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -210,45 +221,6 @@
                     <i class="bi bi-send-plus-fill"></i>
                     Enviar
                   </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- Aba de Produtos -->
-        <div
-          class="tab-pane fade"
-          id="product"
-          role="tabpanel"
-          aria-labelledby="product-tab"
-        >
-          <div class="ps-5 pt-0">
-            <form [formGroup]="productForm" (ngSubmit)="onProductSubmit()">
-              <div
-                class="p-4 rounded"
-                style="
-                  background-color: #e8e8e8;
-                  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-                    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-                "
-              >
-                <div class="form-floating">
-                  <p>Tabela de Produtos:</p>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">Código SKU</th>
-                        <th scope="col">Quantidade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let product of products">
-                        <td>{{ product.skuCode }}</td>
-                        <td>{{ product.quantity }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
                 </div>
               </div>
             </form>
