@@ -26,7 +26,7 @@ export class FormDashboardComponent implements OnInit {
 
   @ViewChild('notificationAlert') notificationAlert!: ElementRef;
   productForm: any;
-  products: any;
+  products: { skuCode: string, quantity: number }[] = [];
 
   constructor(private fb: FormBuilder, private toastr: ToastrService) {
     this.quotationForm = this.fb.group({
@@ -104,6 +104,16 @@ export class FormDashboardComponent implements OnInit {
     if (skuCodeControl) {
       // Transforma o valor do campo em letras maiúsculas
       skuCodeControl.setValue(skuCodeControl.value.toUpperCase(), { emitEvent: false });
+    }
+  }
+
+  addProduct() {
+    const skuCode = this.quotationForm.get('skuCode')?.value;
+    const quantity = this.quotationForm.get('quantity')?.value;
+  
+    if (skuCode && quantity > 0) {
+      this.products.push({ skuCode, quantity });
+      this.quotationForm.reset();  // Reseta o formulário após adicionar
     }
   }
   
