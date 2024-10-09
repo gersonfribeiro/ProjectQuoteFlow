@@ -59,6 +59,7 @@
       </ul>
 
       <div class="tab-content" id="quotationTabsContent">
+        <!-- Aba de Cotações e Produtos combinada -->
         <div
           class="tab-pane fade show active"
           id="quotation"
@@ -126,7 +127,7 @@
                   </div>
 
                   <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-success" (click)="addProduct()">
                       <i class="bi bi-bag-plus-fill"></i>
                       Adicionar
                     </button>
@@ -146,6 +147,7 @@
 
             <!-- Tabela de Produtos -->
             <div class="p-4 mt-4 rounded"
+              *ngIf="products.length > 0"
               style="
                 background-color: #e8e8e8;
                 box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
@@ -157,7 +159,6 @@
                 <thead>
                   <tr>
                     <th scope="col">Código SKU</th>
-                    <th scope="col">Nome</th>
                     <th scope="col">Quantidade</th>
                   </tr>
                 </thead>
