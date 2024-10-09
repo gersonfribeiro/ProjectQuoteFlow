@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiAuthService {
-  private apiUrlUsers = 'http://localhost:8080/usuarios';
+  private apiUrlAuth = 'http://localhost:8080/usuarios';
   // Esta propriedade armazena a URL base da API de usuários, que será utilizada nas requisições HTTP para registrar e deletar usuários.
 
   constructor(private http: HttpClient) {}
@@ -14,14 +14,14 @@ export class ApiAuthService {
 
   // Método para registrar um novo usuário com base nos dados fornecidos (nome, email, senha).
   registerUser(user: any): Observable<any> {
-    return this.http.post(this.apiUrlUsers, user);
+    return this.http.post(this.apiUrlAuth, user);
     // Realiza uma requisição POST para a API, enviando os dados do usuário.
     // Retorna um Observable que pode ser assinado para lidar com a resposta da API.
   }
 
   // Método para deletar um usuário com base no seu ID.
   deleteUser(userId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrlUsers}/${userId}`);
+    return this.http.delete(`${this.apiUrlAuth}/${userId}`);
     // Realiza uma requisição DELETE para a API, removendo o usuário especificado pelo ID.
     // Retorna um Observable que pode ser assinado para lidar com a confirmação da deleção.
   }
