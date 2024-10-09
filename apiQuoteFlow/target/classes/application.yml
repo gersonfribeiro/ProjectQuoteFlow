@@ -1,5 +1,3 @@
-# Configura��es inicias da nossa aplica��o
-
 spring:
   application:
     name: apiQuoteFlow
@@ -12,7 +10,7 @@ spring:
     name: quoteflow
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/quoteflow
-    username: gersin
-    password: Gersin4282
+    username: postgres
+    password: root
 server:
   port: 8080
