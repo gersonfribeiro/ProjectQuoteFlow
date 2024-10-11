@@ -43,7 +43,7 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
 
     private RowMapper<Produtos> createProdutoRowMapper() {
         return (rs, rowNum) -> {
-            String categoria_produto = rs.getString("categoria");
+            Categoria categoria_produto = Categoria.valueOf(rs.getString("categoria"));
             String descricao_produto = rs.getString("descricao");
             String observacao_produto = rs.getString("observacao");
             String sku_produto = rs.getString("sku");

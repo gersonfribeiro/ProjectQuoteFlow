@@ -1,6 +1,7 @@
 package com.workspacepi.apiquoteflow.application.produtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.workspacepi.apiquoteflow.domain.produtos.Categoria;
 import com.workspacepi.apiquoteflow.domain.produtos.Produtos;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.UUID;
 public class ProdutosUpdateCommand {
 
     @JsonProperty("categoria")
-    private String categoria_produto;
+    private Categoria categoria_produto;
 
     @JsonProperty("descricao")
     private String descricao_produto;

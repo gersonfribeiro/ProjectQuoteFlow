@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class Produtos {
-    private String categoria_produto;
+    private Categoria categoria_produto;
     private String descricao_produto;
     private String observacao_produto;
     private String sku_produto;
@@ -18,7 +18,7 @@ public class Produtos {
     private UUID id_produto;
 
     // Construtor de modificação
-    public Produtos(String categoria_produto, String descricao_produto, String observacao_produto,
+    public Produtos(Categoria categoria_produto, String descricao_produto, String observacao_produto,
                    String sku_produto, UUID id_empresa_produto) {
         this.categoria_produto = categoria_produto;
         this.descricao_produto = descricao_produto;
