@@ -41,9 +41,9 @@ export class RegisterFormComponent {
     // Injeta o FormBuilder, o Router e o ApiAuthService no construtor.
     // Inicializa o formulário com campos para nome, email e senha, incluindo validações.
     this.registerForm = this.fb.group({
-      user: ['', [Validators.required]], // Campo nome é obrigatório.
+      nome: ['', [Validators.required]], // Campo nome é obrigatório.
       email: ['', [Validators.required, Validators.email]], // Campo email é obrigatório e deve ser um email válido.
-      password: ['', [Validators.required, Validators.minLength(6)]], // Campo senha é obrigatório e deve ter no mínimo 6 caracteres.
+      senha: ['', [Validators.required, Validators.minLength(6)]], // Campo senha é obrigatório e deve ter no mínimo 6 caracteres.
     });
   }
 
@@ -59,12 +59,19 @@ export class RegisterFormComponent {
         response => {
           console.log('Resposta da API:', response);
           this.isLoading = false;
-          this.router.navigate(['/dashboard']);
+          alert("Usuário registrado com sucesso!")
+          this.router.navigate(['/dashboard/notifications']); // Redireciona ao dashboard
         },
         error => {
           console.error('Erro ao registrar o usuário:', error);
           this.isLoading = false;
-          this.errorMessage = 'Falha no registro. Tente novamente.';
+          // Verifica se o erro é devido ao email já existente
+          if (error.status === 409) {
+            // Altere o status conforme o código de erro retornado pela API
+            this.errorMessage = 'Este email já está registrado. Por favor, utilize outro.';
+          } else {
+            this.errorMessage = 'Falha no registro. Tente novamente.';
+          }
         }
       );
     } else {
