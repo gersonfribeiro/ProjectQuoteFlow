@@ -1,3 +1,5 @@
+# Configura��es inicias da nossa aplica��o
+
 spring:
   application:
     name: apiQuoteFlow
@@ -7,10 +9,10 @@ spring:
     resources:
       add-mappings: false
   datasource:
-    name: ${DOTENV_NAME}
+    name: quoteflow
     driver-class-name: org.postgresql.Driver
-    url: ${DOTENV_URL}
-    username: ${DOTENV_USERNAME}
-    password: ${DOTENV_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/quoteflow
+    username: postgres
+    password: root
 server:
   port: 8080

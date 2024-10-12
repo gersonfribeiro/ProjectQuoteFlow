@@ -54,11 +54,10 @@ export class RegisterFormComponent {
     if (this.registerForm.valid) {
       this.isLoading = true;
       const usuarioData = this.registerForm.value;
-
-      // Faz a chamada ao backend para registrar o usuário
+      console.log('Enviando dados do usuário:', usuarioData);  // Verifica os dados enviados
       this.apiService.registerUser(usuarioData).subscribe(
         response => {
-          console.log('Usuário registrado com sucesso!', response);
+          console.log('Resposta da API:', response);
           this.isLoading = false;
           this.router.navigate(['/dashboard']);
         },
@@ -70,6 +69,7 @@ export class RegisterFormComponent {
       );
     } else {
       this.registerForm.markAllAsTouched();
+      console.log('Formulário inválido:', this.registerForm.errors);  // Verifica erros no formulário
     }
   }
 }
