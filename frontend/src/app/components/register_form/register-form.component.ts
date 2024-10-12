@@ -13,9 +13,10 @@ import {
 import { Router, RouterModule } from '@angular/router';
 // Importa o Router para navegação entre rotas e RouterModule para definir as rotas da aplicação.
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ToastrService } from 'ngx-toastr';
 // Importa diretivas e pipes do pacote 'ngx-mask' para aplicar máscaras a campos de entrada.
 import { ApiAuthService } from "../../services/api-auth.service";
-import {Usuario} from "../../models/user.model";
+import { Usuario } from "../../models/user.model";
 // Importa o serviço 'ApiAuthService' que gerencia a comunicação com a API para registro de usuários.
 
 @Component({
@@ -39,7 +40,7 @@ export class RegisterFormComponent {
   isLoading = false;
   errorMessage: any;
 
-  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService, private toastr: ToastrService) {
     this.registerForm = this.fb.group({
       nome: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -56,8 +57,17 @@ export class RegisterFormComponent {
         response => {
           console.log('Resposta da API:', response);
           this.isLoading = false;
-          alert("Usuário registrado com sucesso!");
-          this.router.navigate(['/dashboard/notifications']);
+          this.toastr.success('Usuário registrado com sucesso!', '', {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            progressAnimation: 'increasing',
+            timeOut: 1000,
+          });
+
+          // Adiciona um tempo de espera de 1 segundos antes de redirecionar
+          setTimeout(() => {
+            this.router.navigate(['/dashboard/notifications']);
+          }, 1000); // Espera 1 segundo
         },
         error => {
           console.error('Erro ao registrar o usuário:', error);
