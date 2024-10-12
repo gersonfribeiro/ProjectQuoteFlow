@@ -82,9 +82,18 @@ export class FormDashboardComponent implements OnInit {
 
   // Método para mudar a aba
   showSuppliersTab() {
-    const supplierTabButton = document.getElementById('supplier-tab');
-    if (supplierTabButton) {
-      supplierTabButton.click(); // Simula um clique na aba "Fornecedores"
+    if (this.products.length > 0) {
+      const supplierTabButton = document.getElementById('supplier-tab');
+      if (supplierTabButton) {
+        supplierTabButton.click(); // Simula um clique na aba "Fornecedores"
+      }
+    } else {
+      this.toastr.warning('Adicione pelo menos um produto antes de acessar a aba de fornecedores.', '', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'increasing',
+        timeOut: 2000,
+      });
     }
   }
 
@@ -114,6 +123,8 @@ export class FormDashboardComponent implements OnInit {
     if (skuCode && quantity > 0) {
       this.products.push({ skuCode, quantity });
       this.quotationForm.reset();  // Reseta o formulário após adicionar
+    } else {
+      this.showFormErrors();
     }
   }
   
