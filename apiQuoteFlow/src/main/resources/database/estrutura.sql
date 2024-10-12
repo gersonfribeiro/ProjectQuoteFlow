@@ -145,7 +145,7 @@ create table usuarios
     telefone   varchar(20)
         constraint ukfxjwde537oroaygx8s5hehche
             unique,
-    id_empresa uuid         not null
+    id_empresa uuid
         constraint fkgrju3u0utt7909j9yap1oacng
             references empresas
 );
