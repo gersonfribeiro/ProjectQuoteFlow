@@ -21,18 +21,18 @@
         type="text"
         class="form-control mb-2"
         placeholder="Digite um nome de usuário"
-        formControlName="user"
+        formControlName="nome"
       />
       <div
         *ngIf="
-          registerForm.get('user')?.invalid && registerForm.get('user')?.touched
+          registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched
         "
         class="text-danger"
       >
         <div
           class="alert alert-danger alert-small mb-2"
           role="alert"
-          *ngIf="registerForm.get('user')?.errors?.['required']"
+          *ngIf="registerForm.get('nome')?.errors?.['required']"
         >
           O usuário é <strong>obrigatório.</strong>
         </div>
@@ -78,19 +78,19 @@
         type="password"
         class="form-control mb-2"
         placeholder="Digite sua senha"
-        formControlName="password"
+        formControlName="senha"
       />
       <div
         *ngIf="
-          registerForm.get('password')?.invalid &&
-          registerForm.get('password')?.touched
+          registerForm.get('senha')?.invalid &&
+          registerForm.get('senha')?.touched
         "
         class="text-danger"
       >
         <div
           class="alert alert-danger alert-small mb-2"
           role="alert"
-          *ngIf="registerForm.get('password')?.errors?.['required']"
+          *ngIf="registerForm.get('senha')?.errors?.['required']"
         >
           A senha é <strong>obrigatória.</strong>
         </div>
@@ -98,7 +98,7 @@
         <div
           class="alert alert-danger alert-small"
           role="alert"
-          *ngIf="registerForm.get('password')?.errors?.['minlength']"
+          *ngIf="registerForm.get('senha')?.errors?.['minlength']"
         >
           A senha deve ter no mínimo 6 caracteres.
         </div>
