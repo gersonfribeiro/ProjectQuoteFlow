@@ -15,6 +15,7 @@ import { Router, RouterModule } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 // Importa diretivas e pipes do pacote 'ngx-mask' para aplicar máscaras a campos de entrada.
 import { ApiAuthService } from "../../services/api-auth.service";
+import {Usuario} from "../../models/user.model";
 // Importa o serviço 'ApiAuthService' que gerencia a comunicação com a API para registro de usuários.
 
 @Component({
@@ -34,40 +35,34 @@ import { ApiAuthService } from "../../services/api-auth.service";
   // Especifica o caminho do arquivo HTML e CSS para este componente.
 })
 export class RegisterFormComponent {
-  registerForm: FormGroup; // Define o formulário reativo para registrar usuários.
-  isLoading = false; // Adiciona uma variável de controle para exibir um indicador de carregamento.
+  registerForm: FormGroup;
+  isLoading = false;
+  errorMessage: any;
 
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService) {
-    // Injeta o FormBuilder, o Router e o ApiAuthService no construtor.
-    // Inicializa o formulário com campos para nome, email e senha, incluindo validações.
     this.registerForm = this.fb.group({
-      nome: ['', [Validators.required]], // Campo nome é obrigatório.
-      email: ['', [Validators.required, Validators.email]], // Campo email é obrigatório e deve ser um email válido.
-      senha: ['', [Validators.required, Validators.minLength(6)]], // Campo senha é obrigatório e deve ter no mínimo 6 caracteres.
+      nome: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-
-  // Método para registrar usuário
-  errorMessage: any;
 
   register() {
     if (this.registerForm.valid) {
       this.isLoading = true;
-      const usuarioData = this.registerForm.value;
-      console.log('Enviando dados do usuário:', usuarioData);  // Verifica os dados enviados
+      const usuarioData: Usuario = this.registerForm.value;
+      console.log('Enviando dados do usuário:', usuarioData);
       this.apiService.registerUser(usuarioData).subscribe(
         response => {
           console.log('Resposta da API:', response);
           this.isLoading = false;
-          alert("Usuário registrado com sucesso!")
-          this.router.navigate(['/dashboard/notifications']); // Redireciona ao dashboard
+          alert("Usuário registrado com sucesso!");
+          this.router.navigate(['/dashboard/notifications']);
         },
         error => {
           console.error('Erro ao registrar o usuário:', error);
           this.isLoading = false;
-          // Verifica se o erro é devido ao email já existente
           if (error.status === 409) {
-            // Altere o status conforme o código de erro retornado pela API
             this.errorMessage = 'Este email já está registrado. Por favor, utilize outro.';
           } else {
             this.errorMessage = 'Falha no registro. Tente novamente.';
@@ -76,7 +71,7 @@ export class RegisterFormComponent {
       );
     } else {
       this.registerForm.markAllAsTouched();
-      console.log('Formulário inválido:', this.registerForm.errors);  // Verifica erros no formulário
+      console.log('Formulário inválido:', this.registerForm.errors);
     }
   }
 }
