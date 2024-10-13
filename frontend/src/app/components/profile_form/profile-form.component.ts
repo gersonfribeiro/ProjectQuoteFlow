@@ -79,6 +79,18 @@ export class ProfileFormComponent {
     }
   }
 
+  ngOnInit(): void {
+    // Carregar dados do usuário armazenados
+    const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+    // Preenche o formulário de perfil com os dados do usuário
+    this.profileForm.patchValue({
+      name: usuarioData.nome,
+      company: '', // Adicione outros dados conforme necessário
+      cnpj: '' // Se houver CNPJ ou outros campos
+    });
+  }
+
   // Função para buscar o CEP
   searchPostalCode() {
     const postalCodeValue = this.profileForm.get('postalCode')?.value;

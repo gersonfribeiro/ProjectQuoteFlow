@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import {ApiAuthService} from "../../services/api-auth.service";
 
 @Component({
   selector: 'app-login-form',
@@ -24,28 +25,36 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 })
 export class LoginFormComponent {
   loginForm: FormGroup;
-  isLoading = false; // Controle do estado de carregamento
+  isLoading = false;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  // Método de login
   login() {
     if (this.loginForm.valid) {
-      this.isLoading = true; // Ativa o loader
-      console.log('Formulário válido:', this.loginForm.value);
-
-      // Simula um tempo de login e redireciona
-      setTimeout(() => {
-        this.isLoading = false; // Desativa o loader ao finalizar
-        this.router.navigate(['/dashboard/notifications']); // Redireciona ao dashboard
-      }, 2000); // Simula 2 segundos de carregamento
+      this.isLoading = true;
+      const credentials = this.loginForm.value;
+      this.apiService.loginUser(credentials).subscribe(
+        (response) => {
+          this.isLoading = false;
+          console.log('Login bem-sucedido:', response);
+          // Navega para o dashboard ou outra página após o login
+          this.router.navigate(['/dashboard']);
+        },
+        (error) => {
+          this.isLoading = false;
+          console.error('Erro ao fazer login:', error);
+          this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
+        }
+      );
     } else {
       this.loginForm.markAllAsTouched();
+      console.log('Formulário inválido:', this.loginForm.errors);
     }
   }
 }
