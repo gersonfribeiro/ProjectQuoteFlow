@@ -10,7 +10,7 @@ import { DashboardConfigurationsComponent } from './components/dashboard_configu
 import { DashboardChartComponent } from './components/dashboard_chart/dashboard-chart.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginPageComponent }, // Home
+  { path: '', component: RegisterPageComponent }, // Home
   { path: 'login', component: LoginPageComponent }, // Página de login
   { path: 'register', component: RegisterPageComponent }, // Página de registro
   { path: 'forgot_password', component: ForgotPasswordPageComponent }, // Página de recuperar senha

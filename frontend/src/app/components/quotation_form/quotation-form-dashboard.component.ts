@@ -119,7 +119,7 @@ export class FormDashboardComponent implements OnInit {
   addProduct() {
     const skuCode = this.quotationForm.get('skuCode')?.value;
     const quantity = this.quotationForm.get('quantity')?.value;
-  
+
     if (skuCode && quantity > 0) {
       this.products.push({ skuCode, quantity });
       this.quotationForm.reset();  // Reseta o formulário após adicionar
@@ -127,5 +127,5 @@ export class FormDashboardComponent implements OnInit {
       this.showFormErrors();
     }
   }
-  
+
 }

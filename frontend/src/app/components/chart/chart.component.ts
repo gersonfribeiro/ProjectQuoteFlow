@@ -38,12 +38,12 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
     if (ctx) {
       this.chart = new Chart(ctx as ChartItem, {
-        type: 'bar',
+        type: 'polarArea',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: ['Enviadas', 'Entregues', 'Pendentes', 'Recebidas', 'Aceitas', 'Recusadas'],
           datasets: [
             {
-              label: '# of Votes',
+              label: '# de Cotações',
               data: [12, 19, 3, 5, 2, 3],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -62,6 +62,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
                 'rgba(255, 159, 64, 1)',
               ],
               borderWidth: 1,
+
             },
           ],
         },

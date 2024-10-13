@@ -53,6 +53,7 @@ export class RegisterFormComponent {
       this.isLoading = true;
       const usuarioData: Usuario = this.registerForm.value;
       console.log('Enviando dados do usuário:', usuarioData);
+
       this.apiService.registerUser(usuarioData).subscribe(
         response => {
           console.log('Resposta da API:', response);
@@ -61,13 +62,16 @@ export class RegisterFormComponent {
             positionClass: 'toast-top-right',
             progressBar: true,
             progressAnimation: 'increasing',
-            timeOut: 1000,
+            timeOut: 2000,
           });
 
-          // Adiciona um tempo de espera de 1 segundos antes de redirecionar
+          // Armazenando os dados do usuário localmente ou em um serviço para uso no perfil
+          localStorage.setItem('usuario', JSON.stringify(usuarioData));
+
+          // Redireciona para a página de perfil
           setTimeout(() => {
             this.router.navigate(['/dashboard/notifications']);
-          }, 1000); // Espera 1 segundo
+          }, 2500);
         },
         error => {
           console.error('Erro ao registrar o usuário:', error);
