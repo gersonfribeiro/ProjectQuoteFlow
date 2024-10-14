@@ -52,22 +52,6 @@ create table cotacao_empresa_destinataria
 alter table cotacao_empresa_destinataria
     owner to postgres;
 
-create table cotacao_empresa_destinataria
-(
-    id                      uuid         not null
-        primary key,
-    data_envio              timestamp(6) not null,
-    id_cotacao_enviada      uuid         not null
-        constraint fkgj3gv44149o2strta8mssqf07
-            references cotacoes,
-    id_empresa_destinataria uuid         not null
-        constraint fkh2nkd76xrb90a59wytlfonyjj
-            references empresas
-);
-
-alter table cotacao_empresa_destinataria
-    owner to postgres;
-
 create table enderecos
 (
     id_endereco uuid    not null
@@ -92,9 +76,9 @@ create table produtos
 (
     id_produto uuid         not null
         primary key,
-    categoria  varchar(50)  not null
+    categoriaProduto  varchar(50)  not null
         constraint produtos_categoria_check
-            check ((categoria)::text = ANY
+            check ((categoriaProduto)::text = ANY
                    ((ARRAY ['MADEIRA'::character varying, 'ALIMENTOS'::character varying, 'LIMPEZA'::character varying, 'ELETRONICOS'::character varying, 'ROUPAS'::character varying, 'COSMETICOS'::character varying, 'UTENSILIOS'::character varying, 'FERRAMENTAS'::character varying, 'MATERIAIS_CONSTRUCAO'::character varying, 'OUTROS'::character varying])::text[])),
     descricao  varchar(100) not null,
     observacao varchar(100),
