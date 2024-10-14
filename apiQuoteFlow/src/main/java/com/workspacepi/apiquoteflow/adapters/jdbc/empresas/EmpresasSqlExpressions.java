@@ -8,7 +8,7 @@ public class EmpresasSqlExpressions {
                     email,
                     nome,
                     senha
-               FROM empresa
+               FROM empresas
             """;
     }
 
@@ -19,14 +19,14 @@ public class EmpresasSqlExpressions {
                     email,
                     nome,
                     senha
-               FROM empresa
+               FROM empresas
                WHERE id_empresa = :id_empresa
            """;
     }
 
     public static String sqlNewEmpresa() {
         return """
-                INSERT INTO empresa(
+                INSERT INTO empresas(
                     id_empresa,
                     cnpj,
                     email,
@@ -43,7 +43,7 @@ public class EmpresasSqlExpressions {
 
     public static String sqlUpdateEmpresa() {
         return """
-               UPDATE empresa
+               UPDATE empresas
                SET id_empresa = :id_empresa,
                     cnpj = :cnpj,
                     email = :email,
@@ -55,7 +55,7 @@ public class EmpresasSqlExpressions {
 
     public static String sqlDeleteEmpresaById() {
         return """
-                   DELETE FROM empresa WHERE id_empresa = :id_empresa
+                   DELETE FROM empresas WHERE id_empresa = :id_empresa
                """;
     }
 }

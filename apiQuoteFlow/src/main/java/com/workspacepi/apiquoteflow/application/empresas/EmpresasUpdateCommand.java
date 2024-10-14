@@ -1,7 +1,7 @@
 package com.workspacepi.apiquoteflow.application.empresas;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.workspacepi.apiquoteflow.domain.empresas.Empresa;
+import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,8 +24,8 @@ public class EmpresasUpdateCommand {
     private String senha_empresa;
 
     //  Conversão para usuario
-    public Empresa toEmpresa(UUID id_empresa) {
-        return new Empresa(id_empresa, cnpj_empresa, email_empresa, nome_empresa, senha_empresa);
+    public Empresas toEmpresa(UUID id_empresa) {
+        return new Empresas(id_empresa, cnpj_empresa, email_empresa, nome_empresa, senha_empresa);
     }
 
 }

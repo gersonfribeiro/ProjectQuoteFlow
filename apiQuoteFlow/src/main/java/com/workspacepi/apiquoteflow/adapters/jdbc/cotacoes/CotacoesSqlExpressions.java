@@ -8,10 +8,10 @@ public class CotacoesSqlExpressions {
         return """
                     SELECT id_cotacao,
                         data,
-                        numero_cotacao,
+                        numero,
                         status,
                         id_empresa
-                    FROM cotacao
+                    FROM cotacoes
                 """;
     }
 
@@ -22,14 +22,14 @@ public class CotacoesSqlExpressions {
                         numero,
                         status,
                         id_empresa
-                    FROM cotacao
+                    FROM cotacoes
                     WHERE id_cotacao = :id_cotacao
                 """;
     }
 
     public static String sqlSolicitarCotacao() {
         return """
-                     INSERT INTO cotacao(
+                     INSERT INTO cotacoes(
                             id_cotacao,
                             data,
                             numero,
@@ -46,7 +46,7 @@ public class CotacoesSqlExpressions {
 
     public static String sqlModificarCotacao() {
         return """
-                    UPDATE cotacao
+                    UPDATE cotacoes
                     SET id_cotacao = :id_cotacao,
                         data = :data,
                         numero_cotacao = :numero_cotacao,
@@ -58,7 +58,7 @@ public class CotacoesSqlExpressions {
 
     public static String sqlDeleteCotacaoById() {
         return """
-                   DELETE FROM cotacao WHERE id_cotacao = :id_cotacao
+                   DELETE FROM cotacoes WHERE id_cotacao = :id_cotacao
                """;
     }
 }

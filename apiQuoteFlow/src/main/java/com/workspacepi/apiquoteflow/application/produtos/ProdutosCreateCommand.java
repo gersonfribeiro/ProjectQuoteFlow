@@ -1,8 +1,9 @@
 package com.workspacepi.apiquoteflow.application.produtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.workspacepi.apiquoteflow.domain.produtos.Categoria;
+import com.workspacepi.apiquoteflow.domain.produtos.CategoriaProduto;
 import com.workspacepi.apiquoteflow.domain.produtos.Produtos;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,25 +13,25 @@ import java.util.UUID;
 @Getter
 public class ProdutosCreateCommand {
 
+
     @JsonProperty("categoria")
-    private Categoria categoria_produto;
+    private CategoriaProduto categoria;
 
     @JsonProperty("descricao")
-    private String descricao_produto;
+    @NotNull(message = "A descrição é obrigatória!")
+    private String descricao;
 
     @JsonProperty("observacao")
-    private String observacao_produto;
+    private String observacao;
 
     @JsonProperty("sku")
-    private String sku_produto;
+    @NotNull(message = "O código SKU é obrigatório!")
+    private String sku;
 
-    @JsonProperty("id_empresa")
-    private UUID id_empresa_produto;
+    @JsonProperty("variacao")
+    private String variacao;
 
-    @JsonProperty("id_produto")
-    private UUID id_produto;
 
-    public Produtos toProduto() { return new Produtos(categoria_produto, descricao_produto,
-            observacao_produto, sku_produto, id_empresa_produto); }
+    public Produtos toProduto() { return new Produtos(categoria, descricao, observacao, sku, variacao); }
 
 }

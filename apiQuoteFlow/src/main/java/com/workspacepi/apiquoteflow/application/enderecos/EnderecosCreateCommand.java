@@ -1,7 +1,7 @@
 package com.workspacepi.apiquoteflow.application.enderecos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.workspacepi.apiquoteflow.domain.enderecos.Endereco;
+import com.workspacepi.apiquoteflow.domain.enderecos.Enderecos;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,8 +37,8 @@ public class EnderecosCreateCommand {
     private UUID id_empresa_endereco;
 
 //  Conversão para endereco
-    public Endereco toEndereco() {
-        return new Endereco(bairro_endereco, cep_endereco, complemento_endereco, localidade_endereco,
+    public Enderecos toEndereco() {
+        return new Enderecos(bairro_endereco, cep_endereco, complemento_endereco, localidade_endereco,
                 logradouro_endereco, numero_endereco, uf_endereco, id_empresa_endereco);
     }
 

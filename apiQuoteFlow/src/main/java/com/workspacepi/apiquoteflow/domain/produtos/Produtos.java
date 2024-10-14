@@ -10,22 +10,58 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class Produtos {
-    private Categoria categoria_produto;
-    private String descricao_produto;
-    private String observacao_produto;
-    private String sku_produto;
-    private UUID id_empresa_produto;
     private UUID id_produto;
+    private CategoriaProduto categoria;
+    private String descricao;
+    private String observacao;
+    private String sku;
+    private String variacao;
+    private UUID id_empresa;
 
-    // Construtor de modificação
-    public Produtos(Categoria categoria_produto, String descricao_produto, String observacao_produto,
-                   String sku_produto, UUID id_empresa_produto) {
-        this.categoria_produto = categoria_produto;
-        this.descricao_produto = descricao_produto;
-        this.observacao_produto = observacao_produto;
-        this.sku_produto = sku_produto;
-        this.id_empresa_produto = id_empresa_produto;
+    // Construtor de inserção
+    public Produtos(CategoriaProduto categoria, String descricao, String observacao,
+                    String sku, String variacao, UUID id_empresa) {
         this.id_produto = UUID.randomUUID();
+        this.categoria = categoria;
+        this.descricao = descricao;
+        this.observacao = observacao;
+        this.sku = sku;
+        this.variacao = variacao;
+        this.id_empresa = id_empresa;
     }
 
+//    Construtor para o DTO de crate
+    public Produtos(CategoriaProduto categoria, String descricao, String observacao,
+                    String sku, String variacao) {
+        this.id_produto = UUID.randomUUID();
+        this.categoria = categoria;
+        this.descricao = descricao;
+        this.observacao = observacao;
+        this.sku = sku;
+        this.variacao = variacao;
+    }
+
+//    Construtor para o DTO de update
+    public Produtos(UUID id_produto, CategoriaProduto categoria, String descricao, String observacao,
+                    String sku, String variacao) {
+        this.id_produto = id_produto;
+        this.categoria = categoria;
+        this.descricao = descricao;
+        this.observacao = observacao;
+        this.sku = sku;
+        this.variacao = variacao;
+    }
+
+    @Override
+    public String toString() {
+        return "Produtos{" +
+                "id_produto=" + id_produto +
+                ", sku='" + sku + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", categoria=" + categoria +
+                ", variacao='" + variacao + '\'' +
+                ", observacao='" + observacao + '\'' +
+                ", id_empresa=" + id_empresa +
+                '}';
+    }
 }

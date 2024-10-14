@@ -17,10 +17,11 @@ create table empresas
 alter table empresas
     owner to postgres;
 
-create table cotacao
+create table cotacoes
 (
     id_cotacao uuid        not null
-        primary key,
+        constraint cotacao_pkey
+            primary key,
     data       timestamp(6),
     numero     integer     not null,
     status     varchar(50) not null
@@ -32,7 +33,7 @@ create table cotacao
             references empresas
 );
 
-alter table cotacao
+alter table cotacoes
     owner to postgres;
 
 create table cotacao_empresa_destinataria
@@ -42,7 +43,7 @@ create table cotacao_empresa_destinataria
     data_envio              timestamp(6) not null,
     id_cotacao_enviada      uuid         not null
         constraint fkgj3gv44149o2strta8mssqf07
-            references cotacao,
+            references cotacoes,
     id_empresa_destinataria uuid         not null
         constraint fkh2nkd76xrb90a59wytlfonyjj
             references empresas
@@ -51,10 +52,27 @@ create table cotacao_empresa_destinataria
 alter table cotacao_empresa_destinataria
     owner to postgres;
 
-create table endereco
+create table cotacao_empresa_destinataria
+(
+    id                      uuid         not null
+        primary key,
+    data_envio              timestamp(6) not null,
+    id_cotacao_enviada      uuid         not null
+        constraint fkgj3gv44149o2strta8mssqf07
+            references cotacoes,
+    id_empresa_destinataria uuid         not null
+        constraint fkh2nkd76xrb90a59wytlfonyjj
+            references empresas
+);
+
+alter table cotacao_empresa_destinataria
+    owner to postgres;
+
+create table enderecos
 (
     id_endereco uuid    not null
-        primary key,
+        constraint endereco_pkey
+            primary key,
     bairro      varchar(100),
     cep         varchar(9),
     complemento varchar(100),
@@ -67,7 +85,7 @@ create table endereco
             references empresas
 );
 
-alter table endereco
+alter table enderecos
     owner to postgres;
 
 create table produtos
@@ -94,7 +112,7 @@ create table cotacao_produtos
 (
     id_cotacao uuid not null
         constraint fkmt7e8jk4b9rhrntcha4gsga9g
-            references cotacao,
+            references cotacoes,
     id_produto uuid not null
         constraint fkosiwxnjympldt5qimsdci2lr
             references produtos
