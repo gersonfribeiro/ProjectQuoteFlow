@@ -3,7 +3,7 @@ package com.workspacepi.apiquoteflow.adapters.http.enderecos;
 import com.workspacepi.apiquoteflow.application.enderecos.EnderecosCreateCommand;
 import com.workspacepi.apiquoteflow.application.enderecos.EnderecosService;
 import com.workspacepi.apiquoteflow.application.enderecos.EnderecosUpdateCommand;
-import com.workspacepi.apiquoteflow.domain.enderecos.Endereco;
+import com.workspacepi.apiquoteflow.domain.enderecos.Enderecos;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,26 +24,26 @@ public class EnderecosHandler {
 
 //    Método findAll definidos nos Serviços de cotação, o retorno é uma lista de cotações
 
-    public ResponseEntity<List<Endereco>> findAll() {
-        List<Endereco> enderecos = enderecosService.findAll();
+    public ResponseEntity<List<Enderecos>> findAll() {
+        List<Enderecos> enderecos = enderecosService.findAll();
         return ResponseEntity.ok(enderecos);
     }
 
 //    Método findById definido nos Serviços de cotação, o retorno é uma cotação ou uma Exception
 
-    public ResponseEntity<Endereco> findById(String id_endereco) throws Exception{
-        Endereco endereco = enderecosService.findById(UUID.fromString(id_endereco));
-        return ResponseEntity.ok(endereco);
+    public ResponseEntity<Enderecos> findById(String id_endereco) throws Exception{
+        Enderecos enderecos = enderecosService.findById(UUID.fromString(id_endereco));
+        return ResponseEntity.ok(enderecos);
     }
 
-    public ResponseEntity<Endereco> cadastrarEndereco(EnderecosCreateCommand enderecosCreateCommand) throws Exception{
-        Endereco endereco = enderecosService.cadastrarEndereco(enderecosCreateCommand);
-        return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
+    public ResponseEntity<Enderecos> cadastrarEndereco(EnderecosCreateCommand enderecosCreateCommand) throws Exception{
+        Enderecos enderecos = enderecosService.cadastrarEndereco(enderecosCreateCommand);
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecos);
     }
 
-    public ResponseEntity<Endereco> modificarEndereco(EnderecosUpdateCommand enderecosUpdateCommand, String id_endereco) throws Exception{
-        Endereco endereco = enderecosService.modificarEndereco(enderecosUpdateCommand, UUID.fromString(id_endereco));
-        return ResponseEntity.ok(endereco);
+    public ResponseEntity<Enderecos> modificarEndereco(EnderecosUpdateCommand enderecosUpdateCommand, String id_endereco) throws Exception{
+        Enderecos enderecos = enderecosService.modificarEndereco(enderecosUpdateCommand, UUID.fromString(id_endereco));
+        return ResponseEntity.ok(enderecos);
     }
 
     public ResponseEntity<String> deleteEnderecoById(String id_endereco) throws Exception {

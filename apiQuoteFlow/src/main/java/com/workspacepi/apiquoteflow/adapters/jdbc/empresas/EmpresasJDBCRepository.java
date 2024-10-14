@@ -1,8 +1,8 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.empresas;
 
 import com.workspacepi.apiquoteflow.adapters.http.empresas.error.EmpresasErrorHandler;
-import com.workspacepi.apiquoteflow.domain.empresas.Empresa;
-import com.workspacepi.apiquoteflow.domain.empresas.EmpresaRepository;
+import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
+import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,36 +17,36 @@ import static com.workspacepi.apiquoteflow.adapters.jdbc.empresas.EmpresasSqlExp
 
 
 @Repository
-public class EmpresasJDBCRepository implements EmpresaRepository {
+public class EmpresasJDBCRepository implements EmpresasRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     public EmpresasJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmpresasErrorHandler.class);
 
-    private RowMapper<Empresa> createEmpresaRowMapper() {
+    private RowMapper<Empresas> createEmpresaRowMapper() {
         return (rs, rowNum) -> {
             UUID id_empresa = UUID.fromString(rs.getString("id_empresa"));
             String cpnj_empresa = rs.getString("cnpj");
             String email_empresa = rs.getString("email");
             String nome_empresa = rs.getString("nome");
             String senha_empresa = rs.getString("senha");
-            return new Empresa(id_empresa, cpnj_empresa, email_empresa, nome_empresa, senha_empresa);
+            return new Empresas(id_empresa, cpnj_empresa, email_empresa, nome_empresa, senha_empresa);
         };
     }
 
-    private MapSqlParameterSource parameterSource(Empresa empresa) {
+    private MapSqlParameterSource parameterSource(Empresas empresas) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_empresa", empresa.getId_empresa());
-        params.addValue("cnpj", empresa.getCnpj_empresa());
-        params.addValue("email", empresa.getEmail_empresa());
-        params.addValue("nome", empresa.getNome_empresa());
-        params.addValue("senha", empresa.getSenha_empresa());
+        params.addValue("id_empresa", empresas.getId_empresa());
+        params.addValue("cnpj", empresas.getCnpj());
+        params.addValue("email", empresas.getEmail());
+        params.addValue("nome", empresas.getNome());
+        params.addValue("senha", empresas.getSenha());
         return params;
     }
 
     @Override
-    public List<Empresa> findAll() {
-        List<Empresa> empresas = List.of();
+    public List<Empresas> findAll() {
+        List<Empresas> empresas = List.of();
         try {
             empresas = jdbcTemplate.query(sqlSelectAllEmpresas(), createEmpresaRowMapper());
             return empresas;
@@ -57,8 +57,8 @@ public class EmpresasJDBCRepository implements EmpresaRepository {
     }
 
     @Override
-    public Empresa findById(UUID id_empresa) {
-        List<Empresa> empresas;
+    public Empresas findById(UUID id_empresa) {
+        List<Empresas> empresas;
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("id_empresa", id_empresa);
             empresas = jdbcTemplate.query(sqlSelectEmpresaById(), params, createEmpresaRowMapper());
@@ -70,9 +70,9 @@ public class EmpresasJDBCRepository implements EmpresaRepository {
     }
 
     @Override
-    public Boolean cadastrarEmpresa(Empresa empresa) {
+    public Boolean cadastrarEmpresa(Empresas empresas) {
         try {
-            MapSqlParameterSource params = parameterSource(empresa);
+            MapSqlParameterSource params = parameterSource(empresas);
             int numLinhasAfetadas = jdbcTemplate.update(sqlNewEmpresa(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {
@@ -82,9 +82,9 @@ public class EmpresasJDBCRepository implements EmpresaRepository {
     }
 
     @Override
-    public Boolean modificarEmpresa(Empresa empresa) {
+    public Boolean modificarEmpresa(Empresas empresas) {
         try {
-            MapSqlParameterSource params = parameterSource(empresa);
+            MapSqlParameterSource params = parameterSource(empresas);
             int numLinhasAfetadas = jdbcTemplate.update(sqlUpdateEmpresa(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {
