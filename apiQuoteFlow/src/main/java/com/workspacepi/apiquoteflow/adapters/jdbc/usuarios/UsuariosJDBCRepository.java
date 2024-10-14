@@ -49,9 +49,9 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
     private MapSqlParameterSource parameterSource(Usuarios usuario) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id_usuario", usuario.getId_usuario());
-        params.addValue("nome", usuario.getNome_usuario());
-        params.addValue("email", usuario.getEmail_usuario());
-        params.addValue("senha", usuario.getSenha_usuario());
+        params.addValue("nome", usuario.getNome());
+        params.addValue("email", usuario.getEmail());
+        params.addValue("senha", usuario.getSenha());
 
         // Campos opcionais
         if (usuario.getTelefone_usuario() != null) {
