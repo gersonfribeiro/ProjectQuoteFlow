@@ -15,7 +15,7 @@ public class EnderecosSqlExpressions {
                         uf,
                         id_empresa,
                         id_endereco
-                    FROM endereco
+                    FROM enderecos
                """;
     }
 
@@ -30,14 +30,14 @@ public class EnderecosSqlExpressions {
                         uf,
                         id_empresa,
                         id_endereco
-                    FROM endereco
+                    FROM enderecos
                     WHERE id_endereco = :id_endereco
                 """;
     
 }
     public static String sqlCadastrarEndereco() {
         return """
-                    INSERT INTO endereco(
+                    INSERT INTO enderecos(
                         bairro,
                         cep,
                         complemento, 
@@ -62,7 +62,7 @@ public class EnderecosSqlExpressions {
 
     public static String sqlModificarEndereco() {
         return """
-                    UPDATE endereco
+                    UPDATE enderecos
                     SET bairro = :bairro,
                         cep = :cep,
                         complemento = :complemento,
@@ -78,7 +78,7 @@ public class EnderecosSqlExpressions {
 
     public static String sqlDeleteEnderecoById() {
         return """
-                   DELETE FROM endereco WHERE id_endereco = :id_endereco
+                   DELETE FROM enderecos WHERE id_endereco = :id_endereco
                """;
     }
 }

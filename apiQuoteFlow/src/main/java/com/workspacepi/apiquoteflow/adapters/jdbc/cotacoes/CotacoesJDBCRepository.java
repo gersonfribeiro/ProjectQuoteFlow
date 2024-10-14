@@ -5,7 +5,7 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes;
 
 
 import com.workspacepi.apiquoteflow.adapters.http.enderecos.error.EnderecosErrorHandler;
-import com.workspacepi.apiquoteflow.domain.cotacao.*;
+import com.workspacepi.apiquoteflow.domain.cotacoes.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,7 +23,7 @@ import static com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes.CotacoesSqlExp
 // Nosso repositório que define os nossos métodos de query e de crud usando o JDBC
 
 @Repository
-public class CotacoesJDBCRepository implements CotacaoRepository {
+public class CotacoesJDBCRepository implements CotacoesRepository {
 
 //  Um atributo para criar o nosso template do JDBC assim como o seu construtor
 
@@ -42,7 +42,7 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
 //  Função da RowMapper para aproveitamento de código
 //  Essa função é usada para mapear o resultado de uma consulta SQL
 
-    private RowMapper<Cotacao> createCotacaoRowMapper() {
+    private RowMapper<Cotacoes> createCotacaoRowMapper() {
         return (rs, rowNum) -> {
             UUID id_cotacao = UUID.fromString(rs.getString("id_cotacao"));
             Timestamp data_cotacao = rs.getTimestamp("data");
@@ -50,28 +50,28 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
             CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
             UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
-            return new Cotacao(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null);
+            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null);
         };
     }
 
 //  Função para mapeamento dos parâmetros para as consultas sql
 
-    private MapSqlParameterSource parameterSource(Cotacao cotacao) {
+    private MapSqlParameterSource parameterSource(Cotacoes cotacoes) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_cotacao", cotacao.getId_cotacao());
-        params.addValue("data", cotacao.getData_cotacao());
-        params.addValue("numero_cotacao", cotacao.getNumero_cotacao());
-        params.addValue("status", cotacao.getStatus_cotacao().name());
-        params.addValue("id_empresa", cotacao.getId_empresa_cotacao());
-        params.addValue("itens", cotacao.getItens());
+        params.addValue("id_cotacao", cotacoes.getId_cotacao());
+        params.addValue("data", cotacoes.getData());
+        params.addValue("numero_cotacao", cotacoes.getNumero());
+        params.addValue("status", cotacoes.getStatus().name());
+        params.addValue("id_empresa", cotacoes.getId_empresa());
+        params.addValue("itens", cotacoes.getProdutos());
         return params;
     }
 
 //  Reescrita do método findAll definito na nossa interface de cotações
 
     @Override
-    public List<Cotacao> findAll() {
-        List<Cotacao> cotacoes = List.of();
+    public List<Cotacoes> findAll() {
+        List<Cotacoes> cotacoes = List.of();
         try {
             cotacoes = jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
             return cotacoes;
@@ -85,8 +85,8 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
 //  Reescrita do método findById definido na nossa interface de cotações
 
     @Override
-    public Cotacao findById(UUID id_cotacao) {
-        List<Cotacao> cotacoes;
+    public Cotacoes findById(UUID id_cotacao) {
+        List<Cotacoes> cotacoes;
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("id_cotacao", id_cotacao);
             cotacoes = jdbcTemplate.query(sqlSelectQuotationById(), params, createCotacaoRowMapper());
@@ -100,9 +100,9 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
 //  Método de inserção de cotações
 
     @Override
-    public Boolean solicitarCotacao(Cotacao cotacao) {
+    public Boolean solicitarCotacao(Cotacoes cotacoes) {
         try {
-            MapSqlParameterSource params = parameterSource(cotacao);
+            MapSqlParameterSource params = parameterSource(cotacoes);
             int numLinhasAfetadas = jdbcTemplate.update(sqlSolicitarCotacao(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {
@@ -114,9 +114,9 @@ public class CotacoesJDBCRepository implements CotacaoRepository {
 //  Método de atualização de cotações
 
     @Override
-    public Boolean modificarCotacao(Cotacao cotacao) {
+    public Boolean modificarCotacao(Cotacoes cotacoes) {
         try {
-            MapSqlParameterSource params = parameterSource(cotacao);
+            MapSqlParameterSource params = parameterSource(cotacoes);
             int numLinhasAfetadas = jdbcTemplate.update(sqlModificarCotacao(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {

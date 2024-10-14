@@ -3,8 +3,8 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.enderecos;
 
 import com.workspacepi.apiquoteflow.adapters.http.enderecos.error.EnderecosErrorHandler;
-import com.workspacepi.apiquoteflow.domain.enderecos.Endereco;
-import com.workspacepi.apiquoteflow.domain.enderecos.EnderecoRepository;
+import com.workspacepi.apiquoteflow.domain.enderecos.Enderecos;
+import com.workspacepi.apiquoteflow.domain.enderecos.EnderecosRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import static com.workspacepi.apiquoteflow.adapters.jdbc.enderecos.EnderecosSqlE
 // Nosso repositório que define os nossos métodos de query e de crud usando o JDBC
 
 @Repository
-public class EnderecosJDBCRepository implements EnderecoRepository {
+public class EnderecosJDBCRepository implements EnderecosRepository {
 
     //  Um atributo para criar o nosso template do JDBC assim como o seu construtor
 
@@ -41,7 +41,7 @@ public class EnderecosJDBCRepository implements EnderecoRepository {
 //  Função da RowMapper para aproveitamento de código
 //  Essa função é usada para mapear o resultado de uma consulta SQL
 
-    private RowMapper<Endereco> createEnderecoRowMapper() {
+    private RowMapper<Enderecos> createEnderecoRowMapper() {
             return (rs, rowNum) -> {
                 String bairro_endereco = rs.getString("bairro");
                 String cep_endereco = rs.getString("cep");
@@ -53,29 +53,29 @@ public class EnderecosJDBCRepository implements EnderecoRepository {
                 UUID id_empresa_endereco = UUID.fromString(rs.getString("id_empresa"));
                 UUID id_endereco = UUID.fromString(rs.getString("id_endereco"));
 
-                return new Endereco(bairro_endereco, cep_endereco, complemento_endereco, localidade_endereco, logradouro_endereco, numero_endereco, uf_endereco, id_empresa_endereco, id_endereco);
+                return new Enderecos(bairro_endereco, cep_endereco, complemento_endereco, localidade_endereco, logradouro_endereco, numero_endereco, uf_endereco, id_empresa_endereco, id_endereco);
         };
     }
 
 // Função para mapeamento dos parâmetros para as consultas sql
 
-    private MapSqlParameterSource parameterSource(Endereco endereco){
+    private MapSqlParameterSource parameterSource(Enderecos enderecos){
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("bairro", endereco.getBairro_endereco());
-        params.addValue("cep", endereco.getCep_endereco());
-        params.addValue("complemento", endereco.getComplemento_endereco());
-        params.addValue("localidade", endereco.getLocalidade_endereco());
-        params.addValue("logradouro", endereco.getLogradouro_endereco());
-        params.addValue("numero", endereco.getNumero_endereco());
-        params.addValue("uf", endereco.getUf_endereco());
-        params.addValue("id_empresa", endereco.getId_empresa_endereco());
-        params.addValue("id_endereco", endereco.getId_endereco());
+        params.addValue("bairro", enderecos.getBairro());
+        params.addValue("cep", enderecos.getCep());
+        params.addValue("complemento", enderecos.getComplemento());
+        params.addValue("localidade", enderecos.getLocalidade());
+        params.addValue("logradouro", enderecos.getLogradouro());
+        params.addValue("numero", enderecos.getNumero());
+        params.addValue("uf", enderecos.getUf());
+        params.addValue("id_empresa", enderecos.getId_empresa());
+        params.addValue("id_endereco", enderecos.getId_endereco());
         return params;
     }
 
     @Override
-    public List<Endereco> findAll() {
-        List<Endereco> enderecos = List.of();
+    public List<Enderecos> findAll() {
+        List<Enderecos> enderecos = List.of();
         try {
             enderecos = jdbcTemplate.query(sqlSelectAllEnderecos(), createEnderecoRowMapper());
             return enderecos;
@@ -88,8 +88,8 @@ public class EnderecosJDBCRepository implements EnderecoRepository {
 
 
     @Override
-    public Endereco findById(UUID id_endereco) {
-        List<Endereco> enderecos;
+    public Enderecos findById(UUID id_endereco) {
+        List<Enderecos> enderecos;
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("id_endereco", id_endereco);
             enderecos = jdbcTemplate.query(sqlSelectEnderecosById(), params, createEnderecoRowMapper());
@@ -101,9 +101,9 @@ public class EnderecosJDBCRepository implements EnderecoRepository {
     }
 
     @Override
-    public Boolean cadastrarEndereco(Endereco endereco) {
+    public Boolean cadastrarEndereco(Enderecos enderecos) {
         try {
-            MapSqlParameterSource params = parameterSource(endereco);
+            MapSqlParameterSource params = parameterSource(enderecos);
             int numLinhasAfetadas = jdbcTemplate.update(sqlCadastrarEndereco(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {
@@ -113,9 +113,9 @@ public class EnderecosJDBCRepository implements EnderecoRepository {
     }
 
     @Override
-    public Boolean modificarEndereco(Endereco endereco) {
+    public Boolean modificarEndereco(Enderecos enderecos) {
         try {
-            MapSqlParameterSource params = parameterSource(endereco);
+            MapSqlParameterSource params = parameterSource(enderecos);
             int numLinhasAfetadas = jdbcTemplate.update(sqlModificarEndereco(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {

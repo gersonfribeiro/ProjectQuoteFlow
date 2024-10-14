@@ -3,7 +3,7 @@ package com.workspacepi.apiquoteflow.adapters.http.empresas;
 import com.workspacepi.apiquoteflow.application.empresas.EmpresasCreateCommand;
 import com.workspacepi.apiquoteflow.application.empresas.EmpresasService;
 import com.workspacepi.apiquoteflow.application.empresas.EmpresasUpdateCommand;
-import com.workspacepi.apiquoteflow.domain.empresas.Empresa;
+import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -23,26 +23,26 @@ public class EmpresasHandler {
 
 //    Método findAll definidos nos Serviços de cotação, o retorno é uma lista de cotações
 
-    public ResponseEntity<List<Empresa>> findAll() {
-        List<Empresa> empresas = empresasService.findAll();
+    public ResponseEntity<List<Empresas>> findAll() {
+        List<Empresas> empresas = empresasService.findAll();
         return ResponseEntity.ok(empresas);
     }
 
 //    Método findById definido nos Serviços de cotação, o retorno é uma cotação ou uma Exception
 
-    public ResponseEntity<Empresa> findById(String id_empresa) throws Exception{
-        Empresa empresa = empresasService.findById(UUID.fromString(id_empresa));
-        return ResponseEntity.ok(empresa);
+    public ResponseEntity<Empresas> findById(String id_empresa) throws Exception{
+        Empresas empresas = empresasService.findById(UUID.fromString(id_empresa));
+        return ResponseEntity.ok(empresas);
     }
 
-    public ResponseEntity<Empresa> cadastrarEmpresa(EmpresasCreateCommand empresasCreateCommand) throws Exception{
-        Empresa empresa = empresasService.cadastrarEmpresa(empresasCreateCommand);
-        return ResponseEntity.status(HttpStatus.CREATED).body(empresa);
+    public ResponseEntity<Empresas> cadastrarEmpresa(EmpresasCreateCommand empresasCreateCommand) throws Exception{
+        Empresas empresas = empresasService.cadastrarEmpresa(empresasCreateCommand);
+        return ResponseEntity.status(HttpStatus.CREATED).body(empresas);
     }
 
-    public ResponseEntity<Empresa> modificarEmpresa(EmpresasUpdateCommand empresasUpdateCommand, String id_empresa) throws Exception{
-        Empresa empresa = empresasService.modificarEmpresa(empresasUpdateCommand, UUID.fromString(id_empresa));
-        return ResponseEntity.ok(empresa);
+    public ResponseEntity<Empresas> modificarEmpresa(EmpresasUpdateCommand empresasUpdateCommand, String id_empresa) throws Exception{
+        Empresas empresas = empresasService.modificarEmpresa(empresasUpdateCommand, UUID.fromString(id_empresa));
+        return ResponseEntity.ok(empresas);
     }
 
     public ResponseEntity<String> deleteEmpresaById(String id_empresa) throws Exception {
