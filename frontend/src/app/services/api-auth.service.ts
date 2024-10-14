@@ -19,7 +19,7 @@ export class ApiAuthService {
   }
 
   // Método para deletar um usuário pelo ID
-  deleteUser(userId: number): Observable<any> {
+  deleteUser(userId: string | null): Observable<any> {
     return this.http.delete(`${this.apiUrlAuth}/${userId}`);
   }
 
