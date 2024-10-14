@@ -65,8 +65,11 @@ export class RegisterFormComponent {
             timeOut: 2000,
           });
 
+        const usuarioComId: Usuario = { ...usuarioData, id_usuario: response.id_usuario };
+            localStorage.setItem('usuario', JSON.stringify(usuarioComId));
+
           // Armazenando os dados do usuário localmente ou em um serviço para uso no perfil
-          localStorage.setItem('usuario', JSON.stringify(usuarioData));
+          //localStorage.setItem('usuario', JSON.stringify(usuarioData));
 
           // Redireciona para a página de perfil
           setTimeout(() => {
