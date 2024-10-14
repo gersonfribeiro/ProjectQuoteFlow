@@ -2,51 +2,69 @@ package com.workspacepi.apiquoteflow.domain.usuarios.impl;
 
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class UsuariosRepositoryImpl implements UsuariosRepository {
 
-    // Simulação de um banco de dados em memória
-    private final List<Usuarios> usuariosDatabase = new ArrayList<>();
+    private final JdbcTemplate jdbcTemplate;
+
+    // Injetar o JdbcTemplate através do construtor
+    public UsuariosRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private final RowMapper<Usuarios> usuarioRowMapper = new RowMapper<Usuarios>() {
+        @Override
+        public Usuarios mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Usuarios(
+                    UUID.fromString(rs.getString("id_usuario")),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("telefone_usuario"),
+                    UUID.fromString(rs.getString("id_empresa_usuario"))
+            );
+        }
+    };
 
     @Override
     public List<Usuarios> findAll() {
-        return usuariosDatabase;
+        String sql = "SELECT * FROM usuarios";
+        return jdbcTemplate.query(sql, usuarioRowMapper);
     }
 
     @Override
     public Usuarios findById(UUID id_usuario) {
-        // Retorna o usuário se encontrado, senão retorna null
-        return usuariosDatabase.stream()
-                .filter(usuario -> usuario.getId_usuario().equals(id_usuario))
-                .findFirst()
-                .orElse(null);
+        String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id_usuario.toString()}, usuarioRowMapper);
     }
 
     @Override
     public Boolean cadastrarUsuario(Usuarios usuario) {
-        // Adiciona o novo usuário à lista
-        return usuariosDatabase.add(usuario);
+        String sql = "INSERT INTO usuarios (id_usuario, nome, email, senha, telefone_usuario, id_empresa_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+        int rows = jdbcTemplate.update(sql, usuario.getId_usuario().toString(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getTelefone_usuario(), usuario.getId_empresa_usuario().toString());
+        return rows > 0;
     }
 
     @Override
     public Boolean modificarUsuario(Usuarios usuario) {
-        // Encontra o usuário pelo ID e modifica seus dados
-        for (int i = 0; i < usuariosDatabase.size(); i++) {
-            if (usuariosDatabase.get(i).getId_usuario().equals(usuario.getId_usuario())) {
-                usuariosDatabase.set(i, usuario);
-                return true;
-            }
-        }
-        return false; // Se o usuário não foi encontrado, retorna false
+        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, telefone_usuario = ?, id_empresa_usuario = ? WHERE id_usuario = ?";
+        int rows = jdbcTemplate.update(sql, usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getTelefone_usuario(), usuario.getId_empresa_usuario().toString(), usuario.getId_usuario().toString());
+        return rows > 0;
     }
 
     @Override
     public Boolean deleteUsuarioById(UUID id_usuario) {
-        // Remove o usuário pelo ID
-        return usuariosDatabase.removeIf(usuario -> usuario.getId_usuario().equals(id_usuario));
+        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+        int rows = jdbcTemplate.update(sql, id_usuario.toString());
+        return rows > 0;
     }
 }
