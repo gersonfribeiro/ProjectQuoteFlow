@@ -13,8 +13,8 @@ import {ApiAuthService} from "../../services/api-auth.service";
 })
 export class ConfigurationsFormComponent {
   showNotificationAlert: boolean;
-  nomeUsuario: string | null;
-  userId: string | null; // Adicionando userId
+  nomeUsuario: string | null = null;
+  userId: string | null = null; // Adicionando userId
 
   constructor(private apiService: ApiAuthService, private router: Router) {
     const notificationConfigurationsPage = localStorage.getItem('notificationConfigurationsPage');
@@ -25,7 +25,7 @@ export class ConfigurationsFormComponent {
     if (usuario) {
       const usuarioObj = JSON.parse(usuario); // Parse do JSON
       this.nomeUsuario = usuarioObj.nome; // Acessa o nome dentro do objeto
-      this.userId = usuarioObj.id; // Acessa o ID dentro do objeto
+      this.userId = usuarioObj.id_usuario; // Acessa o ID dentro do objeto
     }
   }
 
