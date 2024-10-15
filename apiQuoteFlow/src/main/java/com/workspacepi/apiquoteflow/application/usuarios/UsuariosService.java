@@ -46,13 +46,15 @@ public class UsuariosService {
         usuariosRepository.modificarUsuario(usuarioUpdateCommand.toUsuario(id_usuario));
         return findById(id_usuario);
     }
-    
+
+    // Método de exclusão de usuário
     public void deleteUsuarioById(UUID id_usuario) throws Exception {
-        Usuarios usuarioDomain = usuariosRepository.findById(id_usuario);
+        Usuarios usuarioDomain = usuariosRepository.findById(id_usuario); // Busca o usuário pelo ID
 
-        if (usuarioDomain == null)
-            throw new UsuarioNaoEncontradoException(id_usuario);
-
-        usuariosRepository.deleteUsuarioById(id_usuario);
+        if (usuarioDomain != null) { // Verifica se o usuário existe
+            usuariosRepository.deleteUsuarioById(id_usuario); // Chama o repositório para deletar
+        } else {
+            throw new Exception("Usuário não encontrado."); // Lança exceção se o usuário não for encontrado
+        }
     }
 }

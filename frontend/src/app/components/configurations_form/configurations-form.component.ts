@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ApiQuotationService } from "../../services/api-quotation.service";
-import { FormsModule } from "@angular/forms";
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
+import {FormsModule} from "@angular/forms";
 import {ApiAuthService} from "../../services/api-auth.service";
 
 @Component({
@@ -14,32 +13,45 @@ import {ApiAuthService} from "../../services/api-auth.service";
 })
 export class ConfigurationsFormComponent {
   showNotificationAlert: boolean;
+  nomeUsuario: string | null = null;
+  userId: string | null = null; // Adicionando userId
 
-  constructor(private apiService: ApiAuthService) {
+  constructor(private apiService: ApiAuthService, private router: Router) {
     const notificationConfigurationsPage = localStorage.getItem('notificationConfigurationsPage');
     this.showNotificationAlert = !notificationConfigurationsPage;
-  }
 
-  // Função de fechar o alerta
-  closeButton() {
-    this.showNotificationAlert = false;
-    localStorage.setItem('notificationConfigurationsPage', String(true));
+    // Recupera o nome do usuário e o ID do localStorage
+    const usuario = localStorage.getItem('usuario');
+    if (usuario) {
+      const usuarioObj = JSON.parse(usuario); // Parse do JSON
+      this.nomeUsuario = usuarioObj.nome; // Acessa o nome dentro do objeto
+      this.userId = usuarioObj.id_usuario; // Acessa o ID dentro do objeto
+    }
   }
 
   // Método para deletar usuário
   delete() {
-    // const userId =  /* obtenha o ID do usuário de alguma forma, talvez do serviço de autenticação */;
-    // // Verifica se o usuário realmente deseja deletar a conta
-    // if (confirm('Tem certeza de que deseja apagar sua conta? Esta ação não pode ser revertida.')) {
-    //   this.apiService.deleteUser(userId).subscribe(
-    //     response => {
-    //       console.log('Conta deletada com sucesso!', response);
-    //       // Aqui você pode redirecionar o usuário ou exibir uma mensagem de sucesso
-    //     },
-    //     error => {
-    //       console.error('Erro ao deletar a conta:', error);
-    //       // Aqui você pode exibir uma mensagem de erro ao usuário
-    //     }
-    //   );
+    const userId = this.userId; // Obtém o ID do usuário
+
+    // Verifica se o userId é válido
+    if (!userId) {
+      alert('Erro: ID do usuário não encontrado.');
+      return;
     }
+
+    console.log('Tentando deletar usuário com ID:', userId); // Para depuração
+
+    if (confirm('Tem certeza de que deseja apagar sua conta? Esta ação não pode ser revertida.')) {
+      this.apiService.deleteUser(userId).subscribe(
+        response => {
+          console.log('Conta deletada com sucesso!', response);
+          this.router.navigate(['/logout']);
+        },
+        error => {
+          console.error('Erro ao deletar a conta:', error);
+          alert('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
+        }
+      );
+    }
+  }
 }
