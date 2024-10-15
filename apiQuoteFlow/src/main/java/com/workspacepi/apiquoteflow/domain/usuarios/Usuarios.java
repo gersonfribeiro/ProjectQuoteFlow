@@ -11,20 +11,20 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Usuarios {
     private UUID id_usuario;
-    private String nome_usuario;
-    private String email_usuario;
-    private String senha_usuario;
-    private String telefone_usuario;
-    private UUID id_empresa_usuario;
+    private String nome;
+    private String email;
+    private String senha;
+    private String telefone;
+    private UUID id_empresa;
 
 //  Construtor para inserção no banco de dados
-    public Usuarios(String nome_usuario, String email_usuario, String senha_usuario, String telefone_usuario, UUID id_empresa_usuario) {
+    public Usuarios(String nome, String email, String senha, String telefone, UUID id_empresa) {
         this.id_usuario = UUID.randomUUID();
-        this.nome_usuario = nome_usuario;
-        this.email_usuario = email_usuario;
-        this.senha_usuario = senha_usuario;
-        this.telefone_usuario = telefone_usuario;
-        this.id_empresa_usuario = id_empresa_usuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.id_empresa = id_empresa;
     }
 
 }

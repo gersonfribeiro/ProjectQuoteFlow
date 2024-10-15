@@ -26,42 +26,42 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
     private RowMapper<Usuarios> createUsuariosRowMapper() {
         return (rs, rowNum) -> {
             UUID id_usuario = UUID.fromString(rs.getString("id_usuario"));
-            String nome_usuario = rs.getString("nome");
-            String email_usuario = rs.getString("email");
-            String senha_usuario = rs.getString("senha");
+            String nome = rs.getString("nome");
+            String email = rs.getString("email");
+            String senha = rs.getString("senha");
 
-            String telefone_usuario = rs.getString("telefone");
-            if (telefone_usuario == null || telefone_usuario.trim().isEmpty()) {
-                telefone_usuario = null;
+            String telefone = rs.getString("telefone");
+            if (telefone == null || telefone.trim().isEmpty()) {
+                telefone = null;
             }
 
             String idEmpresaStr = rs.getString("id_empresa");
-            UUID id_empresa_usuario;
+            UUID id_empresa;
             if (idEmpresaStr != null && !idEmpresaStr.trim().isEmpty()) {
-                id_empresa_usuario = UUID.fromString(idEmpresaStr);
+                id_empresa = UUID.fromString(idEmpresaStr);
             } else {
-                id_empresa_usuario = null;
+                id_empresa = null;
             }
-            return new Usuarios(id_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, id_empresa_usuario);
+            return new Usuarios(id_usuario, nome, email, senha, telefone, id_empresa);
         };
     }
 
     private MapSqlParameterSource parameterSource(Usuarios usuario) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id_usuario", usuario.getId_usuario());
-        params.addValue("nome", usuario.getNome_usuario());
-        params.addValue("email", usuario.getEmail_usuario());
-        params.addValue("senha", usuario.getSenha_usuario());
+        params.addValue("nome", usuario.getNome());
+        params.addValue("email", usuario.getEmail());
+        params.addValue("senha", usuario.getSenha());
 
         // Campos opcionais
-        if (usuario.getTelefone_usuario() != null) {
-            params.addValue("telefone", usuario.getTelefone_usuario());
+        if (usuario.getTelefone() != null) {
+            params.addValue("telefone", usuario.getTelefone());
         } else {
             params.addValue("telefone", null);
         }
 
-        if (usuario.getId_empresa_usuario() != null) {
-            params.addValue("id_empresa", usuario.getId_empresa_usuario());
+        if (usuario.getId_empresa() != null) {
+            params.addValue("id_empresa", usuario.getId_empresa());
         } else {
             params.addValue("id_empresa", null);
         }
