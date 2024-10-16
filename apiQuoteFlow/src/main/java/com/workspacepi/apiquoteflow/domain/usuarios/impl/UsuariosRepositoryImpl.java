@@ -29,8 +29,8 @@ public class UsuariosRepositoryImpl implements UsuariosRepository {
                     rs.getString("nome"),
                     rs.getString("email"),
                     rs.getString("senha"),
-                    rs.getString("telefone_usuario"),
-                    UUID.fromString(rs.getString("id_empresa_usuario"))
+                    rs.getString("telefone"), // Corrigido para 'telefone'
+                    UUID.fromString(rs.getString("id_empresa")) // Corrigido para 'id_empresa'
             );
         }
     };
@@ -49,15 +49,15 @@ public class UsuariosRepositoryImpl implements UsuariosRepository {
 
     @Override
     public Boolean cadastrarUsuario(Usuarios usuario) {
-        String sql = "INSERT INTO usuarios (id_usuario, nome, email, senha, telefone_usuario, id_empresa_usuario) VALUES (?, ?, ?, ?, ?, ?)";
-        int rows = jdbcTemplate.update(sql, usuario.getId_usuario().toString(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getTelefone_usuario(), usuario.getId_empresa_usuario().toString());
+        String sql = "INSERT INTO usuarios (id_usuario, nome, email, senha, telefone, id_empresa) VALUES (?, ?, ?, ?, ?, ?)";
+        int rows = jdbcTemplate.update(sql, usuario.getId_usuario().toString(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getTelefone(), usuario.getId_empresa().toString());
         return rows > 0;
     }
 
     @Override
     public Boolean modificarUsuario(Usuarios usuario) {
-        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, telefone_usuario = ?, id_empresa_usuario = ? WHERE id_usuario = ?";
-        int rows = jdbcTemplate.update(sql, usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getTelefone_usuario(), usuario.getId_empresa_usuario().toString(), usuario.getId_usuario().toString());
+        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, telefone = ?, id_empresa = ? WHERE id_usuario = ?";
+        int rows = jdbcTemplate.update(sql, usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getTelefone(), usuario.getId_empresa().toString(), usuario.getId_usuario().toString());
         return rows > 0;
     }
 
