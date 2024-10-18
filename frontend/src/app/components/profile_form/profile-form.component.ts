@@ -51,6 +51,18 @@ export class ProfileFormComponent {
     });
   }
 
+  ngOnInit(): void {
+      // Carregar dados do usuário armazenados
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+      // Preenche o formulário de perfil com os dados do usuário
+      this.profileForm.patchValue({
+        name: usuarioData.nome,
+        company: '', // Adicione outros dados conforme necessário
+        cnpj: '' // Se houver CNPJ ou outros campos
+      });
+    }
+
   // Função de validação customizada para o CNPJ
   validateCNPJ(control: AbstractControl): ValidationErrors | null {
     const cnpj = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
@@ -67,28 +79,6 @@ export class ProfileFormComponent {
       return { invalidPhone: true };
     }
     return null;
-  }
-
-  // Submissão do formulário
-  onSubmit() {
-    if (this.profileForm.valid) {
-      console.log('Formulário enviado:', this.profileForm.value);
-    } else {
-      console.log('Formulário inválido');
-      this.profileForm.markAllAsTouched();
-    }
-  }
-
-  ngOnInit(): void {
-    // Carregar dados do usuário armazenados
-    const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-
-    // Preenche o formulário de perfil com os dados do usuário
-    this.profileForm.patchValue({
-      name: usuarioData.nome,
-      company: '', // Adicione outros dados conforme necessário
-      cnpj: '' // Se houver CNPJ ou outros campos
-    });
   }
 
   // Função para buscar o CEP
@@ -118,4 +108,31 @@ export class ProfileFormComponent {
       alert('Por favor, insira um CEP válido com 8 dígitos.');
     }
   }
+
+  // Submissão do formulário
+    onSubmit() {
+      if (this.profileForm.valid) {
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const userId = usuarioData.id_usuario;
+
+      const updatedData = {
+        nome: this.profileForm.value.name || usuarioData.nome,
+        email: usuarioData.email,
+        senha: usuarioData.senha
+      };
+
+        this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
+            response => {
+              console.log('Dados atualizados com sucesso:', response);
+              },
+            error => {
+                console.error('Erro ao atualizar os dados:', error);
+              }
+          );
+        console.log('Formulário enviado:', this.profileForm.value);
+      } else {
+        console.log('Formulário inválido');
+        this.profileForm.markAllAsTouched();
+      }
+    }
 }
