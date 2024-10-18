@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile-form',
@@ -37,7 +38,7 @@ export class ProfileFormComponent {
   state: string = '';
   region: string = '';
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       company: ['', Validators.required],
@@ -50,6 +51,18 @@ export class ProfileFormComponent {
       state: [{ value: '', disabled: true }],
     });
   }
+
+  ngOnInit(): void {
+      // Carregar dados do usuário armazenados
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+      // Preenche o formulário de perfil com os dados do usuário
+      this.profileForm.patchValue({
+        name: usuarioData.nome,
+        company: '', // Adicione outros dados conforme necessário
+        cnpj: '' // Se houver CNPJ ou outros campos
+      });
+    }
 
   // Função de validação customizada para o CNPJ
   validateCNPJ(control: AbstractControl): ValidationErrors | null {
@@ -67,28 +80,6 @@ export class ProfileFormComponent {
       return { invalidPhone: true };
     }
     return null;
-  }
-
-  // Submissão do formulário
-  onSubmit() {
-    if (this.profileForm.valid) {
-      console.log('Formulário enviado:', this.profileForm.value);
-    } else {
-      console.log('Formulário inválido');
-      this.profileForm.markAllAsTouched();
-    }
-  }
-
-  ngOnInit(): void {
-    // Carregar dados do usuário armazenados
-    const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-
-    // Preenche o formulário de perfil com os dados do usuário
-    this.profileForm.patchValue({
-      name: usuarioData.nome,
-      company: '', // Adicione outros dados conforme necessário
-      cnpj: '' // Se houver CNPJ ou outros campos
-    });
   }
 
   // Função para buscar o CEP
@@ -118,4 +109,33 @@ export class ProfileFormComponent {
       alert('Por favor, insira um CEP válido com 8 dígitos.');
     }
   }
+
+  // Submissão do formulário
+    onSubmit() {
+      if (this.profileForm.valid) {
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const userId = usuarioData.id_usuario;
+
+      const updatedData = {
+        nome: this.profileForm.value.name || usuarioData.nome,
+        email: usuarioData.email,
+        senha: usuarioData.senha
+      };
+
+        this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
+            response => {
+              console.log('Dados atualizados com sucesso:', response);
+              this.toastr.success('Dados atualizados com sucesso!');
+              },
+            error => {
+                console.error('Erro ao atualizar os dados:', error);
+                this.toastr.error('Erro ao atualizar os dados.');
+              }
+          );
+        console.log('Formulário enviado:', this.profileForm.value);
+      } else {
+        console.log('Formulário inválido');
+        this.profileForm.markAllAsTouched();
+      }
+    }
 }
