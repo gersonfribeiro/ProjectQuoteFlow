@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile-form',
@@ -37,7 +38,7 @@ export class ProfileFormComponent {
   state: string = '';
   region: string = '';
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       company: ['', Validators.required],
@@ -124,9 +125,11 @@ export class ProfileFormComponent {
         this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
             response => {
               console.log('Dados atualizados com sucesso:', response);
+              this.toastr.success('Dados atualizados com sucesso!');
               },
             error => {
                 console.error('Erro ao atualizar os dados:', error);
+                this.toastr.error('Erro ao atualizar os dados.');
               }
           );
         console.log('Formulário enviado:', this.profileForm.value);
