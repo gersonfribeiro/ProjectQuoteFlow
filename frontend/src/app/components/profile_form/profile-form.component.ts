@@ -119,13 +119,16 @@ export class ProfileFormComponent {
       const updatedData = {
         nome: this.profileForm.value.name || usuarioData.nome,
         email: usuarioData.email,
-        senha: usuarioData.senha
+        senha: usuarioData.senha,
+        id_usuario: userId
       };
 
         this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
             response => {
               console.log('Dados atualizados com sucesso:', response);
               this.toastr.success('Dados atualizados com sucesso!');
+
+              localStorage.setItem('usuario', JSON.stringify(updatedData));
               },
             error => {
                 console.error('Erro ao atualizar os dados:', error);
