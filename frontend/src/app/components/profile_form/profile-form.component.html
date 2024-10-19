@@ -11,9 +11,9 @@
       "
     >
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <!-- Nome e Empresa -->
+        <!-- Nome, Empresa, CNPJ e Telefone na mesma row -->
         <div class="row mb-3">
-          <div class="col-md-6">
+          <div class="col-md-3">
             <label class="form-label"><strong>*</strong> Nome:</label>
             <input
               type="text"
@@ -36,7 +36,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+
+          <div class="col-md-3">
             <label class="form-label"><strong>*</strong> Empresa:</label>
             <input
               type="text"
@@ -55,15 +56,12 @@
                 class="alert alert-danger alert-small mb-2"
                 *ngIf="profileForm.get('company')?.errors?.['required']"
               >
-                A empresas é <strong>obrigatória.</strong>
+                A empresa é <strong>obrigatória.</strong>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- CNPJ, Telefone Fixo, Celular -->
-        <div class="row mb-3">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label class="form-label"><strong>*</strong> CNPJ:</label>
             <input
               type="text"
@@ -93,8 +91,9 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <label class="form-label"><strong>*</strong> Telefone fixo:</label>
+
+          <div class="col-md-3">
+            <label class="form-label"><strong>*</strong> Telefone:</label>
             <input
               type="text"
               class="form-control mb-2"
@@ -110,39 +109,17 @@
               class="text-danger"
             >
               <div class="alert alert-danger alert-small mb-2">
-                Telefone fixo <strong>inválido.</strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Telefone celular:</label>
-            <input
-              type="text"
-              class="form-control mb-2"
-              formControlName="cellphone"
-              placeholder="(99) 99999-9999"
-              [mask]="'(00) 00000-0000'"
-            />
-            <div
-              *ngIf="
-                profileForm.get('cellphone')?.value &&
-                profileForm.get('cellphone')?.invalid &&
-                profileForm.get('cellphone')?.touched
-              "
-              class="text-danger"
-            >
-              <div class="alert alert-danger alert-small mb-2">
-                Telefone celular <strong>inválido.</strong>
+                Telefone <strong>inválido.</strong>
               </div>
             </div>
           </div>
         </div>
 
-        <hr />
+        <!-- Outras seções como CEP, Endereço, Tipo -->
+        <hr/>
 
-        <!-- CEP -->
         <div class="row mb-3">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label class="form-label">CEP:</label>
             <div class="input-group">
               <input
@@ -164,9 +141,8 @@
           </div>
         </div>
 
-        <!-- Endereço -->
         <div class="row mb-3">
-          <div class="col-md-8">
+          <div class="col-md-3">
             <label class="form-label">Logradouro:</label>
             <input
               type="text"
@@ -175,7 +151,7 @@
               [disabled]="true"
             />
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label class="form-label">Bairro:</label>
             <input
               type="text"
@@ -187,7 +163,7 @@
         </div>
 
         <div class="row mb-3">
-          <div class="col-md-6">
+          <div class="col-md-3">
             <label class="form-label">Cidade:</label>
             <input
               type="text"
@@ -196,7 +172,7 @@
               [disabled]="true"
             />
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label class="form-label">Estado:</label>
             <input
               type="text"
@@ -207,11 +183,10 @@
           </div>
         </div>
 
-        <hr />
+        <hr/>
 
-        <!-- Tipo -->
         <div class="row mb-3">
-          <div class="col-md-6">
+          <div class="col-md-3">
             <label class="form-label">Tipo:</label>
             <select class="form-select" formControlName="type">
               <option value="supplier">Fornecedor</option>
@@ -223,7 +198,7 @@
         <!-- Enviar Button -->
         <button
           type="submit"
-          class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2"
+          class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2 col-md-3"
           [disabled]="profileForm.invalid"
         >
           <i class="bi bi-save"></i>
