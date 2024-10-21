@@ -98,15 +98,15 @@ export class ProfileFormComponent {
                 state: data.uf,
               });
             } else {
-              alert('CEP não encontrado.');
+              this.toastr.error('CEP não encontrado.');
             }
           },
           (error) => {
-            alert('Erro ao buscar o CEP.');
+            this.toastr.error('Erro ao buscar o CEP.');
           }
         );
     } else {
-      alert('Por favor, insira um CEP válido com 8 dígitos.');
+      this.toastr.warning('Por favor, insira um CEP válido com 8 dígitos.');
     }
   }
 
@@ -119,13 +119,16 @@ export class ProfileFormComponent {
       const updatedData = {
         nome: this.profileForm.value.name || usuarioData.nome,
         email: usuarioData.email,
-        senha: usuarioData.senha
+        senha: usuarioData.senha,
+        id_usuario: userId
       };
 
         this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
             response => {
               console.log('Dados atualizados com sucesso:', response);
               this.toastr.success('Dados atualizados com sucesso!');
+
+              localStorage.setItem('usuario', JSON.stringify(updatedData));
               },
             error => {
                 console.error('Erro ao atualizar os dados:', error);
