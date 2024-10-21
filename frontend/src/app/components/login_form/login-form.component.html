@@ -47,19 +47,25 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 position-relative">
       <label class="form-label text-dark">Senha:</label>
-      <input
-        type="password"
-        class="form-control mb-2"
-        placeholder="Digite sua senha"
-        formControlName="password"
-      />
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Digite sua senha"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
+      </div>
       <div
-        *ngIf="
-          loginForm.get('password')?.invalid &&
-          loginForm.get('password')?.touched
-        "
+        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
         class="text-danger"
       >
         <div
@@ -69,7 +75,6 @@
         >
           A senha é <strong>obrigatória.</strong>
         </div>
-
         <div
           class="alert alert-danger alert-small"
           role="alert"
@@ -84,7 +89,7 @@
       class="mb-3 form-check d-flex justify-content-between align-items-center"
     >
       <div>
-        <input type="checkbox" class="form-check-input mb-2" />
+        <input type="checkbox" class="form-check-input mb-2"/>
         <label class="form-check-label text-dark">Lembrar</label>
       </div>
     </div>
@@ -128,7 +133,7 @@
       [routerLink]="['/forgot_password']"
       class="text-dark"
       style="font-size: 0.95rem"
-      >Esqueceu a senha?</a
+    >Esqueceu a senha?</a
     >
   </form>
 </div>

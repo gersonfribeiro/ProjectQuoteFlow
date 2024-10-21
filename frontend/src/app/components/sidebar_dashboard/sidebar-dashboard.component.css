@@ -50,7 +50,7 @@ body {
 }
 
 #sidebar.expand {
-  width: 260px;
+  width: max-content;
   min-width: 260px;
 }
 
@@ -98,7 +98,7 @@ a.sidebar-link {
 
 .sidebar-link i {
   font-size: 1.3rem;
-  margin-right: 1.5rem;
+  margin-right: 1rem;
   flex-shrink: 0; /* Evita que o ícone encolha */
 }
 

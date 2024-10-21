@@ -20,7 +20,7 @@
       <input
         type="text"
         class="form-control mb-2"
-        placeholder="Digite um nome de usuário"
+        placeholder="Digite o nome de usuário"
         formControlName="nome"
       />
       <div
@@ -72,19 +72,28 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 position-relative">
       <label class="form-label text-dark">Senha:</label>
-      <input
-        type="password"
-        class="form-control mb-2"
-        placeholder="Digite sua senha"
-        formControlName="senha"
-      />
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Digite sua senha"
+          formControlName="senha"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
+      </div>
       <div
         *ngIf="
-          registerForm.get('senha')?.invalid &&
-          registerForm.get('senha')?.touched
-        "
+      registerForm.get('senha')?.invalid &&
+      registerForm.get('senha')?.touched
+    "
         class="text-danger"
       >
         <div
@@ -94,7 +103,6 @@
         >
           A senha é <strong>obrigatória.</strong>
         </div>
-
         <div
           class="alert alert-danger alert-small"
           role="alert"
@@ -103,10 +111,6 @@
           A senha deve ter no mínimo 6 caracteres.
         </div>
       </div>
-    </div>
-
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
     </div>
 
     <span class="pb-3 d-block">Registrar-se com:</span>
