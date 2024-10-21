@@ -90,9 +90,6 @@ export class FormDashboardComponent implements OnInit {
     } else {
       this.toastr.warning('Adicione pelo menos um produto antes de acessar a aba de fornecedores.', '', {
         positionClass: 'toast-top-right',
-        progressBar: true,
-        progressAnimation: 'increasing',
-        timeOut: 2000,
       });
     }
   }

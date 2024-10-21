@@ -98,15 +98,15 @@ export class ProfileFormComponent {
                 state: data.uf,
               });
             } else {
-              alert('CEP não encontrado.');
+              this.toastr.error('CEP não encontrado.');
             }
           },
           (error) => {
-            alert('Erro ao buscar o CEP.');
+            this.toastr.error('Erro ao buscar o CEP.');
           }
         );
     } else {
-      alert('Por favor, insira um CEP válido com 8 dígitos.');
+      this.toastr.warning('Por favor, insira um CEP válido com 8 dígitos.');
     }
   }
 
