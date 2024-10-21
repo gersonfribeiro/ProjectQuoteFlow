@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import {Router, RouterModule} from '@angular/router';
+import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ApiAuthService} from "../../services/api-auth.service";
 
 @Component({
@@ -27,12 +27,17 @@ export class LoginFormComponent {
   loginForm: FormGroup;
   isLoading = false;
   errorMessage: string | null = null;
+  showPassword = false; // Controle de visibilidade da senha
 
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword; // Alterna entre mostrar/ocultar senha
   }
 
   login() {
