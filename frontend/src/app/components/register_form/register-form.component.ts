@@ -40,7 +40,7 @@ export class RegisterFormComponent {
   registerForm: FormGroup;
   isLoading = false;
   errorMessage: any;
-  showPassword= false; // Controle de visibilidade da senha
+  showPassword = false; // Controle de visibilidade da senha
 
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService, private toastr: ToastrService) {
     this.registerForm = this.fb.group({
