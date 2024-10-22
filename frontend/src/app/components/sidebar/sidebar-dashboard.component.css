@@ -32,7 +32,7 @@ body {
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
   background-color: #fafbfe;
 }
 
@@ -43,15 +43,15 @@ body {
   width: 70px;
   min-width: 70px;
   z-index: 1000;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
   background-color: #0b5389;
   display: flex;
   flex-direction: column;
 }
 
 #sidebar.expand {
-  width: max-content;
-  min-width: 260px;
+  width: 280px;
+  transition: all 0.2s ease-in-out;
 }
 
 .toggle-btn {

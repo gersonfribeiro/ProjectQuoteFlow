@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {ApiAuthService} from "../../services/api-auth.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configurations-form',
@@ -16,7 +17,7 @@ export class ConfigurationsFormComponent {
   nomeUsuario: string | null = null;
   userId: string | null = null; // Adicionando userId
 
-  constructor(private apiService: ApiAuthService, private router: Router) {
+  constructor(private apiService: ApiAuthService, private router: Router, private toastr: ToastrService) {
     const notificationConfigurationsPage = localStorage.getItem('notificationConfigurationsPage');
     this.showNotificationAlert = !notificationConfigurationsPage;
 
@@ -44,12 +45,13 @@ export class ConfigurationsFormComponent {
     if (confirm('Tem certeza de que deseja apagar sua conta? Esta ação não pode ser revertida.')) {
       this.apiService.deleteUser(userId).subscribe(
         response => {
+          this.toastr.success('Conta deletada com sucesso!');
           console.log('Conta deletada com sucesso!', response);
           this.router.navigate(['/logout']);
         },
         error => {
+          this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
           console.error('Erro ao deletar a conta:', error);
-          alert('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
         }
       );
     }
