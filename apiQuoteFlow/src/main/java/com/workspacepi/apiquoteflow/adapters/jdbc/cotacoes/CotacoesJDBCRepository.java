@@ -46,7 +46,7 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
         return (rs, rowNum) -> {
             UUID id_cotacao = UUID.fromString(rs.getString("id_cotacao"));
             Timestamp data_cotacao = rs.getTimestamp("data");
-            int numero_cotacao = rs.getRow();
+            int numero_cotacao = rs.getInt("numero");
             CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
             UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
@@ -60,7 +60,7 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id_cotacao", cotacoes.getId_cotacao());
         params.addValue("data", cotacoes.getData());
-        params.addValue("numero_cotacao", cotacoes.getNumero());
+        params.addValue("numero", cotacoes.getNumero());
         params.addValue("status", cotacoes.getStatus().name());
         params.addValue("id_empresa", cotacoes.getId_empresa());
         params.addValue("itens", cotacoes.getProdutos());

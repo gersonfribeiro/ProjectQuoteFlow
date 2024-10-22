@@ -9,10 +9,10 @@ spring:
     resources:
       add-mappings: false
   datasource:
-    name: quoteflow
+    name: ${DOTENV_NAME}
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/quoteflow
-    username: postgres
-    password: root
+    url: ${DOTENV_URL}
+    username: ${DOTENV_USERNAME}
+    password: ${DOTENV_PASSWORD}
 server:
   port: 8080
