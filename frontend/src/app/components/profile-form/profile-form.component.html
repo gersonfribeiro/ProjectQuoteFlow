@@ -187,20 +187,10 @@
 
         <hr/>
 
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <label class="form-label">Tipo:</label>
-            <select class="form-select" formControlName="type">
-              <option value="supplier">Fornecedor</option>
-              <option value="buyer">Comprador</option>
-            </select>
-          </div>
-        </div>
-
         <!-- Enviar Button -->
         <button
           type="submit"
-          class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2 col-md-3"
+          class="btn btn-success mt-4 d-flex align-items-center justify-content-center gap-2 col-md-3"
           [disabled]="profileForm.invalid"
         >
           <i class="bi bi-save"></i>
