@@ -99,8 +99,10 @@ export class RegisterFormComponent {
           this.isLoading = false;
           if (error.status === 409) {
             this.errorMessage = 'Este email já está registrado. Por favor, utilize outro.';
+            this.toastr.error('Este email já está registrado. Por favor, utilize outro.');
           } else {
             this.errorMessage = 'Falha no registro. Tente novamente.';
+            this.toastr.error('Falha no registro. Tente novamente.');
           }
         }
       );
