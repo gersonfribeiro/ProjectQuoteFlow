@@ -87,7 +87,7 @@ body {
 }
 
 a.sidebar-link {
-  padding: 0.625rem 1.625rem;
+  padding: 0.5rem 1.25rem;
   color: #fff;
   display: flex; /* Usando Flexbox para alinhar os itens */
   align-items: center; /* Alinhando verticalmente no centro */
