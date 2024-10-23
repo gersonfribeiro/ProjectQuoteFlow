@@ -3,9 +3,10 @@ import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 // Importa o decorador 'Component', que é usado para definir um componente Angular.
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
+  ReactiveFormsModule, ValidationErrors,
   Validators,
 } from '@angular/forms';
 // Importa classes e módulos necessários para trabalhar com formulários reativos em Angular,
@@ -45,9 +46,20 @@ export class RegisterFormComponent {
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService, private toastr: ToastrService) {
     this.registerForm = this.fb.group({
       nome: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, this.validateEmail]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  // Função de validação personalizada para e-mail
+  validateEmail(control: AbstractControl): ValidationErrors | null {
+    const email = control.value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (email && !emailPattern.test(email)) {
+      return {invalidEmail: true}; // Retorna um erro se o e-mail não for válido
+    }
+    return null; // Retorna null se o e-mail for válido
   }
 
   togglePasswordVisibility() {

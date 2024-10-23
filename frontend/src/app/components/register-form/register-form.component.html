@@ -47,30 +47,25 @@
         placeholder="Digite seu e-mail"
         formControlName="email"
       />
+
       <div
-        *ngIf="
-          registerForm.get('email')?.invalid &&
-          registerForm.get('email')?.touched
-        "
+        *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
         class="text-danger"
       >
         <div
           class="alert alert-danger alert-small mb-2"
-          role="alert"
           *ngIf="registerForm.get('email')?.errors?.['required']"
         >
-          O email é <strong>obrigatório.</strong>
+          O e-mail é <strong>obrigatório.</strong>
         </div>
-
         <div
-          class="alert alert-danger alert-small"
-          role="alert"
-          *ngIf="registerForm.get('email')?.errors?.['email']"
+          class="alert alert-danger alert-small mb-2"
+          *ngIf="registerForm.get('email')?.errors?.['invalidEmail']"
         >
-          Digite um email válido.
+          O e-mail é <strong>inválido.</strong>
         </div>
       </div>
-    </div>
+    </div> <!-- Aqui está o fechamento da <div class="col-md-4"> -->
 
     <div class="mb-3 position-relative">
       <label class="form-label text-dark">Senha:</label>
