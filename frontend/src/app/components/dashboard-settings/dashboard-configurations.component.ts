@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { SidebarDashboardComponent } from "../sidebar/sidebar-dashboard.component";
-import { ConfigurationsFormComponent } from "../form-settings/configurations-form.component";
+import {Component} from '@angular/core';
+import {SidebarDashboardComponent} from "../sidebar/sidebar-dashboard.component";
+import {ConfigurationsFormComponent} from "../form-settings/configurations-form.component";
 
 @Component({
   selector: 'app-dashboard-configurations',
