@@ -110,6 +110,7 @@ export class ProfileFormComponent {
                 city: data.localidade,
                 state: data.uf,
               });
+            this.toastr.success('CEP encontrado.')
             } else {
               this.toastr.error('CEP não encontrado.');
             }
