@@ -11,9 +11,9 @@
       "
     >
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <!-- Nome e Empresa na primeira linha -->
+        <!-- Nome, E-mail e Telefone na primeira linha -->
         <div class="row mb-3">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label class="form-label"><strong>*</strong> Nome:</label>
             <input
               type="text"
@@ -37,6 +37,58 @@
             </div>
           </div>
 
+          <div class="col-md-4">
+            <label class="form-label"><strong>*</strong> E-mail:</label>
+            <input
+              type="email"
+              class="form-control mb-2"
+              formControlName="email"
+            />
+            <div
+              *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+              class="text-danger"
+            >
+              <div
+                class="alert alert-danger alert-small mb-2"
+                *ngIf="profileForm.get('email')?.errors?.['required']"
+              >
+                O e-mail é <strong>obrigatório.</strong>
+              </div>
+              <div
+                class="alert alert-danger alert-small mb-2"
+                *ngIf="profileForm.get('email')?.errors?.['invalidEmail']"
+              >
+                O e-mail é <strong>inválido.</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Telefone deve estar nesta posição -->
+          <div class="col-md-4">
+            <label class="form-label"><strong>*</strong> Telefone:</label>
+            <input
+              type="text"
+              class="form-control mb-2"
+              formControlName="phone"
+              placeholder="(99) 9999-9999"
+              [mask]="'(00) 0000-0000'"
+            />
+            <div
+              *ngIf="
+                profileForm.get('phone')?.invalid &&
+                profileForm.get('phone')?.touched
+              "
+              class="text-danger"
+            >
+              <div class="alert alert-danger alert-small mb-2">
+                Telefone <strong>inválido.</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empresa e CNPJ na segunda linha -->
+        <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label"><strong>*</strong> Empresa:</label>
             <input
@@ -60,10 +112,7 @@
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- CNPJ e Telefone na segunda linha -->
-        <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label"><strong>*</strong> CNPJ:</label>
             <input
@@ -94,32 +143,10 @@
               </div>
             </div>
           </div>
-
-          <div class="col-md-6">
-            <label class="form-label"><strong>*</strong> Telefone:</label>
-            <input
-              type="text"
-              class="form-control mb-2"
-              formControlName="phone"
-              placeholder="(99) 9999-9999"
-              [mask]="'(00) 0000-0000'"
-            />
-            <div
-              *ngIf="
-                profileForm.get('phone')?.invalid &&
-                profileForm.get('phone')?.touched
-              "
-              class="text-danger"
-            >
-              <div class="alert alert-danger alert-small mb-2">
-                Telefone <strong>inválido.</strong>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- Outras seções como CEP, Endereço, Tipo -->
-        <hr/>
+        <hr />
 
         <div class="row mb-3">
           <div class="col-md-5">
@@ -185,17 +212,7 @@
           </div>
         </div>
 
-        <hr/>
-
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <label class="form-label">Tipo:</label>
-            <select class="form-select" formControlName="type">
-              <option value="supplier">Fornecedor</option>
-              <option value="buyer">Comprador</option>
-            </select>
-          </div>
-        </div>
+        <hr />
 
         <!-- Enviar Button -->
         <button
