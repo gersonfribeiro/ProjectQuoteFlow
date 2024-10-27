@@ -45,7 +45,7 @@ export class ProfileFormComponent {
       email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
       cnpj: [{value: '', disabled: true}, Validators.required, this.validateCNPJ],
       phone: [{value: '', disabled: true}, Validators.required, this.validatePhone],
-      postalCode: ['', Validators.required],
+      postalCode: [{value: '', disabled:true}, Validators.required],
       street: [{value: '', disabled: true}], // Defina o estado inicial como desabilitado
       neighborhood: [{value: '', disabled: true}],
       city: [{value: '', disabled: true}],
@@ -56,14 +56,21 @@ export class ProfileFormComponent {
   ngOnInit(): void {
     // Carregar dados do usuário armazenados
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+    const cepData = JSON.parse(localStorage.getItem('cep') || '{}');
 
     // Preenche o formulário de perfil com os dados do usuário
     this.profileForm.patchValue({
       name: usuarioData.nome,
       email: usuarioData.email,
       company: '', // Adicione outros dados conforme necessário
-      cnpj: '' // Se houver CNPJ ou outros campos
+      cnpj: '', // Se houver CNPJ ou outros campos
+      postalCode: cepData.postalCode
     });
+
+    if (cepData.postalCode) {
+        cepData.postalCode
+        this.searchPostalCode();
+      }
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -112,12 +119,16 @@ export class ProfileFormComponent {
         .subscribe(
           (data) => {
             if (!data.erro) {
-              this.profileForm.patchValue({
+              const dataForm = {
                 street: data.logradouro,
                 neighborhood: data.bairro,
                 city: data.localidade,
                 state: data.uf,
-              });
+                postalCode: data.cep.replace('-', ''),
+              }
+              this.profileForm.patchValue(dataForm);
+              localStorage.setItem('cep', JSON.stringify(dataForm));
+              this.profileForm.get('postalCode')?.disable();
             } else {
               this.toastr.error('CEP não encontrado.');
             }
