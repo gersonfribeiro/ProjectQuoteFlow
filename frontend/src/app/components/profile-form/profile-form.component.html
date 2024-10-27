@@ -15,12 +15,16 @@
         <div class="row mb-3">
           <div class="col-md-4">
             <label class="form-label"><strong>*</strong> Nome:</label>
-            <input
-              type="text"
-              class="form-control mb-2"
-              formControlName="name"
-              style="text-transform: uppercase"
-            />
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+              />
+              <button type="button" class="btn btn-success" (click)="toggleField('name')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
             <div
               *ngIf="
                 profileForm.get('name')?.invalid &&
@@ -39,13 +43,21 @@
 
           <div class="col-md-4">
             <label class="form-label"><strong>*</strong> E-mail:</label>
-            <input
-              type="email"
-              class="form-control mb-2"
-              formControlName="email"
-            />
+            <div class="input-group mb-2">
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+              />
+              <button type="button" class="btn btn-success" (click)="toggleField('email')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
             <div
-              *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+              *ngIf="
+                profileForm.get('email')?.invalid &&
+                profileForm.get('email')?.touched
+              "
               class="text-danger"
             >
               <div
@@ -63,16 +75,20 @@
             </div>
           </div>
 
-          <!-- Telefone deve estar nesta posição -->
           <div class="col-md-4">
             <label class="form-label"><strong>*</strong> Telefone:</label>
-            <input
-              type="text"
-              class="form-control mb-2"
-              formControlName="phone"
-              placeholder="(99) 9999-9999"
-              [mask]="'(00) 0000-0000'"
-            />
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="phone"
+                placeholder="(99) 9999-9999"
+                [mask]="'(00) 0000-0000'"
+              />
+              <button type="button" class="btn btn-success" (click)="toggleField('phone')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
             <div
               *ngIf="
                 profileForm.get('phone')?.invalid &&
@@ -91,12 +107,17 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label"><strong>*</strong> Empresa:</label>
-            <input
-              type="text"
-              class="form-control mb-2"
-              formControlName="company"
-              style="text-transform: uppercase"
-            />
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="company"
+                placeholder="QuoteFlow"
+              />
+              <button type="button" class="btn btn-success" (click)="toggleField('company')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
             <div
               *ngIf="
                 profileForm.get('company')?.invalid &&
@@ -115,13 +136,18 @@
 
           <div class="col-md-6">
             <label class="form-label"><strong>*</strong> CNPJ:</label>
-            <input
-              type="text"
-              class="form-control mb-2"
-              formControlName="cnpj"
-              placeholder="00.000.000/0000-00"
-              [mask]="'00.000.000/0000-00'"
-            />
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cnpj"
+                placeholder="00.000.000/0000-00"
+                [mask]="'00.000.000/0000-00'"
+              />
+              <button type="button" class="btn btn-success" (click)="toggleField('cnpj')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
             <div
               *ngIf="
                 profileForm.get('cnpj')?.invalid &&
@@ -146,7 +172,7 @@
         </div>
 
         <!-- Outras seções como CEP, Endereço, Tipo -->
-        <hr />
+        <hr/>
 
         <div class="row mb-3">
           <div class="col-md-5">
@@ -159,6 +185,9 @@
                 placeholder="01001-000"
                 [mask]="'00000-000'"
               />
+              <button class="btn btn-success input-group-append">
+                <i class="bi bi-pencil"></i>
+              </button>
               <button
                 type="button"
                 class="btn btn-success input-group-append"
@@ -212,7 +241,7 @@
           </div>
         </div>
 
-        <hr />
+        <hr/>
 
         <!-- Enviar Button -->
         <button
