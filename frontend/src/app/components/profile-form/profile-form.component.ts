@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-profile-form',
@@ -34,7 +35,8 @@ export class ProfileFormComponent {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: true}, Validators.required],
       email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
-      phone: [{value: '', disabled: false}, Validators.required, this.validatePhone],
+      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]], // Síncrono
+      //
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
     });
@@ -74,39 +76,49 @@ export class ProfileFormComponent {
   }
 
   // Função de validação customizada para o telefone
-  validatePhone(control: AbstractControl): ValidationErrors | null {
-    const phone = control.value;
-    const phonePattern = /^\(\d{2}\) \d{4,5}-\d{4}$/;
-    if (phone && !phonePattern.test(phone)) {
-      return {invalidPhone: true};
-    }
-    return null;
+  validatePhone(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+    return new Promise((resolve) => {
+      const phone = control.value;
+      // Regex atualizado para suportar números de telefone no formato correto
+      const phonePattern = /^\(\d{2}\)\s*\d{1}\s*\d{4,5}-\d{4}$/;
+
+      if (phone && !phonePattern.test(phone)) {
+        resolve({invalidPhone: true});
+      }
+      resolve(null); // Retorna null se o telefone for válido
+    });
   }
 
   // Método para enviar dados ao LocalStorage e ao banco de dados ao submeter o formulário
+  // Submissão do formulário
   onSubmit() {
     if (this.profileForm.valid) {
-      const usuarioData = {
-        nome: this.profileForm.get('name')?.value,
-        email: this.profileForm.get('email')?.value,
-        telefone: this.profileForm.get('phone')?.value,
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const userId = usuarioData.id_usuario;
+
+      const updatedData = {
+        nome: this.profileForm.value.name || usuarioData.nome,
+        email: usuarioData.email,
+        senha: usuarioData.senha,
+        telefone: this.profileForm.value.phone || usuarioData.telefone,
+        id_usuario: userId
       };
 
-      // Salva os dados no LocalStorage
-      localStorage.setItem('usuario', JSON.stringify(usuarioData));
-
-      // Envia os dados ao banco de dados (substitua pela URL da sua API)
-      this.http.post('https://sua-api.com/usuarios', usuarioData).subscribe({
-        next: (response) => {
-          this.toastr.success('Perfil salvo com sucesso!', 'Sucesso');
+      this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
+        response => {
+          console.log('Dados atualizados com sucesso:', response);
+          this.toastr.success('Dados atualizados com sucesso!');
+          localStorage.setItem('usuario', JSON.stringify(updatedData));
         },
-        error: (error) => {
-          console.error('Erro ao salvar no banco de dados', error);
-          this.toastr.error('Erro ao salvar os dados.', 'Erro');
-        },
-      });
+        error => {
+          console.error('Erro ao atualizar os dados:', error);
+          this.toastr.error('Erro ao atualizar os dados.');
+        }
+      );
+      console.log('Formulário enviado:', this.profileForm.value);
     } else {
-      this.toastr.error('Por favor, preencha todos os campos obrigatórios corretamente.', 'Erro');
+      console.log('Formulário inválido');
+      this.profileForm.markAllAsTouched();
     }
   }
 }
