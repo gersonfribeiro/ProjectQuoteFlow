@@ -15,7 +15,7 @@ export class ApiAuthService {
 
   // Método para registrar um novo usuário com base nos dados fornecidos (nome, email, senha)
   registerUser(user: Usuario): Observable<any> {
-    return this.http.post(this.apiUrlAuth, user); // Envia o objeto diretamente
+    return this.http.post(this.apiUrlAuth, user); //
   }
 
   // Método para deletar um usuário pelo ID
