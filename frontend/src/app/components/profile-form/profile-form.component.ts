@@ -40,11 +40,11 @@ export class ProfileFormComponent {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.profileForm = this.fb.group({
-      name: ['', Validators.required],
-      company: ['', Validators.required],
-      email: ['', [Validators.required, this.validateEmail]],
-      cnpj: ['', [Validators.required, this.validateCNPJ]],
-      phone: ['', [Validators.required, this.validatePhone]],
+      name: [{value: '', disabled: true}, Validators.required],
+      company: [{value: '', disabled: true}, Validators.required],
+      email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
+      cnpj: [{value: '', disabled: true}, Validators.required, this.validateCNPJ],
+      phone: [{value: '', disabled: true}, Validators.required, this.validatePhone],
       postalCode: ['', Validators.required],
       street: [{value: '', disabled: true}], // Defina o estado inicial como desabilitado
       neighborhood: [{value: '', disabled: true}],
@@ -64,6 +64,14 @@ export class ProfileFormComponent {
       company: '', // Adicione outros dados conforme necessário
       cnpj: '' // Se houver CNPJ ou outros campos
     });
+  }
+
+  // Método para alternar o estado de habilitado/desabilitado de um campo específico
+  toggleField(field: string) {
+    const control = this.profileForm.get(field);
+    if (control) {
+      control.enabled ? control.disable() : control.enable();
+    }
   }
 
   // Função de validação personalizada para e-mail
