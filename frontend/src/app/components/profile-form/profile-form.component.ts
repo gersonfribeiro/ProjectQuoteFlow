@@ -36,7 +36,7 @@ export class ProfileFormComponent {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: true}, Validators.required],
       email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
-      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]], // Síncrono
+      phone: [{value: '', disabled: true}, [Validators.required, this.validatePhone]], // Síncrono
       //
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
@@ -49,16 +49,17 @@ export class ProfileFormComponent {
     const userId = usuarioData.id_usuario;
 
     this.http.get<Usuario>(`http://localhost:8080/usuarios/${userId}`).subscribe(
-        (response: Usuario) => {
-            this.profileForm.patchValue({
-                name: response.nome,
-                email: response.email,
-              });
-          },
-        error => {
-          console.error("Erro");
-        }
-      );
+      (response: Usuario) => {
+        this.profileForm.patchValue({
+          name: response.nome,
+          email: response.email,
+          phone: response.telefone,
+        });
+      },
+      error => {
+        console.error("Erro");
+      }
+    );
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -81,12 +82,12 @@ export class ProfileFormComponent {
 
   // Função de validação customizada para o telefone
   validatePhone(control: AbstractControl): ValidationErrors | null {
-      const phone = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
-      if (phone?.length !== 10 && phone?.length !== 11) {
-        return {invalidPhone: true};
-      }
-      return null;
+    const phone = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
+    if (phone?.length !== 10 && phone?.length !== 11) {
+      return {invalidPhone: true};
     }
+    return null;
+  }
 
   // Método para enviar dados ao LocalStorage e ao banco de dados ao submeter o formulário
   // Submissão do formulário
@@ -97,7 +98,7 @@ export class ProfileFormComponent {
 
       const updatedData = {
         nome: this.profileForm.value.name || usuarioData.nome,
-        email: usuarioData.email,
+        email: this.profileForm.value.email || usuarioData.email,
         senha: usuarioData.senha,
         telefone: this.profileForm.value.phone || usuarioData.telefone,
         id_usuario: userId
@@ -108,6 +109,9 @@ export class ProfileFormComponent {
           console.log('Dados atualizados com sucesso:', response);
           this.toastr.success('Dados atualizados com sucesso!');
           localStorage.setItem('usuario', JSON.stringify(updatedData));
+
+          // Desabilitar todos os campos após o envio
+          this.profileForm.disable();
         },
         error => {
           console.error('Erro ao atualizar os dados:', error);
