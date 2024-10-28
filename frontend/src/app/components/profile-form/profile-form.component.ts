@@ -13,6 +13,7 @@ import {
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from "rxjs";
+import {Usuario} from "../../models/user.model";
 
 @Component({
   selector: 'app-profile-form',
@@ -43,18 +44,21 @@ export class ProfileFormComponent {
   }
 
   ngOnInit(): void {
-    // Carregar dados do usuário armazenados
+    // Carregar id do usuário
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+    const userId = usuarioData.id_usuario;
 
-    // Preenche o formulário de perfil com os dados do usuário
-    this.profileForm.patchValue({
-      name: usuarioData.nome,
-      email: usuarioData.email,
-      phone: usuarioData.telefone,
-      company: '',
-      cnpj: '',
-
-    });
+    this.http.get<Usuario>(`http://localhost:8080/usuarios/${userId}`).subscribe(
+        (response: Usuario) => {
+            this.profileForm.patchValue({
+                name: response.nome,
+                email: response.email,
+              });
+          },
+        error => {
+          console.error("Erro");
+        }
+      );
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
