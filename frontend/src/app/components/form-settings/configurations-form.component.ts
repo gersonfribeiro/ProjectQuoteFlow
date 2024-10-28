@@ -45,6 +45,7 @@ export class ConfigurationsFormComponent {
     this.apiService.deleteUser(userId).subscribe(
       response => {
         this.toastr.success('Conta deletada com sucesso!');
+        localStorage.removeItem('usuario'); // Remove dados do LocalStorage
         console.log('Conta deletada com sucesso!', response);
         this.router.navigate(['/logout']);
       },
