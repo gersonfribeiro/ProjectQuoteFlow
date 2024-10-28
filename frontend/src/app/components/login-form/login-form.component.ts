@@ -40,26 +40,25 @@ export class LoginFormComponent {
     this.showPassword = !this.showPassword; // Alterna entre mostrar/ocultar senha
   }
 
-  login() {
-    if (this.loginForm.valid) {
-      this.isLoading = true;
-      const credentials = this.loginForm.value;
-      this.apiService.loginUser(credentials).subscribe(
-        (response) => {
-          this.isLoading = false;
-          console.log('Login bem-sucedido:', response);
-          // Navega para o dashboard ou outra página após o login
-          this.router.navigate(['/dashboard']);
-        },
-        (error) => {
-          this.isLoading = false;
-          console.error('Erro ao fazer login:', error);
-          this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
-        }
-      );
-    } else {
-      this.loginForm.markAllAsTouched();
-      console.log('Formulário inválido:', this.loginForm.errors);
-    }
-  }
+  // login() {
+  //   if (this.loginForm.valid) {
+  //     this.isLoading = true;
+  //     const credentials = this.loginForm.value;
+  //     this.apiService.loginUser(credentials).subscribe(
+  //       (response) => {
+  //         this.isLoading = false;
+  //         console.log('Login bem-sucedido:', response);
+  //         // Navega para o dashboard ou outra página após o login
+  //         this.router.navigate(['/dashboard']);
+  //       },
+  //       (error) => {
+  //         this.isLoading = false;
+  //         console.error('Erro ao fazer login:', error);
+  //         this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
+  //       }
+  //     );
+  //   } else {
+  //     this.loginForm.markAllAsTouched();
+  //     console.log('Formulário inválido:', this.loginForm.errors);
+  //   }
 }
