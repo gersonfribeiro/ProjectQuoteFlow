@@ -27,7 +27,8 @@ create table cotacoes
     status     varchar(50) not null
         constraint cotacao_status_check
             check ((status)::text = ANY
-                   ((ARRAY ['CONCLUIDO'::character varying, 'ENVIADO'::character varying, 'ENTREGUE'::character varying, 'RESPOSTA_PENDENTE'::character varying, 'RESPOSTA_RECEBIDA'::character varying, 'ACEITO'::character varying, 'RECUSADO'::character varying])::text[])),
+        ((ARRAY ['CONCLUIDO':: character varying, 'ENVIADO':: character varying, 'ENTREGUE':: character varying, 'RESPOSTA_PENDENTE':: character varying, 'RESPOSTA_RECEBIDA':: character varying, 'ACEITO':: character varying, 'RECUSADO':: character varying])::text[])
+) ,
     id_empresa uuid        not null
         constraint fk5xy7gse5lcuygba8ilnxlu1u8
             references empresas
@@ -74,12 +75,13 @@ alter table enderecos
 
 create table produtos
 (
-    id_produto uuid         not null
+    id_produto       uuid        not null
         primary key,
-    categoriaProduto  varchar(50)  not null
+    categoriaProduto varchar(50) not null
         constraint produtos_categoria_check
             check ((categoriaProduto)::text = ANY
-                   ((ARRAY ['MADEIRA'::character varying, 'ALIMENTOS'::character varying, 'LIMPEZA'::character varying, 'ELETRONICOS'::character varying, 'ROUPAS'::character varying, 'COSMETICOS'::character varying, 'UTENSILIOS'::character varying, 'FERRAMENTAS'::character varying, 'MATERIAIS_CONSTRUCAO'::character varying, 'OUTROS'::character varying])::text[])),
+        ((ARRAY ['MADEIRA':: character varying, 'ALIMENTOS':: character varying, 'LIMPEZA':: character varying, 'ELETRONICOS':: character varying, 'ROUPAS':: character varying, 'COSMETICOS':: character varying, 'UTENSILIOS':: character varying, 'FERRAMENTAS':: character varying, 'MATERIAIS_CONSTRUCAO':: character varying, 'OUTROS':: character varying])::text[])
+) ,
     descricao  varchar(100) not null,
     observacao varchar(100),
     sku        varchar(8)   not null,
