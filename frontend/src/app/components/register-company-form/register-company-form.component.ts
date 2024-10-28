@@ -28,7 +28,6 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class RegisterCompanyFormComponent {
   registerCompanyForm: FormGroup;
-
   showNotificationAlert?: boolean;
 
   postalCode: string = '';
@@ -40,10 +39,10 @@ export class RegisterCompanyFormComponent {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.registerCompanyForm = this.fb.group({
-      company: [{value: '', disabled: true}, Validators.required],
-      cnpj: [{value: '', disabled: true}, Validators.required, this.validateCNPJ],
-      phone: [{value: '', disabled: true}, Validators.required, this.validatePhone],
-      postalCode: [{value: '', disabled:true}, Validators.required],
+      company: [{value: '', disabled: false}, Validators.required],
+      cnpj: [{value: '', disabled: false}, [Validators.required, this.validateCNPJ]],
+      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
+      postalCode: [{value: '', disabled:false}, Validators.required],
       street: [{value: '', disabled: true}], // Defina o estado inicial como desabilitado
       neighborhood: [{value: '', disabled: true}],
       city: [{value: '', disabled: true}],
@@ -110,7 +109,7 @@ export class RegisterCompanyFormComponent {
               }
               this.registerCompanyForm.patchValue(dataForm);
               localStorage.setItem('cep', JSON.stringify(dataForm));
-              this.registerCompanyForm.get('postalCode')?.disable();
+//               this.registerCompanyForm.get('postalCode')?.disable();
             } else {
               this.toastr.error('CEP não encontrado.');
             }
@@ -128,6 +127,7 @@ export class RegisterCompanyFormComponent {
   onSubmit() {
     if (this.registerCompanyForm.valid) {
       console.log('Formulário enviado:', this.registerCompanyForm.value);
+      this.registerCompanyForm.disable();
     } else {
       console.log('Formulário inválido');
       this.registerCompanyForm.markAllAsTouched();
