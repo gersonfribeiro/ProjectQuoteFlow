@@ -1,6 +1,7 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.usuarios;
 
 import com.workspacepi.apiquoteflow.adapters.http.usuarios.error.UsuarioErrorHandler;
+import com.workspacepi.apiquoteflow.domain.usuarios.Permissoes;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
 import org.slf4j.Logger;
@@ -42,7 +43,10 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
             } else {
                 id_empresa = null;
             }
-            return new Usuarios(id_usuario, nome, email, senha, telefone, id_empresa);
+
+            Permissoes permissao = Permissoes.valueOf(rs.getString("permissao"));
+
+            return new Usuarios(id_usuario, nome, email, senha, telefone, id_empresa, permissao);
         };
     }
 
@@ -65,6 +69,8 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
         } else {
             params.addValue("id_empresa", null);
         }
+
+        params.addValue("permissao", usuario.getPermissao().name());
 
         return params;
     }
