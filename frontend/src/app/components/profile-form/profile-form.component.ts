@@ -76,18 +76,13 @@ export class ProfileFormComponent {
   }
 
   // Função de validação customizada para o telefone
-  validatePhone(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    return new Promise((resolve) => {
-      const phone = control.value;
-      // Regex atualizado para suportar números de telefone no formato correto
-      const phonePattern = /^\(\d{2}\)\s*\d{1}\s*\d{4,5}-\d{4}$/;
-
-      if (phone && !phonePattern.test(phone)) {
-        resolve({invalidPhone: true});
+  validatePhone(control: AbstractControl): ValidationErrors | null {
+      const phone = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
+      if (phone?.length !== 10 && phone?.length !== 11) {
+        return {invalidPhone: true};
       }
-      resolve(null); // Retorna null se o telefone for válido
-    });
-  }
+      return null;
+    }
 
   // Método para enviar dados ao LocalStorage e ao banco de dados ao submeter o formulário
   // Submissão do formulário
