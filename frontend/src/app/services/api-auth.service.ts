@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Usuario} from "../models/user.model";
 
 @Injectable({
@@ -9,7 +9,8 @@ import {Usuario} from "../models/user.model";
 export class ApiAuthService {
   private apiUrlAuth = 'http://localhost:8080/usuarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   /* Registro */
 
@@ -18,15 +19,10 @@ export class ApiAuthService {
     return this.http.post(this.apiUrlAuth, user); //
   }
 
+  /* Configurações */
+
   // Método para deletar um usuário pelo ID
   deleteUser(userId: string | null): Observable<any> {
     return this.http.delete(`${this.apiUrlAuth}/${userId}`);
-  }
-
-  /* Login */
-
-  // Login de usuário
-  loginUser(credentials: { email: string; senha: string }): Observable<any> {
-    return this.http.post(`${this.apiUrlAuth}/login`, credentials);
   }
 }
