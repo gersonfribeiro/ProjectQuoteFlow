@@ -101,6 +101,19 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
     }
 
     @Override
+    public Usuarios findByEmail(String email) {
+        List<Usuarios> usuarios;
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("email", email);
+            usuarios = jdbcTemplate.query(sqlSelectUserByEmail(), params, createUsuariosRowMapper());
+            return usuarios.isEmpty() ? null : usuarios.get(0);
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar o  usuário: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
     public Boolean cadastrarUsuario(Usuarios usuario) {
         try {
             MapSqlParameterSource params = parameterSource(usuario);

@@ -28,9 +28,6 @@ public class UsuariosCreateCommand {
     @JsonProperty("id_empresa")
     private UUID id_empresa_usuario;
 
-    @JsonProperty("permissao")
-    private Permissoes permissao;
-
 //  Conversão para usuario
     public Usuarios toUsuario() {
         return new Usuarios(nome_usuario, email_usuario, senha_usuario, telefone_usuario, id_empresa_usuario);

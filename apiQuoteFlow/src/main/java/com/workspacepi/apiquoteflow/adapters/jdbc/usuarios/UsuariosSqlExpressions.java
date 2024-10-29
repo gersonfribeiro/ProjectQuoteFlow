@@ -13,6 +13,12 @@ public class UsuariosSqlExpressions {
            """;
     }
 
+    public static String sqlSelectUserByEmail() {
+        return """
+               SELECT * FROM usuarios WHERE email = :email
+           """;
+    }
+
     public static String sqlNewUser() {
         return """
                 INSERT INTO usuarios(

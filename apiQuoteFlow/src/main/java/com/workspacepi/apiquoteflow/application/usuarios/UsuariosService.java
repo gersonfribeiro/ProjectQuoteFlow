@@ -3,6 +3,7 @@ package com.workspacepi.apiquoteflow.application.usuarios;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,13 @@ public class UsuariosService {
     }
 
     public Usuarios cadastrarUsuario(UsuariosCreateCommand usuarioCreateCommand) throws Exception {
+        if(usuariosRepository.findByEmail(usuarioCreateCommand.getEmail_usuario()) != null) {
+            throw new Exception("Email já cadastrado!");
+        }
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioCreateCommand.getSenha_usuario());
+        usuarioCreateCommand.setSenha_usuario(encryptedPassword);
+
         Usuarios usuarioDomain = usuarioCreateCommand.toUsuario();
         usuariosRepository.cadastrarUsuario(usuarioDomain);
 
