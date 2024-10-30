@@ -35,6 +35,14 @@ public class Usuarios implements UserDetails {
 
     }
 
+    // Construtor do login
+
+    public Usuarios(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
+
     //  Métodos do UserDetails
 
     @Override
@@ -73,7 +81,7 @@ public class Usuarios implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return senha;
     }
 
     @Override

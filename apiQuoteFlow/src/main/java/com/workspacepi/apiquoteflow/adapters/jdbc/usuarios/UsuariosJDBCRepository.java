@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.workspacepi.apiquoteflow.adapters.jdbc.usuarios.UsuariosSqlExpressions.*;
@@ -99,19 +100,21 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
             throw e;
         }
     }
-
     @Override
-    public Usuarios findByEmail(String email) {
+    public Optional<Usuarios> findByEmail(String email) {
         List<Usuarios> usuarios;
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("email", email);
             usuarios = jdbcTemplate.query(sqlSelectUserByEmail(), params, createUsuariosRowMapper());
-            return usuarios.isEmpty() ? null : usuarios.get(0);
+
+            // Retorna um Optional: se a lista estiver vazia, retorna Optional.empty(); caso contrário, retorna o primeiro usuário como Optional
+            return usuarios.isEmpty() ? Optional.empty() : Optional.of(usuarios.get(0));
         } catch (Exception e) {
-            LOGGER.error("Houve um erro ao consultar o  usuário: " + e.getMessage());
+            LOGGER.error("Houve um erro ao consultar o usuário: " + e.getMessage());
             throw e;
         }
     }
+
 
     @Override
     public Boolean cadastrarUsuario(Usuarios usuario) {

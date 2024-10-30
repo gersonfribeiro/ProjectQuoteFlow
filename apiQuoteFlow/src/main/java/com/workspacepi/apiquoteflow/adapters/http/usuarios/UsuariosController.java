@@ -1,17 +1,14 @@
 package com.workspacepi.apiquoteflow.adapters.http.usuarios;
 
 import com.workspacepi.apiquoteflow.application.usuarios.UsuarioAutenticationDTO;
-import com.workspacepi.apiquoteflow.application.usuarios.UsuarioRegisterDTO;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosCreateCommand;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosUpdateCommand;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import jakarta.validation.Valid;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,11 +36,12 @@ public class UsuariosController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid UsuarioAutenticationDTO data) {
-        var usernamePassord = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+    public ResponseEntity<?> login(@RequestBody @Valid UsuarioAutenticationDTO data) {
+        var usernamePassord = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getSenha());
         var auth = this.authenticationManager.authenticate(usernamePassord);
 
-        return ResponseEntity.ok().build();
+        UsuarioAutenticationDTO response = new UsuarioAutenticationDTO(data.getEmail(), data.getSenha());
+        return ResponseEntity.ok("Login realizado com sucesso!");
     }
 
     @PostMapping("/registrar")

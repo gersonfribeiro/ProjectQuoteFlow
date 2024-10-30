@@ -1,8 +1,7 @@
 package com.workspacepi.apiquoteflow.domain.usuarios;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UsuariosRepository {
@@ -14,7 +13,7 @@ public interface UsuariosRepository {
     Usuarios findById(UUID id_usuario);
 
 //  Buscar usuário por Email
-    UserDetails findByEmail(String email);
+    Optional<Usuarios> findByEmail(String email);
 
 //  Inserção
     Boolean cadastrarUsuario(Usuarios usuario);
