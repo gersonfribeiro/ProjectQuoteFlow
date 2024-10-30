@@ -135,10 +135,10 @@ export class RegisterCompanyFormComponent {
           senha: "teste123",
         };
 
-      this.http.post('http://localhost:8080/empresas', companyData).subscribe(
+      this.http.post<{ id_empresa: string }>('http://localhost:8080/empresas', companyData).subscribe(
           response => {
             console.log("Resposta da API:", response);
-            const id_empresa = "67790e81-9d9d-4bfc-86b3-b2f44cd62fe1";
+            const id_empresa = response.id_empresa;
 
             const addressData = {
               bairro: this.registerCompanyForm.value.neighborhood,
@@ -148,7 +148,7 @@ export class RegisterCompanyFormComponent {
               logradouro: this.registerCompanyForm.value.street,
               numero: this.registerCompanyForm.value.number,
               uf: this.registerCompanyForm.value.state,
-              id_empresa: "67790e81-9d9d-4bfc-86b3-b2f44cd62fe1"
+              id_empresa: id_empresa
             };
 
             this.http.post('http://localhost:8080/enderecos', addressData).subscribe(
