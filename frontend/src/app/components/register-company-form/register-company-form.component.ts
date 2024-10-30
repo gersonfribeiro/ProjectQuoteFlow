@@ -47,6 +47,8 @@ export class RegisterCompanyFormComponent {
       neighborhood: [{value: '', disabled: true}],
       city: [{value: '', disabled: true}],
       state: [{value: '', disabled: true}],
+      complement: [{value: '', disabled: true}],
+      number: [{value: '', disabled: true}],
     });
   }
 
@@ -126,6 +128,27 @@ export class RegisterCompanyFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.registerCompanyForm.valid) {
+
+//       this.http.get('http://localhost:8080/empresas').subscribe(
+//           (response: any) => {
+//               const id_empresa = response.id_empresa;
+//
+//               this.dataForm = {
+//                         ...this.dataForm,
+//                         id_empresa: id_empresa
+//                       };
+//
+//               this.http.post('http://localhost:8080/enderecos', this.dataForm).subscribe(
+//                         response => {
+//                             console.log('Informações de endereço enviado:', this.dataForm);
+//                           },
+//                         error => {
+//                             console.log('Erro ao enviar informações de endereço');
+//                           }
+//                       );
+//             }
+//         )
+
       console.log('Formulário enviado:', this.registerCompanyForm.value);
       this.toastr.success('Empresa cadastrada com sucesso!');
       this.registerCompanyForm.disable();
