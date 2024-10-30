@@ -160,7 +160,7 @@
             <label class="form-label">Cidade:</label>
             <input
               type="text"
-              class="form-control mb-2"
+              class="form-control mb-4"
               formControlName="city"
               [disabled]="true"
             />
@@ -169,14 +169,45 @@
             <label class="form-label">Estado:</label>
             <input
               type="text"
-              class="form-control mb-2"
+              class="form-control mb-4"
               formControlName="state"
               [disabled]="true"
             />
           </div>
-        </div>
 
-        <hr/>
+          <hr/>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label class="form-label">Complemento:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="complement"
+                  [disabled]="true"
+                />
+                <button type="button" class="btn btn-success input-group-append" (click)="toggleField('complement')">
+                  <i class="bi bi-pencil"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Número:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="number"
+                  [disabled]="true"
+                />
+                <button type="button" class="btn btn-success input-group-append" (click)="toggleField('number')">
+                  <i class="bi bi-pencil"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Enviar Button -->
         <button
