@@ -68,14 +68,14 @@
         class="text-danger"
       >
         <div
-          class="alert alert-danger alert-small mb-2"
+          class="alert alert-danger alert-small mb-2 mt-2"
           role="alert"
           *ngIf="loginForm.get('password')?.errors?.['required']"
         >
           A senha é <strong>obrigatória.</strong>
         </div>
         <div
-          class="alert alert-danger alert-small"
+          class="alert alert-danger alert-small mb-2 mt-2"
           role="alert"
           *ngIf="loginForm.get('password')?.errors?.['minlength']"
         >
