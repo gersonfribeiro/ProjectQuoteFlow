@@ -14,6 +14,7 @@ import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from "rxjs";
 import {Usuario} from "../../models/user.model";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-profile-form',
@@ -24,6 +25,7 @@ import {Usuario} from "../../models/user.model";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
   ],
   templateUrl: './profile-form.component.html',
   styleUrls: ['./profile-form.component.css'],
@@ -121,6 +123,7 @@ export class ProfileFormComponent {
       console.log('Formulário enviado:', this.profileForm.value);
     } else {
       console.log('Formulário inválido');
+      this.toastr.warning("Para salvar a informação, clique no lápis apenas uma vez.")
       this.profileForm.markAllAsTouched();
     }
   }
