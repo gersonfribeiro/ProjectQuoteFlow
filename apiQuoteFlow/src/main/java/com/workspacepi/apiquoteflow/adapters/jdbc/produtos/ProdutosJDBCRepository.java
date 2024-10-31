@@ -4,7 +4,7 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.produtos;
 
 
- import com.workspacepi.apiquoteflow.adapters.http.produtos.error.ProdutosErrorHandler;
+import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.domain.produtos.*;
 
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
 
 //  Logger cuida do envio das nossas exceptions específicas ao invés das exceptions padrões
 
-     private static final Logger LOGGER = LoggerFactory.getLogger(ProdutosErrorHandler.class);
+     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
 
 //  Função da RowMapper para aproveitamento de código

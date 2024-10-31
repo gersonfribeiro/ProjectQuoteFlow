@@ -1,6 +1,6 @@
 package com.workspacepi.apiquoteflow.application.produtos;
 
-import com.workspacepi.apiquoteflow.adapters.http.produtos.error.ProdutosErrorHandler;
+import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
 import com.workspacepi.apiquoteflow.domain.produtos.Produtos;
 import com.workspacepi.apiquoteflow.domain.produtos.ProdutosRepository;
@@ -21,7 +21,7 @@ public class ProdutosService {
         this.produtosRepository = produtosRepository;
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProdutosErrorHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
     public List<Produtos> findAll() { return produtosRepository.findAll(); }
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -24,18 +25,18 @@ public class UsuariosHandler {
         return ResponseEntity.ok(usuario);
     }
 
-    public ResponseEntity<Usuarios> findById(String id_usuario) throws Exception {
-        Usuarios usuario = usuariosService.findById(UUID.fromString(id_usuario));
+    public ResponseEntity<Optional<Usuarios>> findById(String id_usuario) throws Exception {
+        Optional<Usuarios> usuario = Optional.ofNullable(usuariosService.findById(UUID.fromString(id_usuario)));
         return ResponseEntity.ok(usuario);
     }
 
-    public ResponseEntity<Usuarios> cadastrarUsuario(UsuariosCreateCommand usuarioCreateCommand) throws Exception {
-        Usuarios usuario = usuariosService.cadastrarUsuario(usuarioCreateCommand);
+    public ResponseEntity<Optional<Usuarios>> cadastrarUsuario(UsuariosCreateCommand usuarioCreateCommand) throws Exception {
+        Optional<Usuarios> usuario = Optional.ofNullable(usuariosService.cadastrarUsuario(usuarioCreateCommand));
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
-    public ResponseEntity<Usuarios> modificarUsuario(UsuariosUpdateCommand usuarioUpdateCommand, String id_usuario) throws Exception {
-        Usuarios usuario = usuariosService.modificarUsuario(usuarioUpdateCommand, UUID.fromString(id_usuario));
+    public ResponseEntity<Optional<Usuarios>> modificarUsuario(UsuariosUpdateCommand usuarioUpdateCommand, String id_usuario) throws Exception {
+        Optional<Usuarios> usuario = Optional.ofNullable(usuariosService.modificarUsuario(usuarioUpdateCommand, UUID.fromString(id_usuario)));
         return ResponseEntity.ok(usuario);
     }
     

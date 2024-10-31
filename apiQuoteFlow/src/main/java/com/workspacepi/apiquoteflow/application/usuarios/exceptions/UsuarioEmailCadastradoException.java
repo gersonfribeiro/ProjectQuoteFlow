@@ -1,8 +1,16 @@
 package com.workspacepi.apiquoteflow.application.usuarios.exceptions;
 
-public class UsuarioEmailCadastradoException extends UsuariosExceptions{
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UsuarioEmailCadastradoException extends RuntimeException {
+
+    private String email;
 
     public UsuarioEmailCadastradoException(String email) {
-        super("O email " + email + " já está registrado! ", email);
+        super("Email já cadastrado: " + email);
+        this.email = email;
     }
 }

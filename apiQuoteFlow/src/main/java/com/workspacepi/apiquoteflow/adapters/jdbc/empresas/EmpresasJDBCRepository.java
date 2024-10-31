@@ -1,6 +1,6 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.empresas;
 
-import com.workspacepi.apiquoteflow.adapters.http.empresas.error.EmpresasErrorHandler;
+import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
 import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class EmpresasJDBCRepository implements EmpresasRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     public EmpresasJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmpresasErrorHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
     private RowMapper<Empresas> createEmpresaRowMapper() {
         return (rs, rowNum) -> {
