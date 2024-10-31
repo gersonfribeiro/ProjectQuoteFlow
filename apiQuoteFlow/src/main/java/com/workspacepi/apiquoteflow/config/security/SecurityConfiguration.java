@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios/registrar").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/{id_usuario}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/empresas/{id_empresa}/produtos").hasRole("ASSOCIADO")
                         .requestMatchers(HttpMethod.POST, "/cotacoes").hasRole("ASSOCIADO")
                         .anyRequest().authenticated()
