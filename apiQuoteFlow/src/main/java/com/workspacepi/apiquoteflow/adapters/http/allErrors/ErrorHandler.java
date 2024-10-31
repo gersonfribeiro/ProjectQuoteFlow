@@ -1,6 +1,8 @@
 package com.workspacepi.apiquoteflow.adapters.http.allErrors;
 
+import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,16 @@ public class ErrorHandler {
                 HttpStatus.NOT_FOUND.value()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UsuarioEmailCadastradoException.class)
+    public ResponseEntity<ErrorResponse> handleUsuarioEmailCadastradoException(UsuarioEmailCadastradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getEmail(),
+                HttpStatus.CONFLICT.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     // Método genérico para outras exceções
