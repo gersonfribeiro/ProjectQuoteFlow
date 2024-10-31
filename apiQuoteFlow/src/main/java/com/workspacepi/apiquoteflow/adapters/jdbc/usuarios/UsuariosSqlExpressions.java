@@ -3,26 +3,19 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.usuarios;
 public class UsuariosSqlExpressions {
     public static String sqlSelectAllUsers() {
         return """
-               SELECT id_usuario,
-                    email,
-                    nome,
-                    senha,
-                    telefone,
-                    id_empresa
-               FROM usuarios
+               SELECT * FROM usuarios
             """;
     }
 
     public static String sqlSelectUserById() {
         return """
-               SELECT id_usuario,
-                    email,
-                    nome,
-                    senha,
-                    telefone,
-                    id_empresa
-               FROM usuarios
-               WHERE id_usuario = :id_usuario
+               SELECT * FROM usuarios WHERE id_usuario = :id_usuario
+           """;
+    }
+
+    public static String sqlSelectUserByEmail() {
+        return """
+               SELECT * FROM usuarios WHERE email = :email
            """;
     }
 
@@ -32,12 +25,14 @@ public class UsuariosSqlExpressions {
                     id_usuario,
                     email,
                     nome,
-                    senha)
+                    senha,
+                    permissao)
                     values (
                         :id_usuario,
                         :email,
                         :nome,
-                        :senha)
+                        :senha,
+                        :permissao)
            """;
     }
 
@@ -48,14 +43,15 @@ public class UsuariosSqlExpressions {
                     nome = :nome,
                     senha = :senha,
                     telefone = :telefone,
-                    id_empresa = :id_empresa
+                    id_empresa = :id_empresa,
+                    permissao = :permissao
                WHERE id_usuario = :id_usuario
            """;
     }
 
     public static String sqlDeleteUserById() {
         return """
-                   DELETE FROM usuarios WHERE id_usuario = :id_usuario
-               """;
+               DELETE FROM usuarios WHERE id_usuario = :id_usuario
+           """;
     }
 }

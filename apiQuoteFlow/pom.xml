@@ -48,7 +48,6 @@
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
 
-
         <!-- Dependência do JDBC para a manipulação e persistência dos dados -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

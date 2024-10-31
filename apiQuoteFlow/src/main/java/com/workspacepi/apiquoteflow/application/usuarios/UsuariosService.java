@@ -1,21 +1,28 @@
 package com.workspacepi.apiquoteflow.application.usuarios;
 
+import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UsuariosService {
 
     private final UsuariosRepository usuariosRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuariosService(UsuariosRepository usuariosRepository) {
+    public UsuariosService(UsuariosRepository usuariosRepository, PasswordEncoder passwordEncoder) {
         this.usuariosRepository = usuariosRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     public List<Usuarios> findAll() {
         return usuariosRepository.findAll();
@@ -31,6 +38,13 @@ public class UsuariosService {
     }
 
     public Usuarios cadastrarUsuario(UsuariosCreateCommand usuarioCreateCommand) throws Exception {
+        if(usuariosRepository.findByEmail(usuarioCreateCommand.getEmail_usuario()).isPresent()) {
+            throw new UsuarioEmailCadastradoException(usuarioCreateCommand.getEmail_usuario());
+        }
+
+        String encryptedPassword = passwordEncoder.encode(usuarioCreateCommand.getSenha_usuario());
+        usuarioCreateCommand.setSenha_usuario(encryptedPassword);
+
         Usuarios usuarioDomain = usuarioCreateCommand.toUsuario();
         usuariosRepository.cadastrarUsuario(usuarioDomain);
 
@@ -43,6 +57,12 @@ public class UsuariosService {
         if (usuarioDomain == null)
             throw new UsuarioNaoEncontradoException(id_usuario);
 
+        // Verifica se o novo e-mail já está cadastrado
+        Optional<Usuarios> usuarioExistente = usuariosRepository.findByEmail(usuarioUpdateCommand.getEmail_usuario());
+        if (usuarioExistente.isPresent() && !usuarioExistente.get().getId_usuario().equals(id_usuario)) {
+            throw new UsuarioEmailCadastradoException(usuarioUpdateCommand.getEmail_usuario());
+        }
+
         usuariosRepository.modificarUsuario(usuarioUpdateCommand.toUsuario(id_usuario));
         return findById(id_usuario);
     }
@@ -54,7 +74,7 @@ public class UsuariosService {
         if (usuarioDomain != null) { // Verifica se o usuário existe
             usuariosRepository.deleteUsuarioById(id_usuario); // Chama o repositório para deletar
         } else {
-            throw new Exception("Usuário não encontrado."); // Lança exceção se o usuário não for encontrado
+            throw new UsuarioNaoEncontradoException(id_usuario);
         }
     }
 }
