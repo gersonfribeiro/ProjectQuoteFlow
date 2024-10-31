@@ -1,6 +1,6 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.usuarios;
 
-import com.workspacepi.apiquoteflow.adapters.http.usuarios.error.UsuarioErrorHandler;
+import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     public UsuariosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioErrorHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
     private RowMapper<Usuarios> createUsuariosRowMapper() {
         return (rs, rowNum) -> {

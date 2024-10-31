@@ -25,7 +25,7 @@ public class UsuariosService {
         Usuarios usuario = usuariosRepository.findById(id_usuario);
 
         if (usuario == null)
-            throw new Exception("Usuario no encontrado");
+            throw new UsuarioNaoEncontradoException(id_usuario);
 
         return usuario;
     }
