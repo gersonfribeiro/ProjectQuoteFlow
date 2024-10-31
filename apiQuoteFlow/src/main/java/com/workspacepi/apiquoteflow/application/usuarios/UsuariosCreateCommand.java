@@ -1,6 +1,7 @@
 package com.workspacepi.apiquoteflow.application.usuarios;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.workspacepi.apiquoteflow.domain.usuarios.Permissoes;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import lombok.Getter;
 import lombok.Setter;

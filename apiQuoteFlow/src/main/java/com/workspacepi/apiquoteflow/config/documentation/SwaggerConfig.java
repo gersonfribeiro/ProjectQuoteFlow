@@ -1,4 +1,4 @@
-package com.workspacepi.apiquoteflow.config;
+package com.workspacepi.apiquoteflow.config.documentation;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

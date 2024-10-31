@@ -1,6 +1,7 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.usuarios;
 
 import com.workspacepi.apiquoteflow.adapters.http.usuarios.error.UsuarioErrorHandler;
+import com.workspacepi.apiquoteflow.domain.usuarios.Permissoes;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.workspacepi.apiquoteflow.adapters.jdbc.usuarios.UsuariosSqlExpressions.*;
@@ -42,7 +44,10 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
             } else {
                 id_empresa = null;
             }
-            return new Usuarios(id_usuario, nome, email, senha, telefone, id_empresa);
+
+            Permissoes permissao = Permissoes.valueOf(rs.getString("permissao"));
+
+            return new Usuarios(id_usuario, nome, email, senha, telefone, id_empresa, permissao);
         };
     }
 
@@ -65,6 +70,8 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
         } else {
             params.addValue("id_empresa", null);
         }
+
+        params.addValue("permissao", usuario.getPermissao().name());
 
         return params;
     }
@@ -93,6 +100,21 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
             throw e;
         }
     }
+    @Override
+    public Optional<Usuarios> findByEmail(String email) {
+        List<Usuarios> usuarios;
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("email", email);
+            usuarios = jdbcTemplate.query(sqlSelectUserByEmail(), params, createUsuariosRowMapper());
+
+            // Retorna um Optional: se a lista estiver vazia, retorna Optional.empty(); caso contrário, retorna o primeiro usuário como Optional
+            return usuarios.isEmpty() ? Optional.empty() : Optional.of(usuarios.get(0));
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar o usuário: " + e.getMessage());
+            throw e;
+        }
+    }
+
 
     @Override
     public Boolean cadastrarUsuario(Usuarios usuario) {
