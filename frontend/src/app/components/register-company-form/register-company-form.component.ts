@@ -39,14 +39,16 @@ export class RegisterCompanyFormComponent {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.registerCompanyForm = this.fb.group({
-      company: [{value: '', disabled: true}, Validators.required],
-      cnpj: [{value: '', disabled: true}, [Validators.required, this.validateCNPJ]],
-      phone: [{value: '', disabled: true}, [Validators.required, this.validatePhone]],
-      postalCode: [{value: '', disabled: true}, Validators.required],
-      street: [{value: '', disabled: true}], // Defina o estado inicial como desabilitado
-      neighborhood: [{value: '', disabled: true}],
-      city: [{value: '', disabled: true}],
-      state: [{value: '', disabled: true}],
+      company: [{value: '', disabled: false}, Validators.required],
+      cnpj: [{value: '', disabled: false}, [Validators.required, this.validateCNPJ]],
+      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
+      postalCode: [{value: '', disabled: false}, Validators.required],
+      street: [{value: '', disabled: false}], // Defina o estado inicial como desabilitado
+      neighborhood: [{value: '', disabled: false}],
+      city: [{value: '', disabled: false}],
+      state: [{value: '', disabled: false}],
+      complement: [{value: '', disabled: false}],
+      number: [{value: '', disabled: false}],
     });
   }
 
@@ -109,7 +111,6 @@ export class RegisterCompanyFormComponent {
               }
               this.registerCompanyForm.patchValue(dataForm);
               localStorage.setItem('cep', JSON.stringify(dataForm));
-//               this.registerCompanyForm.get('postalCode')?.disable();
             } else {
               this.toastr.error('CEP não encontrado.');
             }
@@ -126,12 +127,50 @@ export class RegisterCompanyFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.registerCompanyForm.valid) {
+
+      const companyData = {
+          cnpj: this.registerCompanyForm.value.cnpj,
+          email: "teste@email.com",
+          nome: this.registerCompanyForm.value.company,
+          senha: "teste123",
+        };
+
+      this.http.post<{ id_empresa: string }>('http://localhost:8080/empresas', companyData).subscribe(
+          response => {
+            console.log("Resposta da API:", response);
+            const id_empresa = response.id_empresa;
+
+            const addressData = {
+              bairro: this.registerCompanyForm.value.neighborhood,
+              cep: this.registerCompanyForm.value.postalCode,
+              complemento: this.registerCompanyForm.value.complement,
+              localidade: this.registerCompanyForm.value.city,
+              logradouro: this.registerCompanyForm.value.street,
+              numero: this.registerCompanyForm.value.number,
+              uf: this.registerCompanyForm.value.state,
+              id_empresa: id_empresa
+            };
+
+            this.http.post('http://localhost:8080/enderecos', addressData).subscribe(
+                response => {
+                    this.toastr.success('Empresa e endereço cadastrados com sucesso!');
+                  },
+                error => {
+                    this.toastr.error('Erro ao cadastrar endereço.');
+                  }
+              );
+
+          },
+        (error) => {
+                console.error('Erro ao cadastrar empresa:', error);
+                this.toastr.error('Erro ao cadastrar empresa.');
+              }
+        );
+
       console.log('Formulário enviado:', this.registerCompanyForm.value);
-      this.toastr.success('Empresa cadastrada com sucesso!');
       this.registerCompanyForm.disable();
     } else {
       console.log('Formulário inválido');
-      this.toastr.error('Erro ao cadastrar empresa.');
       this.registerCompanyForm.markAllAsTouched();
     }
   }
