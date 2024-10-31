@@ -12,8 +12,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-//import com.workspacepi.apiquoteflow.adapters.http.cotacoes.error.EnderecoErrorHandler;
-
 import java.util.List;
 import java.util.UUID;
 
