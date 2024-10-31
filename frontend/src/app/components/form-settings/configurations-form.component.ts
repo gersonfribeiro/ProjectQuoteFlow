@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
 import {FormsModule} from "@angular/forms";
-import {ApiAuthService} from "../../services/api-auth.service";
+import {ApiUserService} from "../../services/./api-user.service";
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -17,7 +17,7 @@ export class ConfigurationsFormComponent {
   nomeUsuario: string | null = null;
   userId: string | null = null; // Adicionando userId
 
-  constructor(private apiService: ApiAuthService, private router: Router, private toastr: ToastrService) {
+  constructor(private apiService: ApiUserService, private router: Router, private toastr: ToastrService) {
     const notificationConfigurationsPage = localStorage.getItem('notificationConfigurationsPage');
     this.showNotificationAlert = !notificationConfigurationsPage;
 

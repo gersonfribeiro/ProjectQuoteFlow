@@ -16,10 +16,10 @@ import {Router, RouterModule} from '@angular/router';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 // Importa diretivas e pipes do pacote 'ngx-mask' para aplicar máscaras a campos de entrada.
-import {ApiAuthService} from "../../services/api-auth.service";
+import {ApiUserService} from "../../services/./api-user.service";
 import {Usuario} from "../../models/user.model";
 
-// Importa o serviço 'ApiAuthService' que gerencia a comunicação com a API para registro de usuários.
+// Importa o serviço 'ApiUserService' que gerencia a comunicação com a API para registro de usuários.
 
 @Component({
   selector: 'app-register-form',
@@ -43,7 +43,7 @@ export class RegisterFormComponent {
   errorMessage: any;
   showPassword = false; // Controle de visibilidade da senha
 
-  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiAuthService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService, private toastr: ToastrService) {
     this.registerForm = this.fb.group({
       nome: ['', [Validators.required]],
       email: ['', [Validators.required, this.validateEmail]],
@@ -70,11 +70,9 @@ export class RegisterFormComponent {
     if (this.registerForm.valid) {
       this.isLoading = true;
       const usuarioData: Usuario = this.registerForm.value;
-      console.log('Enviando dados do usuário:', usuarioData);
 
-      this.apiService.registerUser(usuarioData).subscribe(
-        response => {
-          console.log('Resposta da API:', response);
+      this.apiService.registerUser(usuarioData).subscribe({
+        next: (response) => {
           this.isLoading = false;
           this.toastr.success('Usuário registrado com sucesso!', '', {
             positionClass: 'toast-top-right',
@@ -86,26 +84,16 @@ export class RegisterFormComponent {
           const usuarioComId: Usuario = {...usuarioData, id_usuario: response.id_usuario};
           localStorage.setItem('usuario', JSON.stringify(usuarioComId));
 
-          // Armazenando os dados do usuário localmente ou em um serviço para uso no perfil
-          //localStorage.setItem('usuario', JSON.stringify(usuarioData));
-
-          // Redireciona para a página de perfil
           setTimeout(() => {
             this.router.navigate(['/dashboard/notifications']);
           }, 2500);
         },
-        error => {
-          console.error('Erro ao registrar o usuário:', error);
+        error: (error) => {
           this.isLoading = false;
-          if (error.status === 409) {
-            this.errorMessage = 'Este email já está registrado. Por favor, utilize outro.';
-            this.toastr.error('Este email já está registrado. Por favor, utilize outro.');
-          } else {
-            this.errorMessage = 'Falha no registro. Tente novamente.';
-            this.toastr.error('Falha no registro. Tente novamente.');
-          }
+          this.errorMessage = error.message;
+          this.toastr.error(error.message);
         }
-      );
+      });
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Formulário inválido:', this.registerForm.errors);
