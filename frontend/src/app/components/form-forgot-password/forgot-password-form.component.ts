@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -8,4 +8,5 @@ import { RouterModule } from '@angular/router';
   templateUrl: './forgot-password-form.component.html',
   styleUrl: './forgot-password-form.component.css'
 })
-export class ForgotPasswordFormComponent {}
+export class ForgotPasswordFormComponent {
+}
