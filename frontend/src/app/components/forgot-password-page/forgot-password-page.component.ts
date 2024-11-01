@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ForgotPasswordFormComponent } from '../form-forgot-password/forgot-password-form.component';
+import {Component} from '@angular/core';
+import {ForgotPasswordFormComponent} from '../form-forgot-password/forgot-password-form.component';
 
 
 @Component({
@@ -8,4 +8,5 @@ import { ForgotPasswordFormComponent } from '../form-forgot-password/forgot-pass
   imports: [ForgotPasswordFormComponent],
   templateUrl: './forgot-password-page.component.html',
 })
-export class ForgotPasswordPageComponent {}
+export class ForgotPasswordPageComponent {
+}

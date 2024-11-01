@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Chart, ChartItem, registerables } from 'chart.js';
+import {Chart, ChartItem, registerables} from 'chart.js';
 
 @Component({
   selector: 'app-chart',
@@ -15,7 +15,7 @@ import { Chart, ChartItem, registerables } from 'chart.js';
   styleUrl: './chart.component.css',
 })
 export class ChartComponent implements OnInit, AfterViewInit {
-  @ViewChild('myChart', { static: false })
+  @ViewChild('myChart', {static: false})
   myChart!: ElementRef<HTMLCanvasElement>;
   chart: any;
 

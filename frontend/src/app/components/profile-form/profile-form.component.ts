@@ -32,13 +32,12 @@ import {RouterLink} from "@angular/router";
 })
 export class ProfileFormComponent {
   profileForm: FormGroup;
-  showNotificationAlert?: boolean;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: true}, Validators.required],
       email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
-      phone: [{value: '', disabled: true}, [Validators.required, this.validatePhone]], // Síncrono
+      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]], // Síncrono
       //
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
