@@ -10,6 +10,7 @@ import {NgIf} from "@angular/common";
 import {NgxMaskDirective} from "ngx-mask";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register-product-form',
@@ -18,7 +19,8 @@ import {ToastrService} from "ngx-toastr";
     FormsModule,
     NgIf,
     NgxMaskDirective,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './register-product-form.component.html',
   styleUrl: './register-product-form.component.css'
@@ -28,8 +30,9 @@ export class RegisterProductFormComponent {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
     this.registerProductForm = this.fb.group({
-      productCategory: ['', Validators.required],
       sku: ['', [Validators.required, Validators.minLength(6)]],
+      productCategory: ['', Validators.required],
+      variation: [''],
       description: [''],
       observation: ['']
     });
