@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RegisterProductFormComponent} from "../register-product-form/register-product-form.component";
-import {SidebarDashboardComponent} from "../sidebar/sidebar-dashboard.component";
+import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.component";
 import {RegisterCompanyFormComponent} from "../register-company-form/register-company-form.component";
 
 @Component({

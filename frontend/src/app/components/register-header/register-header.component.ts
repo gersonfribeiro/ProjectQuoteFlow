@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-header-register',
+  selector: 'app-register-header',
   standalone: true,
   imports: [RouterModule, CommonModule],
-  templateUrl: './header-register.component.html',
-  styleUrl: './header-register.component.css',
+  templateUrl: './register-header.component.html',
+  styleUrl: './register-header.component.css',
 })
-export class HeaderRegisterComponent {
+export class RegisterHeaderComponent {
   isMenuOpen = false;
 
   toggleMenu() {

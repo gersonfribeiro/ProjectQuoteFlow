@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SidebarDashboardComponent} from '../sidebar/sidebar-dashboard.component';
+import {SidebarDashboardComponent} from '../sidebar-dashboard/sidebar-dashboard.component';
 import {FormDashboardComponent} from '../quotation-form/quotation-form-dashboard.component';
 
 @Component({
