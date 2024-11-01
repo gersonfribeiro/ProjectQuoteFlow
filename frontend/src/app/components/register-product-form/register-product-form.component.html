@@ -1,3 +1,4 @@
+<!-- register-product-form.component.html -->
 <div class="container-fluid main p-3">
   <h1 class="px-5"><strong>Cadastrar produto:</strong></h1>
   <div class="p-5">
@@ -11,32 +12,6 @@
     >
       <form [formGroup]="registerProductForm" (ngSubmit)="onSubmit()">
         <div class="row mb-3">
-          <div class="col-md-6">
-            <label class="form-label"><strong>*</strong> Categoria:</label>
-            <div class="input-group mb-2">
-              <select class="form-control" formControlName="productCategory">
-                <option value="" disabled selected>Selecione uma categoria</option>
-                <option value="MADEIRA">MADEIRA</option>
-                <option value="ALIMENTOS">ALIMENTOS</option>
-                <option value="LIMPEZA">LIMPEZA</option>
-                <option value="ELETRONICOS">ELETRONICOS</option>
-                <option value="ROUPAS">ROUPAS</option>
-                <option value="COSMETICOS">COSMETICOS</option>
-                <option value="UTENSILIOS">UTENSILIOS</option>
-                <option value="FERRAMENTAS">FERRAMENTAS</option>
-                <option value="OUTRO">OUTRO</option>
-              </select>
-            </div>
-            <div
-              *ngIf="registerProductForm.get('productCategory')?.invalid && registerProductForm.get('productCategory')?.touched"
-              class="text-danger"
-            >
-              <div class="alert alert-danger alert-small mb-2">
-                A categoria é <strong>obrigatória.</strong>
-              </div>
-            </div>
-          </div>
-
           <div class="col-md-6">
             <label class="form-label"><strong>*</strong> SKU:</label>
             <div class="input-group mb-2">
@@ -62,42 +37,110 @@
                 class="alert alert-danger alert-small mb-2"
                 *ngIf="registerProductForm.get('sku')?.errors?.['minlength']"
               >
-                O SKU deve ter pelo menos 6 caracteres.
+                O SKU deve ter 6 caracteres.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label"><strong>*</strong> Categoria:</label>
+            <div class="input-group mb-2">
+              <select class="form-control" formControlName="productCategory">
+                <option value="" disabled selected>Selecione uma categoria</option>
+                <optgroup label="Materiais de Construção">
+                  <option value="MADEIRA">Madeira</option>
+                  <option value="FERRAMENTAS">Ferramentas</option>
+                </optgroup>
+                <optgroup label="Alimentos e Bebidas">
+                  <option value="ALIMENTOS">Alimentos</option>
+                </optgroup>
+                <optgroup label="Produtos de Limpeza">
+                  <option value="LIMPEZA">Limpeza</option>
+                </optgroup>
+                <optgroup label="Eletrônicos e Eletrodomésticos">
+                  <option value="ELETRONICOS">Eletrônicos</option>
+                </optgroup>
+                <optgroup label="Vestuário">
+                  <option value="ROUPAS">Roupas</option>
+                </optgroup>
+                <optgroup label="Beleza e Cuidados Pessoais">
+                  <option value="COSMETICOS">Cosméticos</option>
+                </optgroup>
+                <optgroup label="Utensílios Domésticos">
+                  <option value="UTENSILIOS">Utensílios</option>
+                </optgroup>
+                <optgroup label="Outros">
+                  <option value="OUTRO">Outro</option>
+                </optgroup>
+              </select>
+            </div>
+            <div
+              *ngIf="registerProductForm.get('productCategory')?.invalid && registerProductForm.get('productCategory')?.touched"
+              class="text-danger"
+            >
+              <div class="alert alert-danger alert-small mb-2">
+                A categoria é <strong>obrigatória.</strong>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-12">
+        <hr>
+
+        <div class="col-md-12 mb-3">
+          <label class="form-label">Variação:</label>
+          <div class="input-group mb-2">
+            <textarea
+              type="text"
+              class="form-control"
+              formControlName="variation"
+              [maxlength]="50"
+              placeholder="Exemplo.: Cadeira com braço / Cadeira sem braço"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="col-md-12 mb-3">
           <label class="form-label">Descrição:</label>
           <div class="input-group mb-2">
             <textarea
               class="form-control"
               formControlName="description"
-              maxlength="50"
+              [maxlength]="70"
             ></textarea>
           </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-12 mb-3">
           <label class="form-label">Observação:</label>
           <div class="input-group mb-2">
             <textarea
               class="form-control"
               formControlName="observation"
-              maxlength="50"
+              [maxlength]="70"
             ></textarea>
           </div>
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2 col-md-3"
-          [disabled]="registerProductForm.invalid"
-        >
-          <i class="bi bi-save"></i>
-          Cadastrar
-        </button>
+        <div class="d-flex gap-2">
+          <button
+            type="submit"
+            class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2 col-md-6"
+            [disabled]="registerProductForm.invalid"
+          >
+            <i class="bi bi-save"></i>
+            Cadastrar
+          </button>
+
+          <a
+            [routerLink]="['']"
+            class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2 col-md-6"
+            role="button"
+          >
+            <i class="bi bi-binoculars"></i>
+            Visualizar produtos
+          </a>
+        </div>
       </form>
     </div>
   </div>
