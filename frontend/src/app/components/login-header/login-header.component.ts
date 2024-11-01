@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-header-login',
+  selector: 'app-login-header',
   standalone: true,
   imports: [RouterModule, CommonModule],
-  templateUrl: './header-login.component.html',
-  styleUrls: ['./header-login.component.css'],
+  templateUrl: './login-header.component.html',
+  styleUrls: ['./login-header.component.css'],
 })
 export class HeaderLoginComponent {
   isMenuOpen = false;

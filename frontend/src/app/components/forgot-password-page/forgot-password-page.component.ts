@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ForgotPasswordFormComponent} from '../form-forgot-password/forgot-password-form.component';
+import {ForgotPasswordFormComponent} from '../forgot-password-form/forgot-password-form.component';
 
 
 @Component({

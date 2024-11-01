@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { SidebarDashboardComponent } from '../sidebar/sidebar-dashboard.component';
+import { SidebarDashboardComponent } from '../sidebar-dashboard/sidebar-dashboard.component';
 import { NotificationsFormComponent } from '../notifications-form/notifications-form.component';
 
 @Component({

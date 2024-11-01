@@ -6,20 +6,20 @@ import {ApiUserService} from "../../services/./api-user.service";
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: 'app-configurations-form',
+  selector: 'app-form-settings',
   standalone: true,
   imports: [RouterModule, CommonModule, FormsModule],
-  templateUrl: './configurations-form.component.html',
-  styleUrls: ['./configurations-form.component.css'], // Corrigido para 'styleUrls' ao invés de 'styleUrl'
+  templateUrl: './form-settings.component.html',
+  styleUrls: ['./form-settings.component.css'], // Corrigido para 'styleUrls' ao invés de 'styleUrl'
 })
-export class ConfigurationsFormComponent {
+export class FormSettingsComponent {
   showNotificationAlert: boolean;
   nomeUsuario: string | null = null;
   userId: string | null = null; // Adicionando userId
 
   constructor(private apiService: ApiUserService, private router: Router, private toastr: ToastrService) {
-    const notificationConfigurationsPage = localStorage.getItem('notificationConfigurationsPage');
-    this.showNotificationAlert = !notificationConfigurationsPage;
+    const notificationSettingsPage = localStorage.getItem('notificationSettingsPage');
+    this.showNotificationAlert = !notificationSettingsPage;
 
     // Recupera o nome do usuário e o ID do localStorage
     const usuario = localStorage.getItem('usuario');

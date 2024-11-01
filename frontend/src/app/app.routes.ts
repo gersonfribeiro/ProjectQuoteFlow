@@ -7,7 +7,7 @@ import {DashboardNotificationsComponent} from './components/dashboard-notificati
 import {DashboardProfileComponent} from './components/dashboard-profile/dashboard-profile.component';
 import {NotificationsHistoricComponent} from './components/notifications-historic/notifications-historic.component';
 import {DashboardSettingsComponent} from './components/dashboard-settings/dashboard-settings.component';
-import {DashboardChartComponent} from './components/dashboard-chart/dashboard-chart.component';
+import {ChartComponent} from './components/chart/chart.component';
 import {RegisterProductPageComponent} from "./components/register-product-page/register-product-page.component";
 import {RegisterCompanyPageComponent} from "./components/register-company-page/register-company-page.component";
 
@@ -21,7 +21,7 @@ export const routes: Routes = [
   {path: 'dashboard/notifications_historic', component: NotificationsHistoricComponent}, // Página de histórico de notificações
   {path: 'dashboard/profile', component: DashboardProfileComponent}, // Página de perfil
   {path: 'dashboard/settings', component: DashboardSettingsComponent}, // Página de configurações
-  {path: 'dashboard/panel', component: DashboardChartComponent}, // Página de painel
+  {path: 'dashboard/panel', component: ChartComponent}, // Página de painel
   {path: 'dashboard/register-companies', component: RegisterCompanyPageComponent}, // Página de cadastro de empresas
   {path: 'dashboard/register-products', component: RegisterProductPageComponent}, // Página de cadastro de produtos
   // Outras rotas
