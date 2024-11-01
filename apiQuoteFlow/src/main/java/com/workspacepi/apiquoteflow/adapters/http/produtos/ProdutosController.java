@@ -26,25 +26,12 @@ public class ProdutosController {
 
     @GetMapping
     public ResponseEntity<List<Produtos>> findAllByEmpresa(@PathVariable String id_empresa) {
-        try {
-            return produtosHandler.findAllByEmpresa(id_empresa);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();  // Retorna erro 400 para UUID inválido
-        }
+        return produtosHandler.findAllByEmpresa(id_empresa);
     }
 
     @GetMapping("/{id_produto}")
-    public ResponseEntity<Produtos> findByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) {
-        try {
-            return produtosHandler.findByIdAndEmpresa(id_produto, id_empresa);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();  // Retorna erro 400 para UUID inválido
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<Produtos> findByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) throws Exception {
+        return produtosHandler.findByIdAndEmpresa(id_produto, id_empresa);
     }
 
     @PostMapping

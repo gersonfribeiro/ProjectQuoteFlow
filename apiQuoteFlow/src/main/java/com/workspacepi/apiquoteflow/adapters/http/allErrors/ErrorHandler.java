@@ -1,5 +1,6 @@
 package com.workspacepi.apiquoteflow.adapters.http.allErrors;
 
+import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
 import org.apache.catalina.connector.Response;
@@ -16,7 +17,7 @@ public class ErrorHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
-    // Lida com a CotacaoNaoEncontradaException
+    // Lida com a UsuarioNaoEncontradoException
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
     public ResponseEntity<ErrorResponse> handleUsuarioNaoEncontradoException(UsuarioNaoEncontradoException e) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -27,6 +28,7 @@ public class ErrorHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    // Lida com a UsuarioemailCadastradoException
     @ExceptionHandler(UsuarioEmailCadastradoException.class)
     public ResponseEntity<ErrorResponse> handleUsuarioEmailCadastradoException(UsuarioEmailCadastradoException e) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -35,6 +37,17 @@ public class ErrorHandler {
                 HttpStatus.CONFLICT.value()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    //  Lida com o ProdutoNaoEncontradoException
+    @ExceptionHandler(ProdutoNaoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handleProdutoNaoEncontradoException(ProdutoNaoEncontradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getId_produto(),
+                HttpStatus.NOT_FOUND.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     // Método genérico para outras exceções

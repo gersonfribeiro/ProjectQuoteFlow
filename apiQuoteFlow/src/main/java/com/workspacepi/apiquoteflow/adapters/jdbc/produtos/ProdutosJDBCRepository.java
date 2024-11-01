@@ -81,7 +81,7 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
             String observacao = rs.getString("observacao");
             String sku = rs.getString("sku");
             String variacao = rs.getString("variacao");
-            return new Produtos(categoria, descricao, observacao, sku, variacao, id_empresa);
+            return new Produtos(id_produto, categoria, descricao, observacao, sku, variacao, id_empresa);
         };
     }
 
@@ -175,26 +175,12 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
 
     @Override
     public Produtos findByIdAndEmpresa(UUID id_produto, UUID id_empresa) {
-        List<Produtos> produtos;
+        MapSqlParameterSource params = new MapSqlParameterSource("id_produto", id_produto);
+        params.addValue("id_empresa", id_empresa);
 
-        try {
-            MapSqlParameterSource params = new MapSqlParameterSource("id_produto", id_produto);
-            params.addValue("id_empresa", id_empresa);
-            produtos = jdbcTemplate.query(sqlProdutoByIdAndEmpresa(), params, produtosRowMapper(id_empresa));
+        List<Produtos> produtos = jdbcTemplate.query(sqlProdutoByIdAndEmpresa(), params, produtosRowMapper(id_empresa));
 
-            // Verificação para evitar erro de índice se a lista estiver vazia
-            if (produtos.isEmpty()) {
-                throw new NoSuchElementException("Produto não encontrado para o ID: " + id_produto);
-            }
-
-            return produtos.get(0);
-        } catch (DataAccessException e) {
-            LOGGER.error("Houve um erro ao consultar o produto: {}.\n{}", id_produto, e.getMessage());
-            throw e;
-        } catch (NoSuchElementException e) {
-            LOGGER.warn("Nenhum produto encontrado com o ID: {}", id_produto);
-            throw e;
-        }
+        return produtos.isEmpty() ? null : produtos.get(0);
     }
 
     @Override
