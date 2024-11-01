@@ -30,7 +30,7 @@ public class Produtos {
         this.id_empresa = id_empresa;
     }
 
-//    Construtor para o DTO de crate
+//    Construtor para o DTO de create
     public Produtos(CategoriaProduto categoria, String descricao, String observacao,
                     String sku, String variacao) {
         this.id_produto = UUID.randomUUID();

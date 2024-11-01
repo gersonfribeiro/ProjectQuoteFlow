@@ -26,23 +26,13 @@ public class ProdutosHandler {
     }
 
     public ResponseEntity<List<Produtos>> findAllByEmpresa(String id_empresa) {
-        try {
-            List<Produtos> produtos = produtosService.findAllByEmpresa(UUID.fromString(id_empresa));
-            return ResponseEntity.ok(produtos);
-
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UUID da empresa inválido", e);
-        }
+        List<Produtos> produtos = produtosService.findAllByEmpresa(UUID.fromString(id_empresa));
+        return ResponseEntity.ok(produtos);
     }
 
-    public ResponseEntity<Produtos> findByIdAndEmpresa(String id_empresa, String id_produto) throws Exception {
-        try {
-            Produtos produto = produtosService.findByIdAndEmpresa(UUID.fromString(id_empresa), UUID.fromString(id_produto));
-            return ResponseEntity.ok(produto);
-
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UUID inválido", e);
-        }
+    public ResponseEntity<Produtos> findByIdAndEmpresa(String id_produto, String id_empresa) throws Exception {
+        Produtos produto = produtosService.findByIdAndEmpresa(UUID.fromString(id_produto), UUID.fromString(id_empresa));
+        return ResponseEntity.ok(produto);
     }
 
     public ResponseEntity<Produtos> cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, String id_empresa) throws Exception {

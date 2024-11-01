@@ -23,58 +23,56 @@ public class ProdutosService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
-    public List<Produtos> findAll() { return produtosRepository.findAll(); }
-
-    public Produtos findById(UUID id_produto) throws Exception {
-        Produtos produto = produtosRepository.findById(id_produto);
-
-        if (produto == null)
-            throw new ProdutoNaoEncontradoException(id_produto);
-
-        return produto;
-    }
-
-    public Produtos cadastrarProduto(ProdutosCreateCommand produtosCreateCommand) throws Exception {
-        Produtos produtoDomain = produtosCreateCommand.toProduto();
-        produtosRepository.cadastrarProduto(produtoDomain);
-
-        return findById(produtoDomain.getId_produto());
-    }
-
-    public Produtos modificarProduto(ProdutosUpdateCommand produtosUpdateCommand, UUID id_produto) throws Exception {
-        Produtos produtoDomain = produtosRepository.findById(id_produto);
-
-        if (produtoDomain == null)
-            throw new ProdutoNaoEncontradoException(id_produto);
-
-        produtosRepository.modificarProduto(produtosUpdateCommand.toProduto(id_produto));
-        return findById(id_produto);
-    }
-
-    public void deleteProdutoById(UUID id_produto) throws Exception {
-        Produtos produtoDomain = produtosRepository.findById(id_produto);
-
-        if (produtoDomain == null)
-            throw new ProdutoNaoEncontradoException(id_produto);
-
-        produtosRepository.deleteProdutoById(id_produto);
-    }
+//    public List<Produtos> findAll() { return produtosRepository.findAll(); }
+//
+//    public Produtos findById(UUID id_produto) throws Exception {
+//        Produtos produto = produtosRepository.findById(id_produto);
+//
+//        if (produto == null)
+//            throw new ProdutoNaoEncontradoException(id_produto);
+//
+//        return produto;
+//    }
+//
+//    public Produtos cadastrarProduto(ProdutosCreateCommand produtosCreateCommand) throws Exception {
+//        Produtos produtoDomain = produtosCreateCommand.toProduto();
+//        produtosRepository.cadastrarProduto(produtoDomain);
+//
+//        return findById(produtoDomain.getId_produto());
+//    }
+//
+//    public Produtos modificarProduto(ProdutosUpdateCommand produtosUpdateCommand, UUID id_produto) throws Exception {
+//        Produtos produtoDomain = produtosRepository.findById(id_produto);
+//
+//        if (produtoDomain == null)
+//            throw new ProdutoNaoEncontradoException(id_produto);
+//
+//        produtosRepository.modificarProduto(produtosUpdateCommand.toProduto(id_produto));
+//        return findById(id_produto);
+//    }
+//
+//    public void deleteProdutoById(UUID id_produto) throws Exception {
+//        Produtos produtoDomain = produtosRepository.findById(id_produto);
+//
+//        if (produtoDomain == null)
+//            throw new ProdutoNaoEncontradoException(id_produto);
+//
+//        produtosRepository.deleteProdutoById(id_produto);
+//    }
 
 //    Novas implementações (definitivas):
 
     public List<Produtos> findAllByEmpresa(UUID id_empresa) { return produtosRepository.findAllByEmpresa(id_empresa); }
 
-    public Produtos findByIdAndEmpresa(UUID id_produto, UUID id_empresa) throws Exception {
+    public Produtos findByIdAndEmpresa(UUID id_produto, UUID id_empresa) {
         Produtos produto = produtosRepository.findByIdAndEmpresa(id_produto, id_empresa);
 
         if (produto == null) {
-            LOGGER.error("Produto não encontrado: {} na empresa {}", id_produto, id_empresa);
             throw new ProdutoNaoEncontradoException(id_produto);
         }
 
         return produto;
     }
-
 
     public Produtos cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, UUID id_empresa) throws Exception {
         Produtos produtoDomain = produtosCreateCommand.toProduto();
