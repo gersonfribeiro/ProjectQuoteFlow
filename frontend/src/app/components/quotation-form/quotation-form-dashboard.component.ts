@@ -1,16 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { ToastrService } from 'ngx-toastr';
+import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-quotation-form-dashboard',
@@ -109,7 +106,7 @@ export class FormDashboardComponent implements OnInit {
     const skuCodeControl = this.quotationForm.get('skuCode');
     if (skuCodeControl) {
       // Transforma o valor do campo em letras maiúsculas
-      skuCodeControl.setValue(skuCodeControl.value.toUpperCase(), { emitEvent: false });
+      skuCodeControl.setValue(skuCodeControl.value.toUpperCase(), {emitEvent: false});
     }
   }
 
@@ -118,7 +115,7 @@ export class FormDashboardComponent implements OnInit {
     const quantity = this.quotationForm.get('quantity')?.value;
 
     if (skuCode && quantity > 0) {
-      this.products.push({ skuCode, quantity });
+      this.products.push({skuCode, quantity});
       this.quotationForm.reset();  // Reseta o formulário após adicionar
     } else {
       this.showFormErrors();
