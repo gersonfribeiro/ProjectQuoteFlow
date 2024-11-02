@@ -16,10 +16,10 @@ import {Router, RouterModule} from '@angular/router';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 // Importa diretivas e pipes do pacote 'ngx-mask' para aplicar máscaras a campos de entrada.
-import {ApiUserService} from "../../services/./api-user.service";
+import {ApiRegisterUserService} from "../../services/api-register-user.service";
 import {Usuario} from "../../models/user.model";
 
-// Importa o serviço 'ApiUserService' que gerencia a comunicação com a API para registro de usuários.
+// Importa o serviço 'ApiRegisterUserService' que gerencia a comunicação com a API para registro de usuários.
 
 @Component({
   selector: 'app-register-form',
@@ -45,7 +45,7 @@ export class RegisterFormComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private apiService: ApiUserService,
+    private apiService: ApiRegisterUserService,
     private toastr: ToastrService
   ) {
     this.registerForm = this.fb.group({
