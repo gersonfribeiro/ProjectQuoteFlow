@@ -1,5 +1,6 @@
 package com.workspacepi.apiquoteflow.domain.usuarios;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,12 +16,20 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class Usuarios implements UserDetails {
+
     private UUID id_usuario;
+
     private String nome;
+
     private String email;
+
+    @JsonIgnore
     private String senha;
+
     private String telefone;
+
     private UUID id_empresa;
+
     private Permissoes permissao;
 
     // Construtor para inserção no banco de dados
@@ -35,56 +44,63 @@ public class Usuarios implements UserDetails {
 
     }
 
-    // Construtor do login
-
-    public Usuarios(String email, String senha) {
-        this.email = email;
-        this.senha = senha;
-    }
-
-
     //  Métodos do UserDetails
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return UserDetails.super.isAccountNonLocked();
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return UserDetails.super.isCredentialsNonExpired();
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.permissao == Permissoes.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_EMPRESA"),
-                new SimpleGrantedAuthority("ROLE_ASSOCIADO"), new SimpleGrantedAuthority("ROLE_USUARIO"));
+        if(this.permissao == Permissoes.ADMIN) return List.of(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_EMPRESA"),
+                new SimpleGrantedAuthority("ROLE_ASSOCIADO"),
+                new SimpleGrantedAuthority("ROLE_USUARIO")
+        );
 
-        else if(this.permissao == Permissoes.EMPRESA) return List.of(new SimpleGrantedAuthority("ROLE_EMPRESA"),
-                new SimpleGrantedAuthority("ROLE_ASSOCIADO"), new SimpleGrantedAuthority("ROLE_USUARIO"));
+        else if(this.permissao == Permissoes.EMPRESA) return List.of(
+                new SimpleGrantedAuthority("ROLE_EMPRESA"),
+                new SimpleGrantedAuthority("ROLE_ASSOCIADO"),
+                new SimpleGrantedAuthority("ROLE_USUARIO")
+        );
 
-        else if(this.permissao == Permissoes.ASSOCIADO) return List.of(new SimpleGrantedAuthority("ROLE_ASSOCIADO"),
-                new SimpleGrantedAuthority("ROLE_USUARIO"));
+        else if(this.permissao == Permissoes.ASSOCIADO) return List.of(
+                new SimpleGrantedAuthority("ROLE_ASSOCIADO"),
+                new SimpleGrantedAuthority("ROLE_USUARIO")
+        );
 
         else return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return senha;
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return email;
     }

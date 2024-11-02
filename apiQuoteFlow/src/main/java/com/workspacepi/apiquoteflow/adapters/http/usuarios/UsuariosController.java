@@ -1,6 +1,7 @@
 package com.workspacepi.apiquoteflow.adapters.http.usuarios;
 
-import com.workspacepi.apiquoteflow.application.usuarios.UsuarioAutenticationDTO;
+import com.workspacepi.apiquoteflow.application.usuarios.UsuarioAuthenticationDTO;
+import com.workspacepi.apiquoteflow.application.usuarios.UsuarioResponseDTO;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosCreateCommand;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosUpdateCommand;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Optional;
 
 @RestController
@@ -34,16 +34,16 @@ public class UsuariosController {
     }
 
     @GetMapping(value = "/{id_usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Usuarios>> findById(@PathVariable String id_usuario) throws Exception {
+    public ResponseEntity<UsuarioResponseDTO> findById(@PathVariable String id_usuario) throws Exception {
         return usuariosHandler.findById(id_usuario);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UsuarioAutenticationDTO data) {
+    public ResponseEntity<?> login(@RequestBody @Valid UsuarioAuthenticationDTO data) {
         var usernamePassord = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getSenha());
         var auth = this.authenticationManager.authenticate(usernamePassord);
 
-        UsuarioAutenticationDTO response = new UsuarioAutenticationDTO(data.getEmail(), data.getSenha());
+        UsuarioAuthenticationDTO response = new UsuarioAuthenticationDTO(data.getEmail(), data.getSenha());
         return ResponseEntity.ok("Login realizado com sucesso!");
     }
 
