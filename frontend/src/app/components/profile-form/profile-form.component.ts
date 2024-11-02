@@ -49,7 +49,7 @@ export class ProfileFormComponent {
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
     const userId = usuarioData.id_usuario;
 
-    this.apiUserService.getUser(userId).subscribe(
+    this.apiUserService.getUserById(userId).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
           name: response.nome,
@@ -94,8 +94,10 @@ export class ProfileFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.profileForm.valid) {
-      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-      const userId = usuarioData?.id_usuario;
+     // Carregar id do usuário
+        const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+        const userId = usuarioData.id_usuario;
+
       if (!userId) {
         console.error("Usuário não encontrado no LocalStorage.");
         return;
@@ -104,7 +106,7 @@ export class ProfileFormComponent {
       const updatedData = {
         nome: this.profileForm.value.name || usuarioData.nome,
         email: this.profileForm.value.email || usuarioData.email,
-        senha: usuarioData.senha,
+//         senha: usuarioData.senha,
         telefone: this.profileForm.value.phone || usuarioData.telefone,
         id_usuario: userId
       };

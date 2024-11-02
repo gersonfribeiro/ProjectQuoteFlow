@@ -13,6 +13,7 @@ import {
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 import {ApiCompanyService} from "../../services/api-company.service";
+import {ApiAddressService} from "../../services/api-address.service";
 
 @Component({
   selector: 'app-register-company-form',
@@ -38,7 +39,7 @@ export class RegisterCompanyFormComponent {
   state: string = '';
   region: string = '';
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiCompanyService: ApiCompanyService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiCompanyService: ApiCompanyService, private apiAddressService: ApiAddressService) {
     this.registerCompanyForm = this.fb.group({
       company: [{value: '', disabled: false}, Validators.required],
       cnpj: [{value: '', disabled: false}, [Validators.required, this.validateCNPJ]],
@@ -152,7 +153,7 @@ export class RegisterCompanyFormComponent {
             id_empresa: id_empresa
           };
 
-          this.apiCompanyService.registerAdress(addressData).subscribe(
+          this.apiAddressService.registerAddress(addressData).subscribe(
             response => {
               this.toastr.success('Empresa e endereço cadastrados com sucesso!');
             },
