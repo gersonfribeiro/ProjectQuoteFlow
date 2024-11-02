@@ -26,14 +26,6 @@ export class ApiRegisterUserService {
     );
   }
 
-  // getUserById(userId: string): Observable<Usuario> {
-  //   return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`);
-  // }
-  //
-  // updateUser(userId: string, updatedData: Partial<Usuario>): Observable<Usuario> {
-  //   return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData);
-  // }
-
   // Função de tratamento de erro
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Erro desconhecido';

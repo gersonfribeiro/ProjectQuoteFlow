@@ -6,8 +6,8 @@ import {Usuario} from "../models/user.model";
 @Injectable({
   providedIn: 'root'
 })
-export class ApiCompanyService {
-  private apiUrlCompany = 'http://localhost:8080/empresas';
+export class ApiAddressService {
+  private apiUrlCompany = 'http://localhost:8080/enderecos';
 
   constructor(private http: HttpClient) {
   }
