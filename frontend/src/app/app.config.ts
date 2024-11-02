@@ -1,26 +1,26 @@
 // Importa os módulos principais do núcleo do Angular para configuração e detecção de mudanças de zona
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
 // Importa a função necessária para fornecer e configurar o roteamento do Angular Router
-import { provideRouter } from '@angular/router';
+import {provideRouter} from '@angular/router';
 
 // Importa o serviço de cliente HTTP para fazer requisições HTTP na aplicação
 import {provideHttpClient, withFetch} from '@angular/common/http';
 // Importa as rotas definidas no arquivo 'app.routes.ts', que mapeiam os caminhos da aplicação
-import { routes } from './app.routes';
+import {routes} from './app.routes';
 // Importa a função que otimiza o carregamento da página fornecendo hidratação no cliente,
 // o que melhora a performance inicial da aplicação ao pré-carregar o conteúdo HTML
-import { provideClientHydration } from '@angular/platform-browser';
+import {provideClientHydration} from '@angular/platform-browser';
 // Importa a função para configurar o ngx-mask, uma biblioteca usada para aplicar máscaras
 // de entrada (ex.: formatação de números de telefone, CPF, etc.) nos campos de formulários
-import { provideEnvironmentNgxMask } from 'ngx-mask';
+import {provideEnvironmentNgxMask} from 'ngx-mask';
 // Importa o suporte a animações no Angular, necessário para componentes que utilizam animações,
 // como Material Design, entre outros
-import { provideAnimations } from '@angular/platform-browser/animations';
+import {provideAnimations} from '@angular/platform-browser/animations';
 // Importa o serviço Toastr, que permite exibir notificações (toasts) visuais na aplicação
-import { provideToastr } from 'ngx-toastr';
+import {provideToastr} from 'ngx-toastr';
 // Importa a função para fornecer animações assíncronas, melhorando o desempenho em casos
 // onde as animações são executadas em segundo plano
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 // import { CeilPipe } from './pipes/ceil.pipe';
 
 // Define a configuração global da aplicação como um objeto do tipo ApplicationConfig,
@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     // Configura a detecção de mudanças no Angular para melhorar o desempenho,
     // agrupando eventos de mudança e reduzindo o número de verificações de alteração
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZoneChangeDetection({eventCoalescing: true}),
     // Configura o provedor de roteamento da aplicação com as rotas definidas no arquivo 'app.routes.ts'
     provideRouter(routes),
     // Fornece o serviço de hidratação do cliente para otimizar o carregamento inicial da aplicação,

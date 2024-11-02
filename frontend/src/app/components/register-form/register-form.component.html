@@ -22,6 +22,7 @@
         class="form-control mb-2"
         placeholder="Digite o nome de usuário"
         formControlName="nome"
+        [maxlength]="30"
       />
       <div
         *ngIf="
@@ -75,6 +76,7 @@
           class="form-control"
           placeholder="Digite sua senha"
           formControlName="senha"
+          [maxlength]="30"
         />
         <button
           type="button"
@@ -103,7 +105,14 @@
           role="alert"
           *ngIf="registerForm.get('senha')?.errors?.['minlength']"
         >
-          A senha deve ter no mínimo 6 caracteres.
+          A senha deve ter no mínimo 12 caracteres.
+        </div>
+        <div
+          class="alert alert-danger alert-small mb-2 mt-2"
+          role="alert"
+          *ngIf="registerForm.get('senha')?.errors?.['minlength']"
+        >
+          A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.
         </div>
       </div>
     </div>
@@ -112,34 +121,18 @@
 
     <div class="d-flex flex-row gap-2">
       <button
-        [disabled]="isLoading"
         class="btn w-50"
         type="submit"
         style="background-color: #0b5389; color: #fff"
       >
-        <i *ngIf="!isLoading" class="bi bi-envelope-fill"></i>
-        <div
-          *ngIf="isLoading"
-          class="spinner-border spinner-border-sm"
-          role="status"
-        >
-          <span class="visually-hidden">Carregando...</span>
-        </div>
+        <i class="bi bi-envelope-fill"></i>
       </button>
       <button
-        [disabled]="isLoading"
         class="btn w-50"
         type="button"
         style="background-color: #0b5389; color: #fff"
       >
-        <i *ngIf="!isLoading" class="bi bi-google"></i>
-        <div
-          *ngIf="isLoading"
-          class="spinner-border spinner-border-sm"
-          role="status"
-        >
-          <span class="visually-hidden">Carregando...</span>
-        </div>
+        <i class="bi bi-google"></i>
       </button>
     </div>
   </form>

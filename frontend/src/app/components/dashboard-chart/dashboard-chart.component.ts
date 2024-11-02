@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { SidebarDashboardComponent } from "../sidebar/sidebar-dashboard.component";
-import { ChartComponent } from "../chart/chart.component";
+import {Component} from '@angular/core';
+import {ChartComponent} from "../chart/chart.component";
+import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.component";
 
 @Component({
   selector: 'app-dashboard-chart',
   standalone: true,
-  imports: [SidebarDashboardComponent, ChartComponent],
+  imports: [SidebarDashboardComponent, ChartComponent, SidebarDashboardComponent],
   templateUrl: './dashboard-chart.component.html',
   styleUrl: './dashboard-chart.component.css'
 })
