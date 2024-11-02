@@ -69,6 +69,12 @@ public class ProdutosSqlRepository {
                """;
     }
 
+    public static String sqlProdutoBySKUAndEmpresa() {
+        return """
+                SELECT * FROM produtos WHERE sku = :sku AND id_empresa = :id_empresa
+               """;
+    }
+
     public static String sqlCadastrarProdutoInEmpresa() {
         return """
                  INSERT INTO produtos(

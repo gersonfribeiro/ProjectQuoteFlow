@@ -29,47 +29,29 @@ public class ProdutosController {
         return produtosHandler.findAllByEmpresa(id_empresa);
     }
 
-    @GetMapping("/{id_produto}")
+    @GetMapping("/id/{id_produto}")
     public ResponseEntity<Produtos> findByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) throws Exception {
         return produtosHandler.findByIdAndEmpresa(id_produto, id_empresa);
     }
 
+    @GetMapping("/sku/{sku}")
+    public ResponseEntity<Produtos> findBySKUAndEmpresa(@PathVariable String id_empresa, @PathVariable String sku) throws Exception {
+        return produtosHandler.findBySKUAndEmpresa(sku, id_empresa);
+    }
+
     @PostMapping
-    public ResponseEntity<Produtos> cadastrarProdutoInEmpresa(@PathVariable String id_empresa, @RequestBody @Valid ProdutosCreateCommand produtosCreateCommand) {
-        try {
-            return produtosHandler.cadastrarProdutoInEmpresa(produtosCreateCommand, id_empresa);
+    public ResponseEntity<Produtos> cadastrarProdutoInEmpresa(@PathVariable String id_empresa, @RequestBody @Valid ProdutosCreateCommand produtosCreateCommand) throws Exception {
+        return produtosHandler.cadastrarProdutoInEmpresa(produtosCreateCommand, id_empresa);
 
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();  // Retorna erro 400 para UUID inválido
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
     }
 
     @PutMapping("/{id_produto}")
-    public ResponseEntity<Produtos> modificarProdutoInEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto, @RequestBody @Valid ProdutosUpdateCommand produtosUpdateCommand) {
-        try {
-            return produtosHandler.modificarProdutoInEmpresa(produtosUpdateCommand, id_produto, id_empresa);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();  // Retorna erro 400 para UUID inválido
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<Produtos> modificarProdutoInEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto, @RequestBody @Valid ProdutosUpdateCommand produtosUpdateCommand) throws Exception {
+        return produtosHandler.modificarProdutoInEmpresa(produtosUpdateCommand, id_produto, id_empresa);
     }
 
     @DeleteMapping("/{id_produto}")
-    public ResponseEntity<Void> deleteProdutoByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) {
-        try {
-            return produtosHandler.deleteProdutoByIdAndEmpresa(id_empresa, id_produto);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();  // Retorna erro 400 para UUID inválido
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<Void> deleteProdutoByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) throws Exception {
+        return produtosHandler.deleteProdutoByIdAndEmpresa(id_empresa, id_produto);
     }
 }

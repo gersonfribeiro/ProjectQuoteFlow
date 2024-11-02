@@ -34,6 +34,8 @@ public interface ProdutosRepository {
 
     Produtos findByIdAndEmpresa(UUID id_produto, UUID id_empresa);
 
+    Produtos findBySKUAndEmpresa(String sku, UUID id_empresa);
+
     Boolean cadastrarProdutoInEmpresa(Produtos produto, UUID id_empresa);
 
     Boolean modificarProdutoInEmpresa(Produtos produto, UUID id_empresa);

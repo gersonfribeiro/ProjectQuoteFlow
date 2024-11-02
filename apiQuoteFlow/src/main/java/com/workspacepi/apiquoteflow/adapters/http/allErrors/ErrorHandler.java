@@ -1,6 +1,9 @@
 package com.workspacepi.apiquoteflow.adapters.http.allErrors;
 
+import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaNaoEncontradaException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
+import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuCadastradoException;
+import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
 import org.apache.catalina.connector.Response;
@@ -45,6 +48,36 @@ public class ErrorHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 e.getMessage(),
                 e.getId_produto(),
+                HttpStatus.NOT_FOUND.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProdutoSkuNaoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handleProdutoSkuNaoEncontradoException(ProdutoSkuNaoEncontradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getSku(),
+                HttpStatus.NOT_FOUND.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProdutoSkuCadastradoException.class)
+    public ResponseEntity<ErrorResponse> handleProdutoSkuCadastradoException(ProdutoSkuCadastradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getSku(),
+                HttpStatus.CONFLICT.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmpresaNaoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handleEmpresaNaoEncontradaException(EmpresaNaoEncontradaException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getId_empresa(),
                 HttpStatus.NOT_FOUND.value()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
