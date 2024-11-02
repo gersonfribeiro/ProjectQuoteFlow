@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
-import {ApiCompanyService} from 'src/app/services/api-company.service';
+import {ApiCompanyService} from "../../services/api-company.service";
 
 @Component({
   selector: 'app-register-company-form',
@@ -63,9 +63,9 @@ export class RegisterCompanyFormComponent {
     });
 
     if (cepData.postalCode) {
-        cepData.postalCode
-        this.searchPostalCode();
-      }
+      cepData.postalCode
+      this.searchPostalCode();
+    }
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -130,43 +130,43 @@ export class RegisterCompanyFormComponent {
     if (this.registerCompanyForm.valid) {
 
       const companyData = {
-          cnpj: this.registerCompanyForm.value.cnpj,
-          email: "teste@email.com",
-          nome: this.registerCompanyForm.value.company,
-          senha: "teste123",
-        };
+        cnpj: this.registerCompanyForm.value.cnpj,
+        email: "teste@email.com",
+        nome: this.registerCompanyForm.value.company,
+        senha: "teste123",
+      };
 
       this.apiCompanyService.registerCompany(companyData).subscribe(
-          response => {
-            console.log("Resposta da API:", response);
-            const id_empresa = response.id_empresa;
+        response => {
+          console.log("Resposta da API:", response);
+          const id_empresa = response.id_empresa;
 
-            const addressData = {
-              bairro: this.registerCompanyForm.value.neighborhood,
-              cep: this.registerCompanyForm.value.postalCode,
-              complemento: this.registerCompanyForm.value.complement,
-              localidade: this.registerCompanyForm.value.city,
-              logradouro: this.registerCompanyForm.value.street,
-              numero: this.registerCompanyForm.value.number,
-              uf: this.registerCompanyForm.value.state,
-              id_empresa: id_empresa
-            };
+          const addressData = {
+            bairro: this.registerCompanyForm.value.neighborhood,
+            cep: this.registerCompanyForm.value.postalCode,
+            complemento: this.registerCompanyForm.value.complement,
+            localidade: this.registerCompanyForm.value.city,
+            logradouro: this.registerCompanyForm.value.street,
+            numero: this.registerCompanyForm.value.number,
+            uf: this.registerCompanyForm.value.state,
+            id_empresa: id_empresa
+          };
 
-            this.apiCompanyService.registerAdress(addressData).subscribe(
-                response => {
-                    this.toastr.success('Empresa e endereço cadastrados com sucesso!');
-                  },
-                error => {
-                    this.toastr.error('Erro ao cadastrar endereço.');
-                  }
-              );
+          this.apiCompanyService.registerAdress(addressData).subscribe(
+            response => {
+              this.toastr.success('Empresa e endereço cadastrados com sucesso!');
+            },
+            error => {
+              this.toastr.error('Erro ao cadastrar endereço.');
+            }
+          );
 
-          },
+        },
         (error) => {
-                console.error('Erro ao cadastrar empresa:', error);
-                this.toastr.error('Erro ao cadastrar empresa.');
-              }
-        );
+          console.error('Erro ao cadastrar empresa:', error);
+          this.toastr.error('Erro ao cadastrar empresa.');
+        }
+      );
 
       console.log('Formulário enviado:', this.registerCompanyForm.value);
       this.registerCompanyForm.disable();
