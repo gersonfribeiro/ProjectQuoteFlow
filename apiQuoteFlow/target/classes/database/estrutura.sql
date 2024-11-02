@@ -75,11 +75,11 @@ alter table enderecos
 
 create table produtos
 (
-    id_produto       uuid        not null
+    id_produto uuid        not null
         primary key,
-    categoriaProduto varchar(50) not null
+    categoria  varchar(50) not null
         constraint produtos_categoria_check
-            check ((categoriaProduto)::text = ANY
+            check ((categoria)::text = ANY
         ((ARRAY ['MADEIRA':: character varying, 'ALIMENTOS':: character varying, 'LIMPEZA':: character varying, 'ELETRONICOS':: character varying, 'ROUPAS':: character varying, 'COSMETICOS':: character varying, 'UTENSILIOS':: character varying, 'FERRAMENTAS':: character varying, 'MATERIAIS_CONSTRUCAO':: character varying, 'OUTROS':: character varying])::text[])
 ) ,
     descricao  varchar(100) not null,
@@ -151,9 +151,6 @@ create table usuarios
             unique,
     id_empresa uuid
         constraint fkgrju3u0utt7909j9yap1oacng
-            references empresas
+            references empresas,
+    permissao  varchar(20)
 );
-
-alter table usuarios
-    owner to postgres;
-
