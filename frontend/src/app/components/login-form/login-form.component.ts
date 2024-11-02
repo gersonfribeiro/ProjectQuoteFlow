@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
-import {ApiUserService} from "../../services/api-user.service";
+import {ApiRegisterUserService} from "../../services/api-register-user.service";
 
 @Component({
   selector: 'app-login-form',
@@ -29,7 +29,7 @@ export class LoginFormComponent {
   errorMessage: string | null = null;
   showPassword = false; // Controle de visibilidade da senha
 
-  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiRegisterUserService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],

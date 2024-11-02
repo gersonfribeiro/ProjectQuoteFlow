@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {
   AbstractControl,
@@ -12,7 +12,6 @@ import {
 } from '@angular/forms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
-import {Observable} from "rxjs";
 import {Usuario} from "../../models/user.model";
 import {RouterLink} from "@angular/router";
 
@@ -49,7 +48,7 @@ export class ProfileFormComponent {
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
     const userId = usuarioData.id_usuario;
 
-    this.http.get<Usuario>(`http://localhost:8080/usuarios/${userId}`).subscribe(
+    this.http.get<Usuario>(`http://localhost:8080/usuarios${userId}`).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
           name: response.nome,
@@ -95,7 +94,11 @@ export class ProfileFormComponent {
   onSubmit() {
     if (this.profileForm.valid) {
       const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-      const userId = usuarioData.id_usuario;
+      const userId = usuarioData?.id_usuario;
+      if (!userId) {
+        console.error("Usuário não encontrado no LocalStorage.");
+        return;
+      }
 
       const updatedData = {
         nome: this.profileForm.value.name || usuarioData.nome,

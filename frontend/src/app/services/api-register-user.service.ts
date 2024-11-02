@@ -6,22 +6,22 @@ import {Usuario} from "../models/user.model";
 @Injectable({
   providedIn: 'root'
 })
-export class ApiUserService {
-  private apiUrlUser = 'http://localhost:8080/usuarios/registrar';
+export class ApiRegisterUserService {
+  private apiUrlRegisterUser = 'http://localhost:8080/usuarios/registrar';
 
   constructor(private http: HttpClient) {
   }
 
   // Método para registrar um novo usuário
   registerUser(user: Usuario): Observable<any> {
-    return this.http.post(this.apiUrlUser, user).pipe(
+    return this.http.post(this.apiUrlRegisterUser, user).pipe(
       catchError(this.handleError)
     );
   }
 
   // Método para deletar um usuário pelo ID
   deleteUser(userId: string | null): Observable<any> {
-    return this.http.delete(`${this.apiUrlUser}/${userId}`).pipe(
+    return this.http.delete(`${this.apiUrlRegisterUser}/${userId}`).pipe(
       catchError(this.handleError)
     );
   }
