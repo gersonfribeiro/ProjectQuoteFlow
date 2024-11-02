@@ -2,6 +2,9 @@ package com.workspacepi.apiquoteflow.application.produtos;
 
 import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
+import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuCadastradoException;
+import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuNaoEncontradoException;
+import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import com.workspacepi.apiquoteflow.domain.produtos.Produtos;
 import com.workspacepi.apiquoteflow.domain.produtos.ProdutosRepository;
 import org.slf4j.Logger;
@@ -14,15 +17,17 @@ import java.util.UUID;
 @Service
 public class ProdutosService {
     private final  ProdutosRepository produtosRepository;
+    private final EmpresasRepository empresasRepository;
 
 //    Implementação individual:
 
-    public ProdutosService(ProdutosRepository produtosRepository) {
+    public ProdutosService(ProdutosRepository produtosRepository, EmpresasRepository empresasRepository) {
         this.produtosRepository = produtosRepository;
+        this.empresasRepository = empresasRepository;
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
-
+/*
 //    public List<Produtos> findAll() { return produtosRepository.findAll(); }
 //
 //    public Produtos findById(UUID id_produto) throws Exception {
@@ -59,6 +64,7 @@ public class ProdutosService {
 //
 //        produtosRepository.deleteProdutoById(id_produto);
 //    }
+*/
 
 //    Novas implementações (definitivas):
 
@@ -74,7 +80,21 @@ public class ProdutosService {
         return produto;
     }
 
+    public Produtos findBySKUAndEmpresa(String sku, UUID id_empresa) {
+        Produtos produto = produtosRepository.findBySKUAndEmpresa(sku, id_empresa);
+
+        if (produto == null) {
+            throw new ProdutoSkuNaoEncontradoException(sku);
+        }
+
+        return produto;
+    }
+
     public Produtos cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, UUID id_empresa) throws Exception {
+        // Verificar se o SKU já existe na mesma empresa
+        if (produtosRepository.findBySKUAndEmpresa(produtosCreateCommand.getSku(), id_empresa) != null)
+            throw new ProdutoSkuCadastradoException(produtosCreateCommand.getSku());
+
         Produtos produtoDomain = produtosCreateCommand.toProduto();
         produtoDomain.setId_empresa(id_empresa);
         produtosRepository.cadastrarProdutoInEmpresa(produtoDomain, id_empresa);
@@ -88,16 +108,19 @@ public class ProdutosService {
         if (produtoDomain == null)
             throw new ProdutoNaoEncontradoException(id_produto);
 
+        // Verificar se o SKU já existe em outro produto da mesma empresa
+        Produtos produtoValidado = produtosRepository.findBySKUAndEmpresa(produtosUpdateCommand.getSku(), id_empresa);
+        if (produtoValidado != null)
+            throw new ProdutoSkuCadastradoException(produtosUpdateCommand.getSku());
+
         // Atualizar o produto com os novos valores
         produtoDomain = produtosUpdateCommand.toProduto(id_produto);
         produtoDomain.setId_empresa(id_empresa);
 
         produtosRepository.modificarProdutoInEmpresa(produtoDomain, id_empresa);
 
-        // Como o produto já foi atualizado, você não precisa buscá-lo novamente
         return produtoDomain;
     }
-
 
     public void deleteProdutoByIdAndEmpresa(UUID id_empresa, UUID id_produto) throws Exception {
         Produtos produtoDomain = produtosRepository.findByIdAndEmpresa(id_produto, id_empresa);

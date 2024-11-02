@@ -35,33 +35,23 @@ public class ProdutosHandler {
         return ResponseEntity.ok(produto);
     }
 
-    public ResponseEntity<Produtos> cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, String id_empresa) throws Exception {
-        try {
-            Produtos produto = produtosService.cadastrarProdutoInEmpresa(produtosCreateCommand, UUID.fromString(id_empresa));
-            return ResponseEntity.status(HttpStatus.CREATED).body(produto);
+    public ResponseEntity<Produtos> findBySKUAndEmpresa(String sku, String id_empresa) throws Exception {
+        Produtos produto = produtosService.findBySKUAndEmpresa(sku, UUID.fromString(id_empresa));
+        return ResponseEntity.ok(produto);
+    }
 
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UUID da empresa inválido", e);
-        }
+    public ResponseEntity<Produtos> cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, String id_empresa) throws Exception {
+        Produtos produto = produtosService.cadastrarProdutoInEmpresa(produtosCreateCommand, UUID.fromString(id_empresa));
+        return ResponseEntity.ok(produto);
     }
 
     public ResponseEntity<Produtos> modificarProdutoInEmpresa(ProdutosUpdateCommand produtosUpdateCommand, String id_produto, String id_empresa) throws Exception {
-        try {
-            Produtos produto = produtosService.modificarProdutoInEmpresa(produtosUpdateCommand, UUID.fromString(id_empresa), UUID.fromString(id_produto));
-            return ResponseEntity.ok(produto);
-
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UUID inválido", e);
-        }
+        Produtos produto = produtosService.modificarProdutoInEmpresa(produtosUpdateCommand, UUID.fromString(id_empresa), UUID.fromString(id_produto));
+        return ResponseEntity.ok(produto);
     }
 
     public ResponseEntity<Void> deleteProdutoByIdAndEmpresa(String id_empresa, String id_produto) throws Exception {
-        try {
-            produtosService.deleteProdutoByIdAndEmpresa(UUID.fromString(id_empresa), UUID.fromString(id_produto));
-            return ResponseEntity.noContent().build();
-
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UUID inválido", e);
-        }
+        produtosService.deleteProdutoByIdAndEmpresa(UUID.fromString(id_empresa), UUID.fromString(id_produto));
+        return ResponseEntity.noContent().build();
     }
 }

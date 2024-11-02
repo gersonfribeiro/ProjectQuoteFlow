@@ -184,6 +184,16 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
     }
 
     @Override
+    public Produtos findBySKUAndEmpresa(String sku, UUID id_empresa) {
+        MapSqlParameterSource params = new MapSqlParameterSource("sku", sku);
+        params.addValue("id_empresa", id_empresa);
+
+        List<Produtos> produtos = jdbcTemplate.query(sqlProdutoBySKUAndEmpresa(), params, produtosRowMapper(id_empresa));
+
+        return produtos.isEmpty() ? null : produtos.get(0);
+    }
+
+    @Override
     public Boolean cadastrarProdutoInEmpresa(Produtos produto, UUID id_empresa) {
         try {
             MapSqlParameterSource params = parameterSource(produto);

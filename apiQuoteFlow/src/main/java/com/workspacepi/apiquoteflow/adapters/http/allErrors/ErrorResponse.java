@@ -22,8 +22,9 @@ public class ErrorResponse {
     @JsonIgnore
     private UUID id;
 
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("parametro")
+    @JsonIgnore
+    private String parametro;
 
 //  Propriedades genericas
     @JsonProperty("mensagem")
@@ -34,16 +35,16 @@ public class ErrorResponse {
 
 //  Construtores para cada exception
 
-//  Exception de não encontrado
+//  Exception de não encontrado por UUID
     public ErrorResponse(String mensagem, UUID id, int status) {
         this.mensagem = mensagem;
         this.id = id;
         this.status = status;
     }
 
-//  Exception de email já cadastrado
-    public ErrorResponse(String mensagem, String email, int status) {
-        this.email = email;
+//  Exception de não encontrado com string
+    public ErrorResponse(String mensagem, String parametro, int status) {
+        this.parametro = parametro;
         this.mensagem = mensagem;
         this.status = status;
     }
