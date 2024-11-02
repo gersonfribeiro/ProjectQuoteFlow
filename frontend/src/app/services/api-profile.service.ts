@@ -6,20 +6,20 @@ import {Usuario} from "../models/user.model";
 @Injectable({
   providedIn: 'root'
 })
-export class ApiCompanyService {
-  private apiUrl = 'http://localhost:8080';
+export class ApiProfileService {
+  private apiUrl = 'http://localhost:8080/usuarios';
 
   constructor(private http: HttpClient) {
   }
 
-  registerCompany(companyData: any): Observable<{id_empresa: string}> {
-    return this.http.post<{id_empresa: string}>(`${this.apiUrl}/empresas`, companyData);.pipe(
+  getUser(userId: string): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrl}/${userId}`.pipe(
       catchError(this.handleError);
     );
   }
 
-  registerAdress(addressData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/enderecos`, addressData).pipe(
+  updateUser(userId: string, updatedData: Partial<Usuario>): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.apiUrl}/${userId}`, updatedData).pipe(
       catchError(this.handleError);
     );
   }

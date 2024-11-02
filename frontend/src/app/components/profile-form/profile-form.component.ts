@@ -14,6 +14,7 @@ import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 import {Usuario} from "../../models/user.model";
 import {RouterLink} from "@angular/router";
+import {ApiProfileService} from '../../services/api-profile.service';
 
 @Component({
   selector: 'app-profile-form',
@@ -32,7 +33,7 @@ import {RouterLink} from "@angular/router";
 export class ProfileFormComponent {
   profileForm: FormGroup;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiProfileService: ApiProfileService) {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: true}, Validators.required],
       email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
@@ -48,7 +49,7 @@ export class ProfileFormComponent {
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
     const userId = usuarioData.id_usuario;
 
-    this.http.get<Usuario>(`http://localhost:8080/usuarios/${userId}`).subscribe(
+    this.apiProfileService.getUser(userId).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
           name: response.nome,
@@ -108,7 +109,7 @@ export class ProfileFormComponent {
         id_usuario: userId
       };
 
-      this.http.put(`http://localhost:8080/usuarios/${userId}`, updatedData).subscribe(
+      this.apiProfileService.updateUser(userId, updatedData).subscribe(
         response => {
           console.log('Dados atualizados com sucesso:', response);
           this.toastr.success('Dados atualizados com sucesso!');
