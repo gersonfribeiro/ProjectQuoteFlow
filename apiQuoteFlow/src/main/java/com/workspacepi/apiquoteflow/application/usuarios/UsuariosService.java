@@ -4,7 +4,6 @@ import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmail
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,6 @@ public class UsuariosService {
         this.usuariosRepository = usuariosRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     public List<Usuarios> findAll() {
         return usuariosRepository.findAll();

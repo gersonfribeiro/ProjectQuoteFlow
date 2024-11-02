@@ -17,7 +17,6 @@ import java.util.UUID;
 
 import static com.workspacepi.apiquoteflow.adapters.jdbc.usuarios.UsuariosSqlExpressions.*;
 
-
 @Repository
 public class UsuariosJDBCRepository implements UsuariosRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;

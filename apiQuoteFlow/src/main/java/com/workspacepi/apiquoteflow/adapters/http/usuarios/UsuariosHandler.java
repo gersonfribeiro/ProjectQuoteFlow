@@ -1,5 +1,6 @@
 package com.workspacepi.apiquoteflow.adapters.http.usuarios;
 
+import com.workspacepi.apiquoteflow.application.usuarios.UsuarioResponseDTO;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosCreateCommand;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosService;
 import com.workspacepi.apiquoteflow.application.usuarios.UsuariosUpdateCommand;
@@ -25,9 +26,20 @@ public class UsuariosHandler {
         return ResponseEntity.ok(usuario);
     }
 
-    public ResponseEntity<Optional<Usuarios>> findById(String id_usuario) throws Exception {
+    public ResponseEntity<UsuarioResponseDTO> findById(String id_usuario) throws Exception {
         Optional<Usuarios> usuario = Optional.ofNullable(usuariosService.findById(UUID.fromString(id_usuario)));
-        return ResponseEntity.ok(usuario);
+
+        if (usuario.isPresent()) {
+            UsuarioResponseDTO usuarioDTO = new UsuarioResponseDTO(
+                    usuario.get().getNome(),
+                    usuario.get().getEmail(),
+                    usuario.get().getPermissao()
+            );
+            return ResponseEntity.ok(usuarioDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     public ResponseEntity<Optional<Usuarios>> cadastrarUsuario(UsuariosCreateCommand usuarioCreateCommand) throws Exception {

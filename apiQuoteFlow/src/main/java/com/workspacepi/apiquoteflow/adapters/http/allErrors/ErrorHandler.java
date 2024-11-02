@@ -28,7 +28,7 @@ public class ErrorHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    // Lida com a UsuarioemailCadastradoException
+    // Lida com a UsuarioEmailCadastradoException
     @ExceptionHandler(UsuarioEmailCadastradoException.class)
     public ResponseEntity<ErrorResponse> handleUsuarioEmailCadastradoException(UsuarioEmailCadastradoException e) {
         ErrorResponse errorResponse = new ErrorResponse(

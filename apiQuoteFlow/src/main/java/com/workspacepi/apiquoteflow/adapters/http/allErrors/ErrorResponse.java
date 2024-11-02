@@ -22,10 +22,6 @@ public class ErrorResponse {
     @JsonIgnore
     private UUID id;
 
-    @JsonProperty("id_produto")
-    @JsonIgnore
-    private UUID id_produto;
-
     @JsonProperty("email")
     private String email;
 
