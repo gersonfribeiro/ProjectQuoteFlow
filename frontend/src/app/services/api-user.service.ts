@@ -6,8 +6,17 @@ import {Usuario} from "../models/user.model";
 @Injectable({
   providedIn: 'root'
 })
-export class ApiRegisterUserService {
+export class ApiUserService {
   private apiUrlRegisterUser = 'http://localhost:8080/usuarios/registrar';
+  private apiUrlDeleteUser = 'http://localhost:8080/usuarios';
+  // Atualizar nome
+  private apiUrlUpdateName // fazer
+  // Atualizar email
+  private apiUrlUpdateEmail // fazer
+  // Inseriu telefone 1 vez
+  private apiUrlPhone = 'http://localhost:8080/usuarios'; // <-------------------- TELEFONE
+  // Atualizar telefone
+  private apiUrlUpdatePhone // fazer
 
   constructor(private http: HttpClient) {
   }
@@ -21,7 +30,7 @@ export class ApiRegisterUserService {
 
   // Método para deletar um usuário pelo ID
   deleteUser(userId: string | null): Observable<any> {
-    return this.http.delete(`${this.apiUrlRegisterUser}/${userId}`).pipe(
+    return this.http.delete(`${this.apiUrlDeleteUser}/${userId}`).pipe(
       catchError(this.handleError)
     );
   }
