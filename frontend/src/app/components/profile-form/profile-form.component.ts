@@ -48,7 +48,7 @@ export class ProfileFormComponent {
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
     const userId = usuarioData.id_usuario;
 
-    this.http.get<Usuario>(`http://localhost:8080/usuarios${userId}`).subscribe(
+    this.http.get<Usuario>(`http://localhost:8080/usuarios/${userId}`).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
           name: response.nome,
