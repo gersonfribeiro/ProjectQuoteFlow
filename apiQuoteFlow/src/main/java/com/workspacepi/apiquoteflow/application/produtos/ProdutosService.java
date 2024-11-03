@@ -1,6 +1,7 @@
 package com.workspacepi.apiquoteflow.application.produtos;
 
 import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
+import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaNaoEncontradaException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuCadastradoException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuNaoEncontradoException;
@@ -68,7 +69,12 @@ public class ProdutosService {
 
 //    Novas implementações (definitivas):
 
-    public List<Produtos> findAllByEmpresa(UUID id_empresa) { return produtosRepository.findAllByEmpresa(id_empresa); }
+    public List<Produtos> findAllByEmpresa(UUID id_empresa) {
+        if(empresasRepository.findById(id_empresa) == null)
+            throw new EmpresaNaoEncontradaException(id_empresa);
+
+        return produtosRepository.findAllByEmpresa(id_empresa);
+    }
 
     public Produtos findByIdAndEmpresa(UUID id_produto, UUID id_empresa) {
         Produtos produto = produtosRepository.findByIdAndEmpresa(id_produto, id_empresa);
@@ -81,6 +87,9 @@ public class ProdutosService {
     }
 
     public Produtos findBySKUAndEmpresa(String sku, UUID id_empresa) {
+        if(empresasRepository.findById(id_empresa) == null)
+            throw new EmpresaNaoEncontradaException(id_empresa);
+
         Produtos produto = produtosRepository.findBySKUAndEmpresa(sku, id_empresa);
 
         if (produto == null) {
@@ -90,7 +99,10 @@ public class ProdutosService {
         return produto;
     }
 
-    public Produtos cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, UUID id_empresa) throws Exception {
+    public Produtos cadastrarProdutoInEmpresa(ProdutosCreateCommand produtosCreateCommand, UUID id_empresa) {
+        if(empresasRepository.findById(id_empresa) == null)
+            throw new EmpresaNaoEncontradaException(id_empresa);
+
         // Verificar se o SKU já existe na mesma empresa
         if (produtosRepository.findBySKUAndEmpresa(produtosCreateCommand.getSku(), id_empresa) != null)
             throw new ProdutoSkuCadastradoException(produtosCreateCommand.getSku());
@@ -102,7 +114,10 @@ public class ProdutosService {
         return findByIdAndEmpresa(produtoDomain.getId_produto(), id_empresa);
     }
 
-    public Produtos modificarProdutoInEmpresa(ProdutosUpdateCommand produtosUpdateCommand, UUID id_empresa, UUID id_produto) throws Exception {
+    public Produtos modificarProdutoInEmpresa(ProdutosUpdateCommand produtosUpdateCommand, UUID id_empresa, UUID id_produto) {
+        if(empresasRepository.findById(id_empresa) == null)
+            throw new EmpresaNaoEncontradaException(id_empresa);
+
         Produtos produtoDomain = produtosRepository.findByIdAndEmpresa(id_produto, id_empresa);
 
         if (produtoDomain == null)
@@ -122,7 +137,10 @@ public class ProdutosService {
         return produtoDomain;
     }
 
-    public void deleteProdutoByIdAndEmpresa(UUID id_empresa, UUID id_produto) throws Exception {
+    public void deleteProdutoByIdAndEmpresa(UUID id_empresa, UUID id_produto) {
+        if(empresasRepository.findById(id_empresa) == null)
+            throw new EmpresaNaoEncontradaException(id_empresa);
+
         Produtos produtoDomain = produtosRepository.findByIdAndEmpresa(id_produto, id_empresa);
 
         if (produtoDomain == null)
