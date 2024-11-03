@@ -48,6 +48,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Dependência do JWT -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
         <!-- Dependência do JDBC para a manipulação e persistência dos dados -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
