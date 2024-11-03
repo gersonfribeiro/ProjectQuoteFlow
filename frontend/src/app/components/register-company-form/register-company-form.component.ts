@@ -138,6 +138,7 @@ export class RegisterCompanyFormComponent {
         cnpj: this.registerCompanyForm.value.cnpj,
         telefone: this.registerCompanyForm.value.phone,
         email: this.registerCompanyForm.value.email
+
         /* email: "teste@email.com", */
         /* senha: "teste123", */
       };
