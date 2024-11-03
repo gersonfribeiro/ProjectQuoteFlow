@@ -94,9 +94,9 @@ export class ProfileFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.profileForm.valid) {
-     // Carregar id do usuário
-        const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-        const userId = usuarioData.id_usuario;
+      // Carregar id do usuário
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const userId = usuarioData.id_usuario;
 
       if (!userId) {
         console.error("Usuário não encontrado no LocalStorage.");

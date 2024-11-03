@@ -30,22 +30,15 @@ import {ApiAddressService} from "../../services/api-address.service";
 })
 export class RegisterCompanyFormComponent {
   registerCompanyForm: FormGroup;
-  showNotificationAlert?: boolean;
-
-  postalCode: string = '';
-  street: string = '';
-  neighborhood: string = '';
-  city: string = '';
-  state: string = '';
-  region: string = '';
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiCompanyService: ApiCompanyService, private apiAddressService: ApiAddressService) {
     this.registerCompanyForm = this.fb.group({
       company: [{value: '', disabled: false}, Validators.required],
       cnpj: [{value: '', disabled: false}, [Validators.required, this.validateCNPJ]],
       phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
+      email: [{value: '', disabled: false}, [Validators.required, this.validateEmail]],
       postalCode: [{value: '', disabled: false}, Validators.required],
-      street: [{value: '', disabled: false}], // Defina o estado inicial como desabilitado
+      street: [{value: '', disabled: false}],
       neighborhood: [{value: '', disabled: false}],
       city: [{value: '', disabled: false}],
       state: [{value: '', disabled: false}],
@@ -95,6 +88,16 @@ export class RegisterCompanyFormComponent {
     return null;
   }
 
+  // Função de validação personalizada para e-mail
+  validateEmail(control: AbstractControl): ValidationErrors | null {
+    const email = control.value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email && !emailPattern.test(email)) {
+      return {invalidEmail: true};
+    }
+    return null;
+  }
+
   // Função para buscar o CEP
   searchPostalCode() {
     const postalCodeValue = this.registerCompanyForm.get('postalCode')?.value;
@@ -131,10 +134,13 @@ export class RegisterCompanyFormComponent {
     if (this.registerCompanyForm.valid) {
 
       const companyData = {
-        cnpj: this.registerCompanyForm.value.cnpj,
-        email: "teste@email.com",
         nome: this.registerCompanyForm.value.company,
-        senha: "teste123",
+        cnpj: this.registerCompanyForm.value.cnpj,
+        telefone: this.registerCompanyForm.value.phone,
+        email: this.registerCompanyForm.value.email
+
+        /* email: "teste@email.com", */
+        /* senha: "teste123", */
       };
 
       this.apiCompanyService.registerCompany(companyData).subscribe(
