@@ -45,12 +45,12 @@ public class ProdutosController {
 
     }
 
-    @PutMapping("/{id_produto}")
+    @PutMapping("/id/{id_produto}")
     public ResponseEntity<Produtos> modificarProdutoInEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto, @RequestBody @Valid ProdutosUpdateCommand produtosUpdateCommand) throws Exception {
         return produtosHandler.modificarProdutoInEmpresa(produtosUpdateCommand, id_produto, id_empresa);
     }
 
-    @DeleteMapping("/{id_produto}")
+    @DeleteMapping("/id/{id_produto}")
     public ResponseEntity<Void> deleteProdutoByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) throws Exception {
         return produtosHandler.deleteProdutoByIdAndEmpresa(id_empresa, id_produto);
     }

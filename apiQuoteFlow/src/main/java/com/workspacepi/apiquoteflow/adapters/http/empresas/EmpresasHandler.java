@@ -35,6 +35,16 @@ public class EmpresasHandler {
         return ResponseEntity.ok(empresas);
     }
 
+    public ResponseEntity<Empresas> findByCNPJ(String cnpj) throws Exception{
+        Empresas empresas = empresasService.findByCNPJ(cnpj);
+        return ResponseEntity.ok(empresas);
+    }
+
+    public ResponseEntity<Empresas> findByEmail(String email) throws Exception{
+        Empresas empresas = empresasService.findByEmail(email);
+        return ResponseEntity.ok(empresas);
+    }
+
     public ResponseEntity<Empresas> cadastrarEmpresa(EmpresasCreateCommand empresasCreateCommand) throws Exception{
         Empresas empresas = empresasService.cadastrarEmpresa(empresasCreateCommand);
         return ResponseEntity.status(HttpStatus.CREATED).body(empresas);

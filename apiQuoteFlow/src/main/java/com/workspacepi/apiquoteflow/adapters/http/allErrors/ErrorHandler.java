@@ -1,12 +1,11 @@
 package com.workspacepi.apiquoteflow.adapters.http.allErrors;
 
-import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaNaoEncontradaException;
+import com.workspacepi.apiquoteflow.application.empresas.exceptions.*;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuCadastradoException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
-import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -73,11 +72,51 @@ public class ErrorHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(EmpresaNaoEncontradaException.class)
-    public ResponseEntity<ErrorResponse> handleEmpresaNaoEncontradaException(EmpresaNaoEncontradaException e) {
+    @ExceptionHandler(EmpresaCNPJNaoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handleEmpresaCNPJNaoEncontradoException(EmpresaCNPJNaoEncontradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getCnpj(),
+                HttpStatus.NOT_FOUND.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmpresaIdNaoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handleEmpresaIdNaoEncontradaException(EmpresaIdNaoEncontradaException e) {
         ErrorResponse errorResponse = new ErrorResponse(
                 e.getMessage(),
                 e.getId_empresa(),
+                HttpStatus.NOT_FOUND.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmpresaCNPJCadastradoException.class)
+    public ResponseEntity<ErrorResponse> handleEmpresaCNPJCadastradoException(EmpresaCNPJCadastradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getCnpj(),
+                HttpStatus.CONFLICT.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmpresaEmailCadastradoException.class)
+    public ResponseEntity<ErrorResponse> handleEmpresaEmailCadastradoException(EmpresaEmailCadastradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getEmail(),
+                HttpStatus.CONFLICT.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmpresaEmailNaoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handleEmpresaEmailNaoEncontradoException(EmpresaEmailNaoEncontradoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getEmail(),
                 HttpStatus.NOT_FOUND.value()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);

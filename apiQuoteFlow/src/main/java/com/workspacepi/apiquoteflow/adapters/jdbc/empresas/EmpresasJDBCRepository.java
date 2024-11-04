@@ -29,8 +29,8 @@ public class EmpresasJDBCRepository implements EmpresasRepository {
             String cpnj_empresa = rs.getString("cnpj");
             String email_empresa = rs.getString("email");
             String nome_empresa = rs.getString("nome");
-            String senha_empresa = rs.getString("senha");
-            return new Empresas(id_empresa, cpnj_empresa, email_empresa, nome_empresa, senha_empresa);
+            String telefone_empresa = rs.getString("telefone");
+            return new Empresas(id_empresa, cpnj_empresa, email_empresa, nome_empresa, telefone_empresa);
         };
     }
 
@@ -40,7 +40,7 @@ public class EmpresasJDBCRepository implements EmpresasRepository {
         params.addValue("cnpj", empresas.getCnpj());
         params.addValue("email", empresas.getEmail());
         params.addValue("nome", empresas.getNome());
-        params.addValue("senha", empresas.getSenha());
+        params.addValue("telefone", empresas.getTelefone());
         return params;
     }
 
@@ -62,6 +62,32 @@ public class EmpresasJDBCRepository implements EmpresasRepository {
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("id_empresa", id_empresa);
             empresas = jdbcTemplate.query(sqlSelectEmpresaById(), params, createEmpresaRowMapper());
+            return empresas.isEmpty() ? null : empresas.get(0);
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar a empresa: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public Empresas findByCNPJ(String cnpj) {
+        List<Empresas> empresas;
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("cnpj", cnpj);
+            empresas = jdbcTemplate.query(sqlSelectEmpresaByCnpj(), params, createEmpresaRowMapper());
+            return empresas.isEmpty() ? null : empresas.get(0);
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar a empresa: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public Empresas findByEmail(String email) {
+        List<Empresas> empresas;
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("email", email);
+            empresas = jdbcTemplate.query(sqlSelectEmpresaByEmail(), params, createEmpresaRowMapper());
             return empresas.isEmpty() ? null : empresas.get(0);
         } catch (Exception e) {
             LOGGER.error("Houve um erro ao consultar a empresa: " + e.getMessage());
