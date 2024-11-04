@@ -5,7 +5,9 @@ import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEn
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuCadastradoException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
+import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoAutenticadoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
+import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioPermissaoNegadaException;
 import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,27 @@ public class ErrorHandler {
                 HttpStatus.CONFLICT.value()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    // Lida com a UsuarioEmailCadastradoException
+    @ExceptionHandler(UsuarioPermissaoNegadaException.class)
+    public ResponseEntity<ErrorResponse> handleUsuarioPermissaoNegadaException(UsuarioPermissaoNegadaException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                e.getPermissao().name(),
+                HttpStatus.FORBIDDEN.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
+    // Lida com a UsuarioEmailCadastradoException
+    @ExceptionHandler(UsuarioNaoAutenticadoException.class)
+    public ResponseEntity<ErrorResponse> handleUsuarioNaoAutenticadoException(UsuarioNaoAutenticadoException e) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                HttpStatus.UNAUTHORIZED.value()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     //  Lida com o ProdutoNaoEncontradoException
