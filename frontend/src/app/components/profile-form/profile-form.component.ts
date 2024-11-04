@@ -37,8 +37,7 @@ export class ProfileFormComponent {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: true}, Validators.required],
       email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
-      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]], // Síncrono
-      //
+      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
     });
@@ -54,7 +53,7 @@ export class ProfileFormComponent {
         this.profileForm.patchValue({
           name: response.nome,
           email: response.email,
-          phone: response.telefone,
+          phone: response.telefone
         });
       },
       error => {
@@ -94,6 +93,25 @@ export class ProfileFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.profileForm.valid) {
+
+    this.apiUserService.getUser().subscribe(
+          (response: Usuario) => {
+            const updatedData = {
+                    nome: this.profileForm.value.name,
+                    email: this.profileForm.value.email,
+                    senha: response.senha,
+                    telefone: this.profileForm.value.phone,
+                    id_empresa: response.id_empresa,
+                    permissao: response.permissao,
+                    id_usuario: response.id_usuario
+                  };
+
+                this.apiUserService.updateUser(updatedData.id_usuario, updatedData).subscribe(
+                        response => {
+                          console.log('Dados atualizados com sucesso:', response);
+                          this.toastr.success('Dados atualizados com sucesso!');
+                          localStorage.setItem('usuario', JSON.stringify(updatedData));
+                          
       const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
       const userId = usuarioData?.id_usuario;
       if (!userId) {
@@ -109,24 +127,21 @@ export class ProfileFormComponent {
         id_usuario: userId
       };
 
-      this.apiUserService.updateUser(userId, updatedData).subscribe(
-        response => {
-          console.log('Dados atualizados com sucesso:', response);
-          this.toastr.success('Dados atualizados com sucesso!');
-          localStorage.setItem('usuario', JSON.stringify(updatedData));
+                          // Desabilitar todos os campos após o envio
+                          this.profileForm.disable();
+                        },
+                        error => {
+                          console.error('Erro ao atualizar os dados:', error);
+                          this.toastr.error('Erro ao atualizar os dados.');
+                        }
+                      );
+          }
+        );
 
-          // Desabilitar todos os campos após o envio
-          this.profileForm.disable();
-        },
-        error => {
-          console.error('Erro ao atualizar os dados:', error);
-          this.toastr.error('Erro ao atualizar os dados.');
-        }
-      );
       console.log('Formulário enviado:', this.profileForm.value);
     } else {
       console.log('Formulário inválido');
-      this.toastr.warning("Para salvar a informação, clique no lápis apenas uma vez.")
+      this.toastr.warning("Para salvar a informação, clique em salvar apenas uma vez.")
       this.profileForm.markAllAsTouched();
     }
   }
