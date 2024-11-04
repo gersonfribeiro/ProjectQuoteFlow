@@ -1,6 +1,6 @@
 package com.workspacepi.apiquoteflow.application.empresas;
 
-import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaNaoEncontradaException;
+import com.workspacepi.apiquoteflow.application.empresas.exceptions.*;
 import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
 import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import org.springframework.stereotype.Service;
@@ -23,12 +23,36 @@ public class EmpresasService {
         Empresas empresas = empresasRepository.findById(id_empresa);
 
         if (empresas == null)
-            throw new Exception("Empresa não encontrada");
+            throw new EmpresaIdNaoEncontradaException(id_empresa);
+
+        return empresas;
+    }
+
+    public Empresas findByCNPJ(String cnpj) throws Exception {
+        Empresas empresas = empresasRepository.findByCNPJ(cnpj);
+
+        if (empresas == null)
+            throw new EmpresaCNPJNaoEncontradoException(cnpj);
+
+        return empresas;
+    }
+
+    public Empresas findByEmail(String email) throws Exception {
+        Empresas empresas = empresasRepository.findByCNPJ(email);
+
+        if (empresas == null)
+            throw new EmpresaEmailNaoEncontradoException(email);
 
         return empresas;
     }
 
     public Empresas cadastrarEmpresa(EmpresasCreateCommand empresasCreateCommand) throws Exception {
+        if(empresasRepository.findByEmail(empresasCreateCommand.getEmail_empresa()) != null)
+            throw new EmpresaEmailCadastradoException(empresasCreateCommand.getEmail_empresa());
+
+        if (empresasRepository.findByCNPJ(empresasCreateCommand.getCnpj_empresa()) != null)
+            throw new EmpresaCNPJCadastradoException(empresasCreateCommand.getCnpj_empresa());
+
         Empresas empresasDomain = empresasCreateCommand.toEmpresa();
         empresasRepository.cadastrarEmpresa(empresasDomain);
 
@@ -39,7 +63,7 @@ public class EmpresasService {
         Empresas empresasDomain = empresasRepository.findById(id_empresa);
 
         if (empresasDomain == null)
-            throw new EmpresaNaoEncontradaException(id_empresa);
+            throw new EmpresaCNPJNaoEncontradoException(empresasUpdateCommand.getCnpj_empresa());
 
         empresasRepository.modificarEmpresa(empresasUpdateCommand.toEmpresa(id_empresa));
         return findById(id_empresa);
@@ -49,7 +73,7 @@ public class EmpresasService {
         Empresas empresasDomain = empresasRepository.findById(id_empresa);
 
         if (empresasDomain == null)
-            throw new EmpresaNaoEncontradaException(id_empresa);
+            throw new EmpresaIdNaoEncontradaException(id_empresa);
 
         empresasRepository.deleteEmpresaById(id_empresa);
     }
