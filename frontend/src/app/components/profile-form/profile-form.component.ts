@@ -44,6 +44,10 @@ export class ProfileFormComponent {
   }
 
   ngOnInit(): void {
+    // Carregar id do usuário
+    const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+    const userId = usuarioData.id_usuario;
+
     this.apiUserService.getUser().subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
@@ -107,6 +111,21 @@ export class ProfileFormComponent {
                           console.log('Dados atualizados com sucesso:', response);
                           this.toastr.success('Dados atualizados com sucesso!');
                           localStorage.setItem('usuario', JSON.stringify(updatedData));
+                          
+      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const userId = usuarioData?.id_usuario;
+      if (!userId) {
+        console.error("Usuário não encontrado no LocalStorage.");
+        return;
+      }
+
+      const updatedData = {
+        nome: this.profileForm.value.name || usuarioData.nome,
+        email: this.profileForm.value.email || usuarioData.email,
+        senha: usuarioData.senha,
+        telefone: this.profileForm.value.phone || usuarioData.telefone,
+        id_usuario: userId
+      };
 
                           // Desabilitar todos os campos após o envio
                           this.profileForm.disable();
