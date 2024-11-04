@@ -15,6 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ApiCompanyService} from "../../services/api-company.service";
 import {ApiAddressService} from "../../services/api-address.service";
 import {ApiUserService} from "../../services/api-user.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register-company-form',
@@ -25,6 +26,7 @@ import {ApiUserService} from "../../services/api-user.service";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
   ],
   templateUrl: './register-company-form.component.html',
   styleUrls: ['./register-company-form.component.css'],
