@@ -33,6 +33,7 @@ public class UsuariosHandler {
             UsuarioResponseDTO usuarioDTO = new UsuarioResponseDTO(
                     usuario.get().getNome(),
                     usuario.get().getEmail(),
+                    usuario.get().getSenha(),
                     usuario.get().getPermissao()
             );
             return ResponseEntity.ok(usuarioDTO);
