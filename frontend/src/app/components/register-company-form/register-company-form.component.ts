@@ -160,8 +160,6 @@ export class RegisterCompanyFormComponent {
           this.apiAddressService.registerAddress(addressData).subscribe(
             response => {
               this.toastr.success('Empresa e endereço cadastrados com sucesso!');
-              const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-              const userId = usuarioData.id_usuario;
 
               const updatedData = {
                       nome: usuarioData.nome,

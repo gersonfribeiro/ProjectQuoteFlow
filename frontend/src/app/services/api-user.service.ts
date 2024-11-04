@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable, throwError, map} from 'rxjs';
 import {Usuario} from "../models/user.model";
 
 @Injectable({
@@ -30,6 +30,14 @@ export class ApiUserService {
       catchError(this.handleError)
     );
   }
+
+   // Método para pegar um usuário (retorna o primeiro do array)
+   getUser(): Observable<Usuario> {
+     return this.http.get<Usuario[]>(`${this.apiUrlUser}`).pipe(
+       map(users => users[0]), // Pega o primeiro usuário do array
+       catchError(this.handleError)
+      );
+   }
 
   // Método para pegar um usuário pelo ID
   getUserById(userId: string): Observable<Usuario> {
