@@ -63,7 +63,7 @@ public class EmpresasService {
         Empresas empresasDomain = empresasRepository.findById(id_empresa);
 
         if (empresasDomain == null)
-            throw new EmpresaCNPJNaoEncontradoException(empresasUpdateCommand.getCnpj_empresa());
+            throw new EmpresaIdNaoEncontradaException(id_empresa);
 
         empresasRepository.modificarEmpresa(empresasUpdateCommand.toEmpresa(id_empresa));
         return findById(id_empresa);
