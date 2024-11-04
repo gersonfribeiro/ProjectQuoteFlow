@@ -12,7 +12,7 @@ export class ApiUserService {
   // URL de registro de usuarios
   private apiUrlRegisterUser = 'http://localhost:8080/usuarios/registrar';
   // URL de login de usuarios
-  private apiUrlLoginUser = 'http://localhost:8080/login'
+  private apiUrlLoginUser = 'http://localhost:8080/usuarios/login'
 
   constructor(private http: HttpClient) {
   }
@@ -46,7 +46,7 @@ export class ApiUserService {
   }
 
   // Método para login de usuário
-  loginUser(credentials: { email: string; password: string }): Observable<any> {
+  loginUser(credentials: { email: string; senha: string }): Observable<any> {
     return this.http.post(`${this.apiUrlLoginUser}`, credentials).pipe(
       catchError(this.handleError)
     );
