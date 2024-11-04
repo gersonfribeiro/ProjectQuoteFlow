@@ -11,6 +11,8 @@ export class ApiUserService {
   private apiUrlUser = 'http://localhost:8080/usuarios';
   // URL de registro de usuarios
   private apiUrlRegisterUser = 'http://localhost:8080/usuarios/registrar';
+  // URL de login de usuarios
+  private apiUrlLoginUser = 'http://localhost:8080/login'
 
   constructor(private http: HttpClient) {
   }
@@ -31,17 +33,25 @@ export class ApiUserService {
 
   // Método para pegar um usuário pelo ID
   getUserById(userId: string): Observable<Usuario> {
-      return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
-        catchError(this.handleError)
-      );
-    }
+    return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   // Método para atualizar informações de um usuário
   updateUser(userId: string, updatedData: Partial<Usuario>): Observable<Usuario> {
-      return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData).pipe(
-        catchError(this.handleError)
-      );
-    }
+    return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Método para login de usuário
+  loginUser(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrlLoginUser}`, credentials).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   // Função de tratamento de erro
   private handleError(error: HttpErrorResponse) {
