@@ -23,7 +23,6 @@ public class Usuarios implements UserDetails {
 
     private String email;
 
-    @JsonIgnore
     private String senha;
 
     private String telefone;

@@ -17,6 +17,9 @@ public class UsuarioResponseDTO {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("senha")
+    private String senha;
+
     @JsonProperty("permissao")
     private Permissoes permissao;
 }
