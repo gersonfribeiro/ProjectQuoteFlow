@@ -54,7 +54,7 @@ export class ProfileFormComponent {
         this.profileForm.patchValue({
           name: response.nome,
           email: response.email,
-          phone: response.telefone,
+          phone: usuarioData.telefone, // O GET da API não retorna telefone. Por isso peguei do local storage.
         });
       },
       error => {
@@ -106,9 +106,10 @@ export class ProfileFormComponent {
       const updatedData = {
         nome: this.profileForm.value.name || usuarioData.nome,
         email: this.profileForm.value.email || usuarioData.email,
-//         senha: usuarioData.senha,
+        senha: usuarioData.senha,
         telefone: this.profileForm.value.phone || usuarioData.telefone,
-        id_usuario: userId
+        id_usuario: userId,
+        permissao: usuarioData.permissao
       };
 
       this.apiUserService.updateUser(userId, updatedData).subscribe(
