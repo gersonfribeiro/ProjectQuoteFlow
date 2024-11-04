@@ -45,7 +45,7 @@ public class UsuariosController {
 
         var token = tokenService.generateToken((Usuarios) auth.getPrincipal());
 
-        UsuarioAuthenticationDTO response = new UsuarioAuthenticationDTO(data.getEmail(), data.getSenha());
+//      UsuarioAuthenticationDTO response = new UsuarioAuthenticationDTO(data.getEmail(), data.getSenha());
         return ResponseEntity.ok(new UsuarioResponseLoginDTO(token));
     }
 

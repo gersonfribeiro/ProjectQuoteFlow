@@ -1,7 +1,10 @@
 package com.workspacepi.apiquoteflow.application.usuarios;
 
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioEmailCadastradoException;
+import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoAutenticadoException;
 import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioNaoEncontradoException;
+import com.workspacepi.apiquoteflow.application.usuarios.exceptions.UsuarioPermissaoNegadaException;
+import com.workspacepi.apiquoteflow.domain.usuarios.Permissoes;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import com.workspacepi.apiquoteflow.domain.usuarios.UsuariosRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +27,18 @@ public class UsuariosService {
     }
 
     public List<Usuarios> findAll() {
+        Permissoes permissaoAtual = SecurityUtils.getPermissaoDoUsuarioAtual();
+
+        // Lança exceção se o usuário não estiver autenticado
+        if (permissaoAtual == Permissoes.ANONYMOUS) {
+            throw new UsuarioNaoAutenticadoException();
+        }
+
+        // Lança exceção se o usuário autenticado não tiver a permissão de ADMIN
+        if (permissaoAtual != Permissoes.ADMIN) {
+            throw new UsuarioPermissaoNegadaException(permissaoAtual);
+        }
+
         return usuariosRepository.findAll();
     }
 

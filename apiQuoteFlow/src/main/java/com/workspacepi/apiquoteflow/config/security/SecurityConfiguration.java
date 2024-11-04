@@ -4,6 +4,7 @@ import com.workspacepi.apiquoteflow.application.security.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,12 +36,12 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/usuarios/registrar").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/usuarios/{id_usuario}").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/empresas/{id_empresa}/produtos").hasRole("ASSOCIADO")
-//                        .requestMatchers(HttpMethod.POST, "/cotacoes").hasRole("ASSOCIADO")
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/registrar").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/{id_usuario}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/empresas/{id_empresa}/produtos").hasRole("ASSOCIADO")
+                        .requestMatchers(HttpMethod.POST, "/cotacoes").hasRole("ASSOCIADO")
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
