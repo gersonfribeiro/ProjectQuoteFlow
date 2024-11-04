@@ -98,11 +98,11 @@ export class ProfileFormComponent {
                     senha: response.senha,
                     telefone: this.profileForm.value.phone,
                     id_empresa: response.id_empresa,
-                    id_usuario: response.id_usuario,
-                    permissao: response.permissao
+                    permissao: response.permissao,
+                    id_usuario: response.id_usuario
                   };
 
-                this.apiUserService.updateUser(id_usuario, updatedData).subscribe(
+                this.apiUserService.updateUser(updatedData.id_usuario, updatedData).subscribe(
                         response => {
                           console.log('Dados atualizados com sucesso:', response);
                           this.toastr.success('Dados atualizados com sucesso!');

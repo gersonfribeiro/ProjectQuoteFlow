@@ -14,7 +14,6 @@ import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
 import {ApiCompanyService} from "../../services/api-company.service";
 import {ApiAddressService} from "../../services/api-address.service";
-import {ApiUserService} from "../../services/api-user.service";
 
 @Component({
   selector: 'app-register-company-form',
@@ -32,7 +31,7 @@ import {ApiUserService} from "../../services/api-user.service";
 export class RegisterCompanyFormComponent {
   registerCompanyForm: FormGroup;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiCompanyService: ApiCompanyService, private apiAddressService: ApiAddressService, private apiUserService: ApiUserService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiCompanyService: ApiCompanyService, private apiAddressService: ApiAddressService) {
     this.registerCompanyForm = this.fb.group({
       company: [{value: '', disabled: false}, Validators.required],
       cnpj: [{value: '', disabled: false}, [Validators.required, this.validateCNPJ]],
@@ -139,6 +138,10 @@ export class RegisterCompanyFormComponent {
         cnpj: this.registerCompanyForm.value.cnpj,
         telefone: this.registerCompanyForm.value.phone,
         email: this.registerCompanyForm.value.email
+
+        /* email: "teste@email.com", */
+        /* senha: "teste123", */
+
       };
 
       this.apiCompanyService.registerCompany(companyData).subscribe(
@@ -160,22 +163,6 @@ export class RegisterCompanyFormComponent {
           this.apiAddressService.registerAddress(addressData).subscribe(
             response => {
               this.toastr.success('Empresa e endereço cadastrados com sucesso!');
-
-              const updatedData = {
-                      nome: usuarioData.nome,
-                      email: usuarioData.email,
-                      senha: usuarioData.senha,
-                      telefone: usuarioData.telefone,
-                      id_empresa: id_empresa,
-                      permissao: usuarioData.permissao,
-                      id_usuario: userId
-                    };
-
-                  this.apiUserService.updateUser(userId, updatedData).subscribe(
-                          response => {
-                            console.log('id_empresa atribuída ao usuário');
-                          }
-                        );
             },
             error => {
               this.toastr.error('Erro ao cadastrar endereço.');
