@@ -103,10 +103,34 @@
               </div>
             </div>
           </div>
+
+          <div class="col-md-4 mt-2">
+            <label class="form-label"><strong>*</strong> E-mail da empresa:</label>
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="email"
+                placeholder="quoteflow@email.com"
+              />
+              <button type="button" class="btn btn-success" (click)="toggleField('email')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
+            <div
+              *ngIf="
+                registerCompanyForm.get('email')?.invalid &&
+                registerCompanyForm.get('email')?.touched
+              "
+              class="text-danger"
+            >
+              <div class="alert alert-danger alert-small mb-2">
+                O email é <strong>obrigatório.</strong>
+              </div>
+            </div>
+          </div>
         </div>
 
-
-        <!-- Outras seções como CEP, Endereço, Tipo -->
         <hr/>
 
         <div class="row mb-3">
@@ -209,7 +233,6 @@
           </div>
         </div>
 
-        <!-- Enviar Button -->
         <button
           type="submit"
           class="btn btn-success mt-5 d-flex align-items-center justify-content-center gap-2 col-md-3"

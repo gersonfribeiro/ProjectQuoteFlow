@@ -14,15 +14,15 @@ public class Empresas {
     private String cnpj;
     private String email;
     private String nome;
-    private String senha;
+    private String telefone;
 
 //  Construtor para modificação e inserção. Necessitade modificações para inserir usuários em uma empresa.
-    public Empresas(String cnpj, String email, String nome, String senha) {
+    public Empresas(String cnpj, String email, String nome, String telefone) {
         this.id_empresa = UUID.randomUUID();
         this.cnpj = cnpj;
         this.email = email;
         this.nome = nome;
-        this.senha = senha;
+        this.telefone = telefone;
     }
 
 }

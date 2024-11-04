@@ -13,11 +13,8 @@ export class ApiCompanyService {
   }
 
   registerCompany(companyData: any): Observable<{ id_empresa: string }> {
-    return this.http.post<{ id_empresa: string }>(`${this.apiUrlCompany}/empresas`, companyData)
+    return this.http.post<{ id_empresa: string }>(this.apiUrlCompany, companyData)
   }
 
-  registerAdress(addressData: any): Observable<any> {
-    return this.http.post(`${this.apiUrlCompany}/enderecos`, addressData)
-  }
 }
 

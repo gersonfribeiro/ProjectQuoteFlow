@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/empresas")
 public class EmpresasController {
 
 
@@ -23,34 +24,44 @@ public class EmpresasController {
 //  Método get para a rota de empresa que devolve todas as empresas
 //  (afim de testes, isso não pode ser implementado na aplicação com as empresas).
 
-    @GetMapping("/empresas")
+    @GetMapping
     public ResponseEntity<List<Empresas>> findAll() {
         return empresasHandler.findAll();
     }
 
 //  Método get para a rota de uma empresa especifica.
 
-    @GetMapping("/empresas/{id_empresa}")
+    @GetMapping("/id/{id_empresa}")
     public ResponseEntity<Empresas> findById(@PathVariable String id_empresa) throws Exception {
         return empresasHandler.findById(id_empresa);
     }
 
+    @GetMapping("/cnpj/{cnpj}")
+    public ResponseEntity<Empresas> findByCNPJ(@PathVariable String cnpj) throws Exception {
+        return empresasHandler.findByCNPJ(cnpj);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Empresas> findByEmail(@PathVariable String email) throws Exception {
+        return empresasHandler.findByEmail(email);
+    }
+
     //  Método post para solicitar uma nova empresa (necessita de modificações)
-    @PostMapping("/empresas")
+    @PostMapping
     public ResponseEntity<Empresas> cadastrarEmpresa(@RequestBody EmpresasCreateCommand empresasCreateCommand) throws Exception {
 
         return empresasHandler.cadastrarEmpresa(empresasCreateCommand);
     }
 
     //  Método put para criar uma nova empresa (necessita de modificações)
-    @PutMapping("/empresas/{id_empresa}")
+    @PutMapping("/id/{id_empresa}")
     public ResponseEntity<Empresas> modificarEmpresa(@RequestBody EmpresasUpdateCommand empresasUpdateCommand, @PathVariable String id_empresa) throws Exception {
 
         return empresasHandler.modificarEmpresa(empresasUpdateCommand, id_empresa);
     }
 
     //  Método de exclusão das empresas
-    @DeleteMapping("/empresas/{id_empresa}")
+    @DeleteMapping("/id/{id_empresa}")
     public ResponseEntity<String> deletarEmpresa(@PathVariable String id_empresa) throws Exception {
         return empresasHandler.deleteEmpresaById(id_empresa);
     }

@@ -19,6 +19,7 @@ public class ApiQuoteFlowApplication implements WebMvcConfigurer {
         registry.addMapping("/**")  // Habilita o CORS para todos os endpoints
                 .allowedOrigins("http://localhost:4200")  // Permite requisições apenas do frontend rodando em localhost:4200
                 .allowedMethods("*")  // Permite todos os métodos HTTP (GET, POST, etc.)
-                .allowedHeaders("*");  // Permite todos os cabeçalhos nas requisições
+                .allowedHeaders("*") // Permite todos os cabeçalhos nas requisições
+                .allowCredentials(true);
     }
 }

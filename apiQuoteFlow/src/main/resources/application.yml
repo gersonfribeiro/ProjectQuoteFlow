@@ -14,3 +14,8 @@ spring:
     password: ${DOTENV_PASSWORD}
 server:
   port: 8080
+
+api:
+  security:
+    token:
+      secret: ${DOTENV_JWT_SECRET:my-secret-key}

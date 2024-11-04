@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -100,7 +101,7 @@ public class UsuariosJDBCRepository implements UsuariosRepository {
         }
     }
     @Override
-    public Optional<Usuarios> findByEmail(String email) {
+    public Optional<UserDetails> findByEmail(String email) {
         List<Usuarios> usuarios;
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("email", email);

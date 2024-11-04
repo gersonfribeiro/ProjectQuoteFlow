@@ -53,7 +53,7 @@
           [type]="showPassword ? 'text' : 'password'"
           class="form-control"
           placeholder="Digite sua senha"
-          formControlName="password"
+          formControlName="senha"
         />
         <button
           type="button"
@@ -101,6 +101,7 @@
         class="btn flex-fill"
         type="submit"
         style="background-color: #0b5389; color: #fff"
+        (click)="login()"
       >
         <i *ngIf="!isLoading" class="bi bi-envelope-fill"></i>
         <div

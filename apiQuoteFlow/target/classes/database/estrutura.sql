@@ -8,10 +8,8 @@ create table empresas
     email      varchar(100) not null
         constraint uk8to9qnxq8i65isd0ys2yfeps0
             unique,
-    nome       varchar(100) not null
-        constraint uk4i591figd8nsoii5e9ersm0cl
-            unique,
-    senha      varchar(100) not null
+    nome       varchar(100) not null,
+    telefone   varchar(11)
 );
 
 alter table empresas
@@ -154,3 +152,7 @@ create table usuarios
             references empresas,
     permissao  varchar(20)
 );
+
+alter table usuarios
+    owner to postgres;
+

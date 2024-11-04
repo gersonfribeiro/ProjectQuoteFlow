@@ -4,5 +4,7 @@ export interface Usuario {
   email: string;
   senha: string;
   telefone: string;
+  id_empresa: string;
+  permissao: string;
   // ... outras propriedades
 }

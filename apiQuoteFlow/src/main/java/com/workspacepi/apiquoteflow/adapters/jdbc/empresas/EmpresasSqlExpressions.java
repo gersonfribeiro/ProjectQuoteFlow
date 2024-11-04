@@ -7,7 +7,7 @@ public class EmpresasSqlExpressions {
                     cnpj,
                     email,
                     nome,
-                    senha
+                    telefone
                FROM empresas
             """;
     }
@@ -18,9 +18,33 @@ public class EmpresasSqlExpressions {
                     cnpj,
                     email,
                     nome,
-                    senha
+                    telefone
                FROM empresas
                WHERE id_empresa = :id_empresa
+           """;
+    }
+
+    public static String sqlSelectEmpresaByCnpj() {
+        return """
+               SELECT id_empresa,
+                    cnpj,
+                    email,
+                    nome,
+                    telefone
+               FROM empresas
+               WHERE cnpj = :cnpj
+           """;
+    }
+
+    public static String sqlSelectEmpresaByEmail() {
+        return """
+               SELECT id_empresa,
+                    cnpj,
+                    email,
+                    nome,
+                    telefone
+               FROM empresas
+               WHERE email = :email
            """;
     }
 
@@ -31,13 +55,13 @@ public class EmpresasSqlExpressions {
                     cnpj,
                     email,
                     nome,
-                    senha)
+                    telefone)
                     values (
                         :id_empresa,
                         :cnpj,
                         :email,
                         :nome,
-                        :senha)
+                        :telefone)
            """;
     }
 
@@ -48,7 +72,7 @@ public class EmpresasSqlExpressions {
                     cnpj = :cnpj,
                     email = :email,
                     nome = :nome,
-                    senha = :senha
+                    telefone = :telefone
                WHERE id_empresa = :id_empresa
            """;
     }
