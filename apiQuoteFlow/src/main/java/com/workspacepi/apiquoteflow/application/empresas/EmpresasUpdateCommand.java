@@ -20,12 +20,12 @@ public class EmpresasUpdateCommand {
     @JsonProperty("nome")
     private String nome_empresa;
 
-    @JsonProperty("senha")
-    private String senha_empresa;
+    @JsonProperty("telefone")
+    private String telefone_empresa;
 
     //  Conversão para usuario
     public Empresas toEmpresa(UUID id_empresa) {
-        return new Empresas(id_empresa, cnpj_empresa, email_empresa, nome_empresa, senha_empresa);
+        return new Empresas(id_empresa, cnpj_empresa, email_empresa, nome_empresa, telefone_empresa);
     }
 
 }

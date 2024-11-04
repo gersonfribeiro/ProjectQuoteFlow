@@ -18,12 +18,12 @@ public class EmpresasCreateCommand {
     @JsonProperty("nome")
     private String nome_empresa;
 
-    @JsonProperty("senha")
-    private String senha_empresa;
+    @JsonProperty("telefone")
+    private String telefone_empresa;
 
     //  Conversão para usuario
     public Empresas toEmpresa() {
-        return new Empresas(cnpj_empresa, email_empresa, nome_empresa, senha_empresa);
+        return new Empresas(cnpj_empresa, email_empresa, nome_empresa, telefone_empresa);
     }
 
 }

@@ -1,9 +1,7 @@
 package com.workspacepi.apiquoteflow.adapters.http.usuarios;
 
-import com.workspacepi.apiquoteflow.application.usuarios.UsuarioAuthenticationDTO;
-import com.workspacepi.apiquoteflow.application.usuarios.UsuarioResponseDTO;
-import com.workspacepi.apiquoteflow.application.usuarios.UsuariosCreateCommand;
-import com.workspacepi.apiquoteflow.application.usuarios.UsuariosUpdateCommand;
+import com.workspacepi.apiquoteflow.application.usuarios.*;
+import com.workspacepi.apiquoteflow.config.security.TokenService;
 import com.workspacepi.apiquoteflow.domain.usuarios.Usuarios;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,8 @@ public class UsuariosController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenService tokenService;
 
     @GetMapping
     public ResponseEntity<List<Usuarios>> findAll() {
@@ -43,8 +43,10 @@ public class UsuariosController {
         var usernamePassord = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getSenha());
         var auth = this.authenticationManager.authenticate(usernamePassord);
 
+        var token = tokenService.generateToken((Usuarios) auth.getPrincipal());
+
         UsuarioAuthenticationDTO response = new UsuarioAuthenticationDTO(data.getEmail(), data.getSenha());
-        return ResponseEntity.ok("Login realizado com sucesso!");
+        return ResponseEntity.ok(new UsuarioResponseLoginDTO(token));
     }
 
     @PostMapping("/registrar")
