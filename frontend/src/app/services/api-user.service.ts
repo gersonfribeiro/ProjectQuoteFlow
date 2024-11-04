@@ -12,7 +12,7 @@ export class ApiUserService {
   // URL de registro de usuarios
   private apiUrlRegisterUser = 'http://localhost:8080/usuarios/registrar';
   // URL de login de usuarios
-  private apiUrlLoginUser = 'http://localhost:8080/login'
+  private apiUrlLoginUser = 'http://localhost:8080/usuarios/login'
 
   constructor(private http: HttpClient) {
   }
