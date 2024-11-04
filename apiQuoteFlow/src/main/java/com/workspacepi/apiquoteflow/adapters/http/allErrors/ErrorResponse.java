@@ -28,6 +28,7 @@ public class ErrorResponse {
     private String parametro;
 
     @JsonProperty("permissao")
+    @JsonIgnore
     private Permissoes permissao;
 
 //  Propriedades genericas
