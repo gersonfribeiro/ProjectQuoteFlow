@@ -12,6 +12,12 @@ public interface EmpresasRepository {
 //  Buscar empresa por ID
     Empresas findById(UUID id_empresa);
 
+//  Buscar empresa pelo CNPJ
+    Empresas findByCNPJ(String cnpj);
+
+//  Buscar empresa pelo Email
+    Empresas findByEmail(String email);
+
 //  Inserção
     Boolean cadastrarEmpresa(Empresas empresas);
 

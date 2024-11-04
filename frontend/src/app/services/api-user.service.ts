@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable, throwError, map} from 'rxjs';
 import {Usuario} from "../models/user.model";
 
 @Injectable({
@@ -11,6 +11,8 @@ export class ApiUserService {
   private apiUrlUser = 'http://localhost:8080/usuarios';
   // URL de registro de usuarios
   private apiUrlRegisterUser = 'http://localhost:8080/usuarios/registrar';
+  // URL de login de usuarios
+  private apiUrlLoginUser = 'http://localhost:8080/usuarios/login'
 
   constructor(private http: HttpClient) {
   }
@@ -29,19 +31,35 @@ export class ApiUserService {
     );
   }
 
+   // Método para pegar um usuário (retorna o primeiro do array)
+   getUser(): Observable<Usuario> {
+     return this.http.get<Usuario[]>(`${this.apiUrlUser}`).pipe(
+       map(users => users[0]), // Pega o primeiro usuário do array
+       catchError(this.handleError)
+      );
+   }
+
   // Método para pegar um usuário pelo ID
   getUserById(userId: string): Observable<Usuario> {
-      return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
-        catchError(this.handleError)
-      );
-    }
+    return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   // Método para atualizar informações de um usuário
   updateUser(userId: string, updatedData: Partial<Usuario>): Observable<Usuario> {
-      return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData).pipe(
-        catchError(this.handleError)
-      );
-    }
+    return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Método para login de usuário
+  loginUser(credentials: { email: string; senha: string }): Observable<any> {
+    return this.http.post(`${this.apiUrlLoginUser}`, credentials).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   // Função de tratamento de erro
   private handleError(error: HttpErrorResponse) {
