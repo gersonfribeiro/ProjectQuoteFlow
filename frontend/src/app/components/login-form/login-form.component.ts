@@ -32,7 +32,7 @@ export class LoginFormComponent {
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -54,6 +54,7 @@ export class LoginFormComponent {
         (error) => {
           this.isLoading = false;
           console.error('Erro ao fazer login:', error);
+          console.log(credentials);
           this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
         }
       );

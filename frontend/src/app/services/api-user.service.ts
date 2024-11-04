@@ -46,7 +46,7 @@ export class ApiUserService {
   }
 
   // Método para login de usuário
-  loginUser(credentials: { email: string; password: string }): Observable<any> {
+  loginUser(credentials: { email: string; senha: string }): Observable<any> {
     return this.http.post(`${this.apiUrlLoginUser}`, credentials).pipe(
       catchError(this.handleError)
     );
