@@ -111,7 +111,7 @@ export class ProfileFormComponent {
                           console.log('Dados atualizados com sucesso:', response);
                           this.toastr.success('Dados atualizados com sucesso!');
                           localStorage.setItem('usuario', JSON.stringify(updatedData));
-                          
+
       const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
       const userId = usuarioData?.id_usuario;
       if (!userId) {
