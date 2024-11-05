@@ -21,6 +21,7 @@
         class="form-control mb-2"
         placeholder="Digite seu e-mail"
         formControlName="email"
+        [maxlength]="30"
       />
       <div
         *ngIf="
@@ -37,16 +38,15 @@
         </div>
 
         <div
-          class="alert alert-danger alert-small"
-          role="alert"
-          *ngIf="loginForm.get('email')?.errors?.['email']"
+          class="alert alert-danger alert-small mb-2"
+          *ngIf="loginForm.get('email')?.errors?.['invalidEmail']"
         >
-          Digite um email válido.
+          O e-mail é <strong>inválido.</strong>
         </div>
       </div>
     </div>
 
-    <div class="mb-3 position-relative">
+    <div class="mb-5 position-relative">
       <label class="form-label text-dark">Senha:</label>
       <div class="input-group">
         <input
@@ -54,30 +54,38 @@
           class="form-control"
           placeholder="Digite sua senha"
           formControlName="senha"
+          [maxlength]="30"
         />
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="btn btn-outline-dark"
           (click)="togglePasswordVisibility()"
         >
           <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
         </button>
       </div>
       <div
-        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched"
         class="text-danger"
       >
         <div
           class="alert alert-danger alert-small mb-2 mt-2"
           role="alert"
-          *ngIf="loginForm.get('password')?.errors?.['required']"
+          *ngIf="loginForm.get('senha')?.errors?.['required']"
         >
           A senha é <strong>obrigatória.</strong>
         </div>
         <div
           class="alert alert-danger alert-small mb-2 mt-2"
           role="alert"
-          *ngIf="loginForm.get('password')?.errors?.['minlength']"
+          *ngIf="loginForm.get('senha')?.errors?.['minlength']"
+        >
+          A senha deve ter no mínimo 12 caracteres.
+        </div>
+        <div
+          class="alert alert-danger alert-small mb-2 mt-2"
+          role="alert"
+          *ngIf="loginForm.get('senha')?.errors?.['minlength']"
         >
           A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.
         </div>
@@ -93,39 +101,16 @@
       </div>
     </div>
 
-    <span class="pb-3 d-block">Entrar com:</span>
+    <!--    <span class="pb-3 d-block">Entrar com:</span>-->
 
     <div class="d-flex gap-2 pb-3">
       <button
-        [disabled]="isLoading"
         class="btn flex-fill"
         type="submit"
         style="background-color: #0b5389; color: #fff"
         (click)="login()"
       >
-        <i *ngIf="!isLoading" class="bi bi-envelope-fill"></i>
-        <div
-          *ngIf="isLoading"
-          class="spinner-border spinner-border-sm"
-          role="status"
-        >
-          <span class="visually-hidden">Carregando...</span>
-        </div>
-      </button>
-      <button
-        [disabled]="isLoading"
-        class="btn flex-fill"
-        type="button"
-        style="background-color: #0b5389; color: #fff"
-      >
-        <i *ngIf="!isLoading" class="bi bi-google"></i>
-        <div
-          *ngIf="isLoading"
-          class="spinner-border spinner-border-sm"
-          role="status"
-        >
-          <span class="visually-hidden">Carregando...</span>
-        </div>
+        Login
       </button>
     </div>
 

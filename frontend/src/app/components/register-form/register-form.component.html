@@ -1,6 +1,6 @@
 <div
   class="container d-flex flex-column flex-md-row justify-content-center align-items-center gap-4"
-  style="min-height: calc(100vh - 100px)"
+  style="height: calc(100vh - 100px)"
 >
   <img
     src="images/undraw_create.svg"
@@ -66,9 +66,9 @@
           O e-mail é <strong>inválido.</strong>
         </div>
       </div>
-    </div> <!-- Aqui está o fechamento da <div class="col-md-4"> -->
+    </div>
 
-    <div class="mb-3 position-relative">
+    <div class="mb-5 position-relative">
       <label class="form-label text-dark">Senha:</label>
       <div class="input-group">
         <input
@@ -80,7 +80,7 @@
         />
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="btn btn-outline-dark"
           (click)="togglePasswordVisibility()"
         >
           <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
@@ -117,18 +117,15 @@
       </div>
     </div>
 
-    <span class="pb-3 d-block">Registrar-se com:</span>
+    <!--    <span class="pb-3 d-block">Registrar-se com:</span>-->
 
     <button
-
-      class="btn d-flex w-100"
+      class="btn w-100"
       type="submit"
       style="background-color: #0b5389; color: #fff"
     >
       <!--        <i class="bi bi-envelope-fill"></i>-->
-      <p>Registrar</p>
+      Registrar
     </button>
-
-
   </form>
 </div>
