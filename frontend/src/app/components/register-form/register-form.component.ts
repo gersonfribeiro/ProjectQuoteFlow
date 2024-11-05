@@ -114,7 +114,6 @@ export class RegisterFormComponent {
             ...usuarioData,
             id_usuario: response.id_usuario,
           };
-          localStorage.setItem('usuario', JSON.stringify(usuarioComId));
 
           setTimeout(() => {
             this.router.navigate(['/dashboard/notifications']);

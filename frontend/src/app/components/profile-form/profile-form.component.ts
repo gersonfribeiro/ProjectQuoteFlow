@@ -15,6 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Usuario} from "../../models/user.model";
 import {RouterLink} from "@angular/router";
 import {ApiUserService} from "../../services/api-user.service";
+import {ApiCompanyService} from "../../services/api-company.service";
 
 @Component({
   selector: 'app-profile-form',
@@ -33,10 +34,10 @@ import {ApiUserService} from "../../services/api-user.service";
 export class ProfileFormComponent {
   profileForm: FormGroup;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiUserService: ApiUserService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService, private apiUserService: ApiUserService, private apiCompanyService: ApiCompanyService) {
     this.profileForm = this.fb.group({
-      name: [{value: '', disabled: true}, Validators.required],
-      email: [{value: '', disabled: true}, [Validators.required, this.validateEmail]],
+      name: [{value: '', disabled: false}, Validators.required],
+      email: [{value: '', disabled: false}, [Validators.required, this.validateEmail]],
       phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
@@ -44,10 +45,6 @@ export class ProfileFormComponent {
   }
 
   ngOnInit(): void {
-    // Carregar id do usuário
-    const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-    const userId = usuarioData.id_usuario;
-
     this.apiUserService.getUser().subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
@@ -55,6 +52,14 @@ export class ProfileFormComponent {
           email: response.email,
           phone: response.telefone
         });
+        this.apiCompanyService.getCompany().subscribe(
+            (response: any) => {
+                this.profileForm.patchValue({
+                    company: response.nome,
+                    cnpj: response.cnpj
+                  })
+              }
+          );
       },
       error => {
         console.error("Erro");
@@ -89,11 +94,9 @@ export class ProfileFormComponent {
     return null;
   }
 
-  // Método para enviar dados ao LocalStorage e ao banco de dados ao submeter o formulário
   // Submissão do formulário
   onSubmit() {
     if (this.profileForm.valid) {
-
     this.apiUserService.getUser().subscribe(
           (response: Usuario) => {
             const updatedData = {
@@ -106,38 +109,13 @@ export class ProfileFormComponent {
                     id_usuario: response.id_usuario
                   };
 
-                this.apiUserService.updateUser(updatedData.id_usuario, updatedData).subscribe(
+                this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
                         response => {
-                          console.log('Dados atualizados com sucesso:', response);
                           this.toastr.success('Dados atualizados com sucesso!');
-                          localStorage.setItem('usuario', JSON.stringify(updatedData));
-
-      const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-      const userId = usuarioData?.id_usuario;
-      if (!userId) {
-        console.error("Usuário não encontrado no LocalStorage.");
-        return;
-      }
-
-      const updatedData = {
-        nome: this.profileForm.value.name || usuarioData.nome,
-        email: this.profileForm.value.email || usuarioData.email,
-        senha: usuarioData.senha,
-        telefone: this.profileForm.value.phone || usuarioData.telefone,
-        id_usuario: userId
-      };
-
-                          // Desabilitar todos os campos após o envio
-                          this.profileForm.disable();
-                        },
-                        error => {
-                          console.error('Erro ao atualizar os dados:', error);
-                          this.toastr.error('Erro ao atualizar os dados.');
                         }
                       );
-          }
-        );
-
+                }
+            );
       console.log('Formulário enviado:', this.profileForm.value);
     } else {
       console.log('Formulário inválido');
