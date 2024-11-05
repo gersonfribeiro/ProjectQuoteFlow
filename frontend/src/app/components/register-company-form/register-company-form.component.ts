@@ -16,6 +16,7 @@ import {ApiCompanyService} from "../../services/api-company.service";
 import {ApiAddressService} from "../../services/api-address.service";
 import {ApiUserService} from "../../services/api-user.service";
 import {RouterLink} from "@angular/router";
+import {Usuario} from "../../models/user.model";
 
 @Component({
   selector: 'app-register-company-form',
@@ -51,18 +52,17 @@ export class RegisterCompanyFormComponent {
   }
 
   ngOnInit(): void {
-    // Carregar dados do usuário armazenados
-    const cepData = JSON.parse(localStorage.getItem('cep') || '{}');
-
-    // Preenche o formulário de perfil com os dados do usuário
-    this.registerCompanyForm.patchValue({
-      postalCode: cepData.postalCode
-    });
-
-    if (cepData.postalCode) {
-      cepData.postalCode
-      this.searchPostalCode();
-    }
+    // Carregar dados do endereço
+    this.apiAddressService.getAddress().subscribe(
+                (response: any) => {
+                    this.registerCompanyForm.patchValue({
+                        postalCode: response.cep
+                      });
+                    if (response.cep) {
+                          this.searchPostalCode();
+                        }
+                  }
+              );
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -118,7 +118,6 @@ export class RegisterCompanyFormComponent {
                 postalCode: data.cep.replace('-', ''),
               }
               this.registerCompanyForm.patchValue(dataForm);
-              localStorage.setItem('cep', JSON.stringify(dataForm));
             } else {
               this.toastr.error('CEP não encontrado.');
             }
@@ -135,7 +134,6 @@ export class RegisterCompanyFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.registerCompanyForm.valid) {
-
       const companyData = {
         nome: this.registerCompanyForm.value.company,
         cnpj: this.registerCompanyForm.value.cnpj,
@@ -161,34 +159,40 @@ export class RegisterCompanyFormComponent {
 
           this.apiAddressService.registerAddress(addressData).subscribe(
             response => {
-              this.toastr.success('Empresa e endereço cadastrados com sucesso!');
-              const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
-              const userId = usuarioData.id_usuario;
+              this.toastr.success('Dados cadastrados com sucesso!');
 
-              const updatedData = {
-                      nome: usuarioData.nome,
-                      email: usuarioData.email,
-                      senha: usuarioData.senha,
-                      telefone: usuarioData.telefone,
-                      id_empresa: id_empresa,
-                      permissao: usuarioData.permissao,
-                      id_usuario: userId
-                    };
+              this.apiUserService.getUser().subscribe(
+                (response: Usuario) => {
+                  const updatedData = {
+                    nome: response.nome,
+                    email: response.email,
+                    senha: response.senha,
+                    telefone: response.telefone,
+                    id_empresa: id_empresa,
+                    permissao: response.permissao,
+                    id_usuario: response.id_usuario
+                  };
 
-                  this.apiUserService.updateUser(userId, updatedData).subscribe(
-                          response => {
-                            console.log('id_empresa atribuída ao usuário');
-                          }
-                        );
+                  this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
+                    response => {
+                      console.log('id_empresa atribuída ao usuário');
+                    },
+                    error => {
+                      this.toastr.error('Erro ao atualizar o usuário.');
+                    }
+                  );
+                },
+                error => {
+                  this.toastr.error('Erro ao buscar dados do usuário.');
+                }
+              );
             },
             error => {
               this.toastr.error('Erro ao cadastrar endereço.');
             }
           );
-
         },
-        (error) => {
-          console.error('Erro ao cadastrar empresa:', error);
+        error => {
           this.toastr.error('Erro ao cadastrar empresa.');
         }
       );
