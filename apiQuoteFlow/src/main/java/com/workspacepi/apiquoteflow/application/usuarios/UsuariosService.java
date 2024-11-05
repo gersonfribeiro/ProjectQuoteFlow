@@ -27,6 +27,7 @@ public class UsuariosService {
     }
 
     public List<Usuarios> findAll() {
+
 //        Permissoes permissaoAtual = SecurityUtils.getPermissaoDoUsuarioAtual();
 //
 //        // Lança exceção se o usuário não estiver autenticado
