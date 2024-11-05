@@ -201,6 +201,7 @@ export class RegisterCompanyFormComponent {
       this.registerCompanyForm.disable();
     } else {
       console.log('Formulário inválido');
+      this.toastr.warning("Para salvar a informação, clique em cadastrar apenas uma vez.")
       this.registerCompanyForm.markAllAsTouched();
     }
   }
