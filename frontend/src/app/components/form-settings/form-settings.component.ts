@@ -4,6 +4,7 @@ import {Router, RouterModule} from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {ApiUserService} from "../../services/api-user.service";
 import {ToastrService} from 'ngx-toastr';
+import {Usuario} from "../../models/user.model";
 
 @Component({
   selector: 'app-form-settings',
@@ -13,46 +14,39 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./form-settings.component.css'], // Corrigido para 'styleUrls' ao invés de 'styleUrl'
 })
 export class FormSettingsComponent {
-  showNotificationAlert: boolean;
-  nomeUsuario: string | null = null;
-  userId: string | null = null; // Adicionando userId
 
-  constructor(private apiService: ApiUserService, private router: Router, private toastr: ToastrService) {
-    const notificationSettingsPage = localStorage.getItem('notificationSettingsPage');
-    this.showNotificationAlert = !notificationSettingsPage;
-
-    // Recupera o nome do usuário e o ID do localStorage
-    const usuario = localStorage.getItem('usuario');
-    if (usuario) {
-      const usuarioObj = JSON.parse(usuario); // Parse do JSON
-      this.nomeUsuario = usuarioObj.nome; // Acessa o nome dentro do objeto
-      this.userId = usuarioObj.id_usuario; // Acessa o ID dentro do objeto
-    }
-  }
+  constructor(private apiUserService: ApiUserService, private router: Router, private toastr: ToastrService) {}
 
   // Método para deletar usuário
   delete() {
-    const userId = this.userId; // Obtém o ID do usuário
+      this.apiUserService.getUser().subscribe(
+          (response: Usuario) => {
+              const userId = response.id_usuario;
 
-    // Verifica se o userId é válido
-    if (!userId) {
-      this.toastr.error('ID do usuário não encontrado.');
-      return;
-    }
+              // Verifica se o userId é válido
+              if (!userId) {
+                  this.toastr.error('ID do usuário não encontrado.');
+                  return;
+              }
 
-    console.log('Tentando deletar usuário com ID:', userId); // Para depuração
+              console.log('Tentando deletar usuário com ID:', userId); // Para depuração
 
-    this.apiService.deleteUser(userId).subscribe(
-      response => {
-        this.toastr.success('Conta deletada com sucesso!');
-        localStorage.removeItem('usuario'); // Remove dados do LocalStorage
-        console.log('Conta deletada com sucesso!', response);
-        this.router.navigate(['/logout']);
-      },
-      error => {
-        this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
-        console.error('Erro ao deletar a conta:', error);
-      }
-    );
+              this.apiUserService.deleteUser(userId).subscribe(
+                  response => {
+                      this.toastr.success('Conta deletada com sucesso!');
+                      this.router.navigate(['/logout']);
+                  },
+                  error => {
+                      this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
+                      console.error('Erro ao deletar a conta:', error);
+                  }
+              );
+          },
+          error => {
+              console.error("Erro ao obter usuário:", error);
+              this.toastr.error('Não foi possível obter os dados do usuário.');
+          }
+      );
   }
+
 }

@@ -1,3 +1,5 @@
+# Arquivo .gitignore configurado para ignorar .tsbuildinfo e outros arquivos/desnecessários
+
 # Compiled class file
 *.class
 
@@ -52,3 +54,6 @@ yarn-error.log*
 # Temporary files
 temp
 tmp
+
+# TypeScript build info file
+.tsbuildinfo
