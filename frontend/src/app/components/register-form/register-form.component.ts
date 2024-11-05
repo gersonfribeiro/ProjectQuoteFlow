@@ -1,7 +1,5 @@
 import {CommonModule} from '@angular/common';
-// Importa o módulo comum que fornece diretivas comuns, como ngIf e ngFor.
 import {Component} from '@angular/core';
-// Importa o decorador 'Component', que é usado para definir um componente Angular.
 import {
   AbstractControl,
   FormBuilder,
@@ -9,22 +7,17 @@ import {
   ReactiveFormsModule, ValidationErrors,
   Validators,
 } from '@angular/forms';
-// Importa classes e módulos necessários para trabalhar com formulários reativos em Angular,
-// incluindo FormBuilder para criar instâncias de FormGroup e Validators para validação de campos.
+
 import {Router, RouterModule} from '@angular/router';
-// Importa o Router para navegação entre rotas e RouterModule para definir as rotas da aplicação.
+
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
-// Importa diretivas e pipes do pacote 'ngx-mask' para aplicar máscaras a campos de entrada.
 import {ApiUserService} from "../../services/api-user.service";
 import {Usuario} from "../../models/user.model";
-
-// Importa o serviço 'ApiUserService' que gerencia a comunicação com a API para registro de usuários.
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  // Define este componente como um componente independente que pode ser usado sem ser declarado em um módulo.
   imports: [
     RouterModule,
     NgxMaskDirective,
@@ -32,15 +25,14 @@ import {Usuario} from "../../models/user.model";
     ReactiveFormsModule,
     CommonModule,
   ],
-  // Lista os módulos e diretivas que serão utilizados neste componente.
+
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css'],
-  // Especifica o caminho do arquivo HTML e CSS para este componente.
 })
 export class RegisterFormComponent {
   registerForm: FormGroup;
   errorMessage: any;
-  showPassword = false; // Controle de visibilidade da senha
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -72,10 +64,6 @@ export class RegisterFormComponent {
     return null;
   }
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
-  }
-
   // Validação personalizada da senha
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.value;
@@ -95,6 +83,10 @@ export class RegisterFormComponent {
       return {invalidPassword: true};
     }
     return null;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   register() {
