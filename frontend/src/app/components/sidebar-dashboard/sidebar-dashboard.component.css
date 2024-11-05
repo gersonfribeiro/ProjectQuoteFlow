@@ -43,7 +43,7 @@ body {
   width: 70px;
   min-width: 70px;
   z-index: 1000;
-  transition: all 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out;
   background-color: #0b5389;
   display: flex;
   flex-direction: column;
@@ -51,7 +51,6 @@ body {
 
 #sidebar.expand {
   width: 280px;
-  transition: all 0.2s ease-in-out;
 }
 
 .toggle-btn {
@@ -68,6 +67,7 @@ body {
 
 .sidebar-logo {
   margin: auto 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .sidebar-logo a {
@@ -76,9 +76,9 @@ body {
   font-weight: 600;
 }
 
-#sidebar:not(.expand) .sidebar-logo,
-#sidebar:not(.expand) a.sidebar-link span {
-  display: none;
+#sidebar:not(.expand) .sidebar-logo {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sidebar-nav {
@@ -94,16 +94,23 @@ a.sidebar-link {
   font-size: 0.9rem;
   white-space: nowrap;
   border-left: 3px solid transparent;
+  transition: padding 0.2s ease-in-out;
 }
 
 .sidebar-link i {
   font-size: 1.3rem;
   margin-right: 1rem;
-  flex-shrink: 0; /* Evita que o ícone encolha */
+  flex-shrink: 0;  /* Evita que o ícone encolha */
 }
 
 .sidebar-link span {
   flex-grow: 1; /* O texto ocupará o espaço restante */
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+#sidebar.expand a.sidebar-link span {
+  opacity: 1;
 }
 
 .sidebar-item {
