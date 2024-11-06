@@ -7,7 +7,9 @@ import {catchError, Observable, throwError} from "rxjs";
 })
 export class ApiProductService {
 
-  private apiUrlProduct = 'http://localhost:8080/id_empresa/produtos'
+
+  // Passei o ID de uma empreasa cadastrada no meu banco pra testar
+  private apiUrlProduct = 'http://localhost:8080/807096aa-ce40-4f16-8b97-3ba9d54a9b42/produtos'
 
   constructor(private http: HttpClient) {
   }
