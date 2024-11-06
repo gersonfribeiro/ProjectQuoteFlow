@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RegisterCompanyFormComponent} from "../register-company-form/register-company-form.component";
 import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.component";
 
@@ -8,9 +9,10 @@ import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.
   imports: [
     RegisterCompanyFormComponent,
     SidebarDashboardComponent,
+    CommonModule,
   ],
-  templateUrl: './see-products-page.component.html',
-  styleUrls: ['./see-products-page.component.css']
+  templateUrl: './see-products-form.component.html',
+  styleUrls: ['./see-products-form.component.css']
 })
 export class SeeProductsPageComponent implements OnInit {
   products: any[] = []; // Declaração da variável products
