@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {RegisterProductFormComponent} from "../register-product-form/register-product-form.component";
+import {RegisterProductsFormComponent} from "../register-products-form/register-products-form.component";
 import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.component";
 import {RegisterCompanyFormComponent} from "../register-company-form/register-company-form.component";
 
@@ -7,7 +7,7 @@ import {RegisterCompanyFormComponent} from "../register-company-form/register-co
   selector: 'app-register-company-page',
   standalone: true,
   imports: [
-    RegisterProductFormComponent,
+    RegisterProductsFormComponent,
     SidebarDashboardComponent,
     RegisterCompanyFormComponent
   ],

@@ -1,0 +1,38 @@
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  thead {
+    background-color: #f7f7f7;
+    color: #333;
+
+    th {
+      border-bottom: 1px solid #dcdcdc;
+      padding: 12px;
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      &:hover {
+        background-color: #e0e0e0;
+        transition: background-color 0.3s;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #dcdcdc;
+      }
+    }
+  }
+}
