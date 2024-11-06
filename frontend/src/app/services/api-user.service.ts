@@ -60,6 +60,11 @@ export class ApiUserService {
     );
   }
 
+  isLoggedIn(): boolean {
+      const token = localStorage.getItem('authToken');
+      return !!token;
+    }
+
 
   // Função de tratamento de erro
   private handleError(error: HttpErrorResponse) {
