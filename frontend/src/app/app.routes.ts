@@ -7,10 +7,10 @@ import {DashboardNotificationsComponent} from './components/dashboard-notificati
 import {DashboardProfileComponent} from './components/dashboard-profile/dashboard-profile.component';
 import {NotificationsHistoricComponent} from './components/notifications-historic/notifications-historic.component';
 import {DashboardSettingsComponent} from './components/dashboard-settings/dashboard-settings.component';
-import {RegisterProductPageComponent} from "./components/register-product-page/register-product-page.component";
 import {RegisterCompanyPageComponent} from "./components/register-company-page/register-company-page.component";
 import {DashboardChartComponent} from "./components/dashboard-chart/dashboard-chart.component";
 import {SeeProductsPageComponent} from "./components/see-products-page/see-products-page.component";
+import {RegisterProductsPageComponent} from "./components/register-products-page/register-products-page.component";
 
 export const routes: Routes = [
   {path: '', component: RegisterPageComponent}, // Home
@@ -24,7 +24,8 @@ export const routes: Routes = [
   {path: 'dashboard/settings', component: DashboardSettingsComponent}, // Página de configurações
   {path: 'dashboard/panel', component: DashboardChartComponent}, // Página de painel
   {path: 'dashboard/register-companies', component: RegisterCompanyPageComponent}, // Página de cadastro de empresas
-  {path: 'dashboard/register-products', component: RegisterProductPageComponent}, // Página de cadastro de produtos
+  {path: 'dashboard/register-products', component: RegisterProductsPageComponent}, // Página de cadastro de produtos
   {path: 'dashboard/products', component: SeeProductsPageComponent}, // Página de produtos cadastrados
+
   // Outras rotas
 ];
