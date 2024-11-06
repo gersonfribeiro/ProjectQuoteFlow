@@ -16,6 +16,8 @@ import {ApiProductService} from "../../services/api-product.service";
 export class SeeProductsFormComponent {
   products: any[] = [];
 
+  companyId: string = '21a4dfeb-e12c-4cb7-8977-ae6f30432e9f';
+
   constructor(private productService: ApiProductService) {
   }
 
@@ -33,14 +35,14 @@ export class SeeProductsFormComponent {
 // }
 
   ngOnInit(): void {
-    // Carrega os produtos do backend
-    this.productService.getProducts().subscribe({
-      next: (products) => {
-        this.products = products;
-      },
-      error: (error) => {
-        console.error('Erro ao carregar produtos:', error);
-      }
-    });
-  }
+      // Carrega os produtos do backend
+      this.productService.getProducts(this.companyId).subscribe({
+        next: (products) => {
+          this.products = products;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar produtos:', error);
+        }
+      });
+    }
 }

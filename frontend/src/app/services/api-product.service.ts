@@ -1,30 +1,27 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { catchError, Observable, throwError } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiProductService {
 
-
-  // Passei o ID de uma empreasa cadastrada no meu banco pra testar
-  private apiUrlProduct = 'http://localhost:8080/807096aa-ce40-4f16-8b97-3ba9d54a9b42/produtos'
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   // Método para salvar um produto
-  registerProduct(productData: any): Observable<any> {
-    return this.http.post(this.apiUrlProduct, productData)
+  registerProduct(companyId: string, productData: any): Observable<any> {
+    const apiUrlProduct = `http://localhost:8080/empresas/${companyId}/produtos`;
+    return this.http.post(apiUrlProduct, productData) // Corrigido para usar a variável apiUrlProduct
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  // Método para obter os produtos
-  getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrlProduct)
+  getProducts(companyId: string): Observable<any[]> {
+    const apiUrlProduct = `http://localhost:8080/empresas/${companyId}/produtos`;
+    console.log("URL para obter produtos:", apiUrlProduct); // Log para confirmar a URL
+    return this.http.get<any[]>(apiUrlProduct)
       .pipe(
         catchError(this.handleError)
       );
