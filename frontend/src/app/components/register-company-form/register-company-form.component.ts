@@ -53,16 +53,16 @@ export class RegisterCompanyFormComponent {
 
   ngOnInit(): void {
     // Carregar dados do endereço
-    this.apiAddressService.getAddress().subscribe(
-                (response: any) => {
-                    this.registerCompanyForm.patchValue({
-                        postalCode: response.cep
-                      });
-                    if (response.cep) {
-                          this.searchPostalCode();
-                        }
-                  }
-              );
+//     this.apiAddressService.getAddress().subscribe(
+//                 (response: any) => {
+//                     this.registerCompanyForm.patchValue({
+//                         postalCode: response.cep
+//                       });
+//                     if (response.cep) {
+//                           this.searchPostalCode();
+//                         }
+//                   }
+//               );
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
