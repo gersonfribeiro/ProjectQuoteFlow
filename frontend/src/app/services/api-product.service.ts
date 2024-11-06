@@ -20,6 +20,14 @@ export class ApiProductService {
       );
   }
 
+  // Método para obter os produtos
+  getProducts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrlProduct)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Erro desconhecido';
     if (error.error instanceof ErrorEvent) {
