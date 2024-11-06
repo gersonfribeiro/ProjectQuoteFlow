@@ -38,12 +38,32 @@ export class RegisterProductFormComponent {
     });
   }
 
+  // Método para pegar os produtos do localStorage
+  getProducts() {
+    const products = localStorage.getItem('products');
+    return products ? JSON.parse(products) : [];
+  }
+
   // Submissão do formulário
   onSubmit() {
+    console.log("Formulário enviado");
     if (this.registerProductForm.valid) {
-      console.log('Formulário enviado:', this.registerProductForm.value);
+      const product = this.registerProductForm.value;
+
+      // Pega a lista atual de produtos
+      const products = this.getProducts();
+
+      // Adiciona o novo produto à lista
+      products.push(product);
+
+      // Salva a lista atualizada no localStorage
+      localStorage.setItem('products', JSON.stringify(products));
+
+      // Exibe a notificação de sucesso
       this.toastr.success('Produto cadastrado com sucesso!');
-      this.registerProductForm.disable();
+
+      // Limpa o formulário após o envio
+      this.registerProductForm.reset();
     } else {
       console.log('Formulário inválido');
       this.registerProductForm.markAllAsTouched();
