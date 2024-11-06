@@ -1,31 +1,24 @@
 import {Component} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from "@angular/forms";
-import {NgIf} from "@angular/common";
-import {NgxMaskDirective} from "ngx-mask";
 import {HttpClient} from "@angular/common/http";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {RouterLink} from "@angular/router";
+import {NgIf} from "@angular/common";
+import {NgxMaskDirective} from "ngx-mask";
 
 @Component({
-  selector: 'app-register-product-form',
+  selector: 'app-register-products-form',
   standalone: true,
   imports: [
-    FormsModule,
-    NgIf,
-    NgxMaskDirective,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    NgIf,
+    NgxMaskDirective
   ],
-  templateUrl: './register-product-form.component.html',
-  styleUrl: './register-product-form.component.css'
+  templateUrl: './register-products-form.component.html',
+  styleUrl: './register-products-form.component.css'
 })
-export class RegisterProductFormComponent {
+export class RegisterProductsFormComponent {
   registerProductForm: FormGroup;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) {

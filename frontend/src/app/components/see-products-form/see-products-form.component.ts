@@ -1,22 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RegisterCompanyFormComponent} from "../register-company-form/register-company-form.component";
-import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.component";
+import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-see-products-form',
   standalone: true,
   imports: [
-    RegisterCompanyFormComponent,
-    SidebarDashboardComponent,
-    CommonModule,
     RouterLink,
+    NgForOf
   ],
   templateUrl: './see-products-form.component.html',
-  styleUrls: ['./see-products-form.component.css']
+  styleUrl: './see-products-form.component.css'
 })
-export class SeeProductsFormComponent implements OnInit {
+export class SeeProductsFormComponent {
   products: any[] = []; // Declaração da variável products
 
   ngOnInit(): void {
