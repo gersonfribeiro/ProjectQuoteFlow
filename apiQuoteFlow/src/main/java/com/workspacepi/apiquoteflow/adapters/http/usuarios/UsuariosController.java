@@ -43,10 +43,12 @@ public class UsuariosController {
         var usernamePassord = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getSenha());
         var auth = this.authenticationManager.authenticate(usernamePassord);
 
-        var token = tokenService.generateToken((Usuarios) auth.getPrincipal());
+        // Cast para o objeto Usuarios, precisamos retornar o usuário autenticado para pegar seu id.
+        var usuario = (Usuarios) auth.getPrincipal();
 
-//      UsuarioAuthenticationDTO response = new UsuarioAuthenticationDTO(data.getEmail(), data.getSenha());
-        return ResponseEntity.ok(new UsuarioResponseLoginDTO(token));
+        var token = tokenService.generateToken(usuario);
+
+        return ResponseEntity.ok(new UsuarioResponseLoginDTO(usuario.getId_usuario(), token));
     }
 
     @PostMapping("/registrar")

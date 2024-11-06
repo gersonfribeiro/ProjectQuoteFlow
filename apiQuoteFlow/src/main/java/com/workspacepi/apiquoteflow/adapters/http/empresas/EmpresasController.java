@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/empresas")
 public class EmpresasController {
 
-
 //  Definição do nosso atributo Handler assim como o seu construtor
 
     private final EmpresasHandler empresasHandler;
