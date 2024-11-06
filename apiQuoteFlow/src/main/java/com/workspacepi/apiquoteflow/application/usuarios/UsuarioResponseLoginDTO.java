@@ -1,4 +1,5 @@
 package com.workspacepi.apiquoteflow.application.usuarios;
 
-public record UsuarioResponseLoginDTO(String token) {
-}
+import java.util.UUID;
+
+public record UsuarioResponseLoginDTO(UUID id_usuario, String token) {  }
