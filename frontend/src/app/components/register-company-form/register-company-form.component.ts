@@ -169,7 +169,7 @@ export class RegisterCompanyFormComponent {
                     senha: response.senha,
                     telefone: response.telefone,
                     id_empresa: id_empresa,
-                    permissao: response.permissao,
+                    permissao: "EMPRESA",
                     id_usuario: response.id_usuario
                   };
 
