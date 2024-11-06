@@ -84,6 +84,10 @@ export class LoginFormComponent {
       this.apiService.loginUser(credentials).subscribe(
         (response) => {
           console.log('Login bem-sucedido:', response);
+          // Armazenando o token no localStorage
+            if (response.token) {
+              localStorage.setItem('authToken', response.token);
+            }
           // Navega para o dashboard ou outra página após o login
           this.router.navigate(['/dashboard/notifications']);
         },

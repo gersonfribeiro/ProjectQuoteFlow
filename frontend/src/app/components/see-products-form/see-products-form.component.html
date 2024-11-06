@@ -22,12 +22,12 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let produto of produtos">
-            <!--                        <td>{{ produto.sku }}</td>-->
-            <!--                        <td>{{ produto.categoria }}</td>-->
-            <!--                        <td>{{ produto.variacao }}</td>-->
-            <!--                        <td>{{ produto.descricao }}</td>-->
-            <!--                        <td>{{ produto.observacao }}</td>-->
+          <tr *ngFor="let product of products">
+            <td>{{ product.sku }}</td>
+            <td>{{ product.productCategory }}</td>
+            <td>{{ product.variation }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.observation }}</td>
           </tr>
           </tbody>
         </table>

@@ -1,18 +1,28 @@
-import {Component} from '@angular/core';
-import {NgForOf} from "@angular/common";
-import {RouterLink} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {RegisterCompanyFormComponent} from "../register-company-form/register-company-form.component";
+import {SidebarDashboardComponent} from "../sidebar-dashboard/sidebar-dashboard.component";
 
 @Component({
-  selector: 'app-see-products-form',
+  selector: 'app-see-products-page',
   standalone: true,
   imports: [
-    NgForOf,
-    RouterLink
+    RegisterCompanyFormComponent,
+    SidebarDashboardComponent,
   ],
-  templateUrl: './see-products-form.component.html',
-  styleUrl: './see-products-form.component.css'
+  templateUrl: './see-products-page.component.html',
+  styleUrls: ['./see-products-page.component.css']
 })
-export class SeeProductsFormComponent {
-  produtos: any;
+export class SeeProductsPageComponent implements OnInit {
+  products: any[] = []; // Declaração da variável products
 
+  ngOnInit(): void {
+    // Carrega os produtos do localStorage quando o componente for inicializado
+    this.products = this.getProducts();
+  }
+
+  // Método para pegar os produtos do localStorage
+  getProducts() {
+    const products = localStorage.getItem('products');
+    return products ? JSON.parse(products) : [];
+  }
 }
