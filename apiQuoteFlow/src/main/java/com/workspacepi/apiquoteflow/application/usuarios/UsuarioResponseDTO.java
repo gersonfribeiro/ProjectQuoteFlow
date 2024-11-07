@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,4 +24,10 @@ public class UsuarioResponseDTO {
 
     @JsonProperty("permissao")
     private Permissoes permissao;
+
+    @JsonProperty("telefone")
+    private String telefone;
+
+    @JsonProperty("id_empresa")
+    private UUID id_empresa;
 }
