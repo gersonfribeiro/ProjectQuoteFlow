@@ -14,8 +14,18 @@ export class ApiUserService {
   // URL de login de usuarios
   private apiUrlLoginUser = 'http://localhost:8080/usuarios/login'
 
+  private userId: string | null = null;
+
   constructor(private http: HttpClient) {
   }
+
+  setUserId(id: string): void {
+      this.userId = id;
+    }
+
+  getUserId(): string | null {
+      return this.userId;
+    }
 
   // Método para registrar um novo usuário
   registerUser(user: Usuario): Observable<any> {
@@ -40,7 +50,7 @@ export class ApiUserService {
    }
 
   // Método para pegar um usuário pelo ID
-  getUserById(userId: string): Observable<Usuario> {
+  getUserById(userId: string | null): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
       catchError(this.handleError)
     );

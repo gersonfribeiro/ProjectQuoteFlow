@@ -107,9 +107,29 @@ export class RegisterFormComponent {
             id_usuario: response.id_usuario,
           };
 
-          setTimeout(() => {
-            this.router.navigate(['/dashboard/notifications']);
-          }, 2500);
+          const loginCredentials = {
+              email: usuarioData.email,
+              senha: usuarioData.senha
+            }
+
+          this.apiService.loginUser(loginCredentials).subscribe(
+              (response) => {
+                console.log('Login bem-sucedido.');
+                this.apiService.setUserId(response.id_usuario);
+                // Armazenando o token no localStorage
+                if (response.token) {
+                  localStorage.setItem('authToken', response.token);
+                  }
+                // Navega para o dashboard ou outra página após o login
+                setTimeout(() => {
+                  this.router.navigate(['/dashboard/notifications']);
+                  }, 2500);
+              },
+              (error) => {
+                console.error('Erro ao fazer login:', error);
+                this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
+              }
+            );
         },
         error: (error) => {
           this.errorMessage = error.message;
