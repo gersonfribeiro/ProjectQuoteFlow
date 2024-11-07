@@ -34,7 +34,9 @@ public class UsuariosHandler {
                     usuario.get().getNome(),
                     usuario.get().getEmail(),
                     usuario.get().getSenha(),
-                    usuario.get().getPermissao()
+                    usuario.get().getPermissao(),
+                    usuario.get().getTelefone(),
+                    usuario.get().getId_empresa()
             );
             return ResponseEntity.ok(usuarioDTO);
         } else {
