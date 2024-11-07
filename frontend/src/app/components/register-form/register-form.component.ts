@@ -127,7 +127,6 @@ export class RegisterFormComponent {
               },
               (error) => {
                 console.error('Erro ao fazer login:', error);
-                this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
               }
             );
         },

@@ -10,6 +10,7 @@ import {
 import {Router, RouterModule} from '@angular/router';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ApiUserService} from "../../services/api-user.service";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-form',
@@ -29,7 +30,7 @@ export class LoginFormComponent {
   errorMessage: string | null = null;
   showPassword = false; // Controle de visibilidade da senha
 
-  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService, private toastr: ToastrService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, this.validateEmail]],
       senha: [
@@ -101,6 +102,7 @@ export class LoginFormComponent {
       );
     } else {
       this.loginForm.markAllAsTouched();
+      this.toastr.warning("Email ou senha incorretos. Tente novamente!")
       console.log('Formulário inválido:', this.loginForm.errors);
     }
   }
