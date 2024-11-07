@@ -115,9 +115,9 @@ export class RegisterFormComponent {
           this.apiService.loginUser(loginCredentials).subscribe(
               (response) => {
                 console.log('Login bem-sucedido.');
-                this.apiService.setUserId(response.id_usuario);
-                // Armazenando o token no localStorage
-                if (response.token) {
+                // Armazenando o id do usuário e o token no localStorage
+                if (response.id_usuario && response.token) {
+                  localStorage.setItem('userId', response.id_usuario);
                   localStorage.setItem('authToken', response.token);
                   }
                 // Navega para o dashboard ou outra página após o login

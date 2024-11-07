@@ -45,13 +45,9 @@ export class ProfileFormComponent {
   }
 
   ngOnInit(): void {
-    const savedForm = localStorage.getItem('profileForm');
+    const userId = localStorage.getItem('userId');
+    const companyId = localStorage.getItem('companyId');
 
-    if (savedForm) {
-      this.profileForm.patchValue(JSON.parse(savedForm));
-    }
-
-    const userId = this.apiUserService.getUserId();
     this.apiUserService.getUserById(userId).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
@@ -59,7 +55,8 @@ export class ProfileFormComponent {
           email: response.email,
           phone: response.telefone,
         });
-        this.apiCompanyService.getCompany().subscribe(
+
+        this.apiCompanyService.getCompanyById(companyId).subscribe(
           (companyResponse: any) => {
             this.profileForm.patchValue({
               company: companyResponse.nome,
@@ -75,11 +72,6 @@ export class ProfileFormComponent {
         console.error('Erro ao buscar dados do usuário', error);
       }
     );
-
-    // Salvar os dados do formulário no localStorage sempre que houver alteração
-    this.profileForm.valueChanges.subscribe(value => {
-      localStorage.setItem('profileForm', JSON.stringify(value));
-    });
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -111,8 +103,9 @@ export class ProfileFormComponent {
 
   // Submissão do formulário
   onSubmit() {
-    if (this.profileForm.valid) {
-      const userId = this.apiUserService.getUserId();
+    const userId = localStorage.getItem('userId');
+
+    if (this.profileForm.valid && userId) {
       this.apiUserService.getUserById(userId).subscribe(
         (response: Usuario) => {
           const updatedData = {
@@ -122,14 +115,22 @@ export class ProfileFormComponent {
             telefone: this.profileForm.value.phone,
             id_empresa: response.id_empresa,
             permissao: response.permissao,
-            id_usuario: response.id_usuario
+            id_usuario: userId
           };
 
-          this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
-            response => {
+          this.apiUserService.updateUser(userId, updatedData).subscribe(
+            (response) => {
               this.toastr.success('Dados atualizados com sucesso!');
+            },
+            (error) => {
+              console.error('Erro ao atualizar os dados:', error);
+              this.toastr.error('Erro ao atualizar os dados.');
             }
           );
+        },
+        (error) => {
+          console.error('Erro ao buscar os dados do usuário:', error);
+          this.toastr.error('Erro ao buscar os dados do usuário.');
         }
       );
       console.log('Formulário enviado:', this.profileForm.value);
