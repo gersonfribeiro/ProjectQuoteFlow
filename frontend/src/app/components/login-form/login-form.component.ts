@@ -86,7 +86,8 @@ export class LoginFormComponent {
           console.log('Login bem-sucedido.');
           this.apiService.setUserId(response.id_usuario);
           // Armazenando o token no localStorage
-            if (response.token) {
+            if (response.id_usuario && response.token) {
+              localStorage.setItem('userId', response.id_usuario);
               localStorage.setItem('authToken', response.token);
             }
           // Navega para o dashboard ou outra página após o login

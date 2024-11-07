@@ -19,34 +19,19 @@ export class FormSettingsComponent {
 
   // Método para deletar usuário
   delete() {
-      this.apiUserService.getUser().subscribe(
-          (response: Usuario) => {
-              const userId = response.id_usuario;
+    const userId = localStorage.getItem('userId')
 
-              // Verifica se o userId é válido
-              if (!userId) {
-                  this.toastr.error('ID do usuário não encontrado.');
-                  return;
-              }
-
-              console.log('Tentando deletar usuário com ID:', userId); // Para depuração
-
-              this.apiUserService.deleteUser(userId).subscribe(
-                  response => {
-                      this.toastr.success('Conta deletada com sucesso!');
-                      this.router.navigate(['/logout']);
-                  },
-                  error => {
-                      this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
-                      console.error('Erro ao deletar a conta:', error);
-                  }
-              );
+        this.apiUserService.deleteUser(userId).subscribe(
+          response => {
+            this.toastr.success('Conta deletada com sucesso!');
+            localStorage.removeItem('userId');
+            this.router.navigate(['/logout']);
           },
           error => {
-              console.error("Erro ao obter usuário:", error);
-              this.toastr.error('Não foi possível obter os dados do usuário.');
+            this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
+            console.error('Erro ao deletar a conta:', error);
           }
-      );
+        );
   }
 
 }

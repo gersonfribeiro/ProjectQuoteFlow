@@ -41,14 +41,6 @@ export class ApiUserService {
     );
   }
 
-   // Método para pegar um usuário (retorna o primeiro do array)
-   getUser(): Observable<Usuario> {
-     return this.http.get<Usuario[]>(`${this.apiUrlUser}`).pipe(
-       map(users => users[0]), // Pega o primeiro usuário do array
-       catchError(this.handleError)
-      );
-   }
-
   // Método para pegar um usuário pelo ID
   getUserById(userId: string | null): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
