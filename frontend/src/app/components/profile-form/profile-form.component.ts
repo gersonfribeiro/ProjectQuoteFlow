@@ -45,26 +45,41 @@ export class ProfileFormComponent {
   }
 
   ngOnInit(): void {
-    this.apiUserService.getUser().subscribe(
+    const savedForm = localStorage.getItem('profileForm');
+
+    if (savedForm) {
+      this.profileForm.patchValue(JSON.parse(savedForm));
+    }
+
+    const userId = this.apiUserService.getUserId();
+    this.apiUserService.getUserById(userId).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
           name: response.nome,
           email: response.email,
-          phone: response.telefone
+          phone: response.telefone,
         });
         this.apiCompanyService.getCompany().subscribe(
-            (response: any) => {
-                this.profileForm.patchValue({
-                    company: response.nome,
-                    cnpj: response.cnpj
-                  })
-              }
-          );
+          (companyResponse: any) => {
+            this.profileForm.patchValue({
+              company: companyResponse.nome,
+              cnpj: companyResponse.cnpj,
+            });
+          },
+          (error) => {
+            console.error('Erro ao buscar dados da empresa', error);
+          }
+        );
       },
-      error => {
-        console.error("Erro");
+      (error) => {
+        console.error('Erro ao buscar dados do usuário', error);
       }
     );
+
+    // Salvar os dados do formulário no localStorage sempre que houver alteração
+    this.profileForm.valueChanges.subscribe(value => {
+      localStorage.setItem('profileForm', JSON.stringify(value));
+    });
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -97,29 +112,30 @@ export class ProfileFormComponent {
   // Submissão do formulário
   onSubmit() {
     if (this.profileForm.valid) {
-    this.apiUserService.getUser().subscribe(
-          (response: Usuario) => {
-            const updatedData = {
-                    nome: this.profileForm.value.name,
-                    email: this.profileForm.value.email,
-                    senha: response.senha,
-                    telefone: this.profileForm.value.phone,
-                    id_empresa: response.id_empresa,
-                    permissao: response.permissao,
-                    id_usuario: response.id_usuario
-                  };
+      const userId = this.apiUserService.getUserId();
+      this.apiUserService.getUserById(userId).subscribe(
+        (response: Usuario) => {
+          const updatedData = {
+            nome: this.profileForm.value.name,
+            email: this.profileForm.value.email,
+            senha: response.senha,
+            telefone: this.profileForm.value.phone,
+            id_empresa: response.id_empresa,
+            permissao: response.permissao,
+            id_usuario: response.id_usuario
+          };
 
-                this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
-                        response => {
-                          this.toastr.success('Dados atualizados com sucesso!');
-                        }
-                      );
-                }
-            );
+          this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
+            response => {
+              this.toastr.success('Dados atualizados com sucesso!');
+            }
+          );
+        }
+      );
       console.log('Formulário enviado:', this.profileForm.value);
     } else {
       console.log('Formulário inválido');
-      this.toastr.warning("Para salvar a informação, clique em salvar apenas uma vez.")
+      this.toastr.warning("Para salvar a informação, clique em salvar apenas uma vez.");
       this.profileForm.markAllAsTouched();
     }
   }

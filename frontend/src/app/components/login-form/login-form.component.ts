@@ -83,7 +83,8 @@ export class LoginFormComponent {
       const credentials = this.loginForm.value;
       this.apiService.loginUser(credentials).subscribe(
         (response) => {
-          console.log('Login bem-sucedido:', response);
+          console.log('Login bem-sucedido.');
+          this.apiService.setUserId(response.id_usuario);
           // Armazenando o token no localStorage
             if (response.token) {
               localStorage.setItem('authToken', response.token);
