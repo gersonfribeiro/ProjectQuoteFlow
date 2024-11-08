@@ -1,19 +1,20 @@
-import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule, ValidationErrors,
+  ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 
-import {Router, RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
-import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
-import {ToastrService} from 'ngx-toastr';
-import {ApiUserService} from "../../services/api-user.service";
-import {Usuario} from "../../models/user.model";
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ToastrService } from 'ngx-toastr';
+import { ApiUserService } from "../../services/api-user.service";
+import { Usuario } from "../../models/user.model";
 
 @Component({
   selector: 'app-register-form',
@@ -25,7 +26,6 @@ import {Usuario} from "../../models/user.model";
     ReactiveFormsModule,
     CommonModule,
   ],
-
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css'],
 })
@@ -47,24 +47,25 @@ export class RegisterFormComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(12), // Validação de no mínimo 12 caracteres
+          Validators.minLength(12),
           this.passwordValidator,
         ],
       ],
+      confirmSenha: ['', [Validators.required, this.confirmPasswordValidator]],
     });
   }
 
-  // Função de validação personalizada para e-mail
+  // Validação personalizada de e-mail
   validateEmail(control: AbstractControl): ValidationErrors | null {
     const email = control.value;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (email && !emailPattern.test(email)) {
-      return {invalidEmail: true};
+      return { invalidEmail: true };
     }
     return null;
   }
 
-  // Validação personalizada da senha
+  // Validação personalizada de senha
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.value;
     const hasUpperCase = /[A-Z]/.test(password);
@@ -73,17 +74,29 @@ export class RegisterFormComponent {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     const isValid =
       password &&
-      password.length >= 12 && // Confere se a senha tem no mínimo 12 caracteres
+      password.length >= 12 &&
       hasUpperCase &&
       hasLowerCase &&
       hasNumeric &&
       hasSpecialChar;
 
     if (!isValid) {
-      return {invalidPassword: true};
+      return { invalidPassword: true };
     }
     return null;
   }
+
+  // Validação personalizada de confirmação de senha
+  confirmPasswordValidator = (control: AbstractControl): ValidationErrors | null => {
+    if (control.parent) {
+      const senha = control.parent.get('senha')?.value;
+      const confirmSenha = control.value;
+      if (senha !== confirmSenha) {
+        return { passwordMismatch: true };
+      }
+    }
+    return null;
+  };
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -92,46 +105,14 @@ export class RegisterFormComponent {
   register() {
     if (this.registerForm.valid) {
       const usuarioData: Usuario = this.registerForm.value;
-
       this.apiService.registerUser(usuarioData).subscribe({
         next: (response) => {
           this.toastr.success('Usuário registrado com sucesso!', '', {
             positionClass: 'toast-top-right',
             progressBar: true,
-            progressAnimation: 'increasing',
             timeOut: 2000,
           });
-          setTimeout(() => {
-            this.router.navigate(['/dashboard/notifications']);
-          }, 2500);
-
-          const usuarioComId: Usuario = {
-            ...usuarioData,
-            id_usuario: response.id_usuario,
-          };
-          
-          const loginCredentials = {
-              email: usuarioData.email,
-              senha: usuarioData.senha
-            }
-
-          this.apiService.loginUser(loginCredentials).subscribe(
-              (response) => {
-                console.log('Login bem-sucedido.');
-                // Armazenando o id do usuário e o token no localStorage
-                if (response.id_usuario && response.token) {
-                  localStorage.setItem('userId', response.id_usuario);
-                  localStorage.setItem('authToken', response.token);
-                  }
-                // Navega para o dashboard ou outra página após o login
-                setTimeout(() => {
-                  this.router.navigate(['/dashboard/notifications']);
-                  }, 2500);
-              },
-              (error) => {
-                console.error('Erro ao fazer login:', error);
-              }
-            );
+          setTimeout(() => this.router.navigate(['/dashboard/notifications']), 2500);
         },
         error: (error) => {
           this.errorMessage = error.message;
@@ -140,7 +121,6 @@ export class RegisterFormComponent {
       });
     } else {
       this.registerForm.markAllAsTouched();
-      console.log('Formulário inválido:', this.registerForm.errors);
     }
   }
 }

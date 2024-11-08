@@ -85,7 +85,6 @@ export class LoginFormComponent {
       this.apiService.loginUser(credentials).subscribe(
         (response) => {
           console.log('Login bem-sucedido.');
-          this.apiService.setUserId(response.id_usuario);
           // Armazenando o token no localStorage
             if (response.id_usuario && response.token) {
               localStorage.setItem('userId', response.id_usuario);
