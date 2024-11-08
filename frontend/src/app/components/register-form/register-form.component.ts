@@ -101,12 +101,15 @@ export class RegisterFormComponent {
             progressAnimation: 'increasing',
             timeOut: 2000,
           });
+          setTimeout(() => {
+            this.router.navigate(['/dashboard/notifications']);
+          }, 2500);
 
           const usuarioComId: Usuario = {
             ...usuarioData,
             id_usuario: response.id_usuario,
           };
-
+          
           const loginCredentials = {
               email: usuarioData.email,
               senha: usuarioData.senha
