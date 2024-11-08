@@ -7,21 +7,21 @@ import { catchError, Observable, throwError } from "rxjs";
 })
 export class ApiProductService {
 
-  constructor(private http: HttpClient) { }
+  private apiUrlProduct = 'http://localhost:8080/empresas';
+
+  constructor(private http: HttpClient) {}
 
   // Método para salvar um produto
   registerProduct(companyId: string, productData: any): Observable<any> {
-    const apiUrlProduct = `http://localhost:8080/empresas/${companyId}/produtos`;
-    return this.http.post(apiUrlProduct, productData) // Corrigido para usar a variável apiUrlProduct
+    return this.http.post(`${this.apiUrlProduct}/${companyId}/produtos`, productData)
       .pipe(
         catchError(this.handleError)
       );
   }
 
+  // Método para obter os produtos
   getProducts(companyId: string): Observable<any[]> {
-    const apiUrlProduct = `http://localhost:8080/empresas/${companyId}/produtos`;
-    console.log("URL para obter produtos:", apiUrlProduct); // Log para confirmar a URL
-    return this.http.get<any[]>(apiUrlProduct)
+    return this.http.get<any[]>(`${this.apiUrlProduct}/${companyId}/produtos`)
       .pipe(
         catchError(this.handleError)
       );
