@@ -52,17 +52,7 @@ export class RegisterCompanyFormComponent {
   }
 
   ngOnInit(): void {
-    // Carregar dados do endereço
-//     this.apiAddressService.getAddress().subscribe(
-//                 (response: any) => {
-//                     this.registerCompanyForm.patchValue({
-//                         postalCode: response.cep
-//                       });
-//                     if (response.cep) {
-//                           this.searchPostalCode();
-//                         }
-//                   }
-//               );
+
   }
 
   // Método para alternar o estado de habilitado/desabilitado de um campo específico
@@ -175,7 +165,7 @@ export class RegisterCompanyFormComponent {
                     id_usuario: response.id_usuario
                   };
 
-                  this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
+                  this.apiUserService.updateUser(userId, updatedData).subscribe(
                     response => {
                       console.log('id_empresa atribuída ao usuário');
                     },
