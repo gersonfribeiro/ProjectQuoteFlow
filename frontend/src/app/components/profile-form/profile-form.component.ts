@@ -46,7 +46,6 @@ export class ProfileFormComponent {
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
-    const companyId = localStorage.getItem('companyId');
 
     this.apiUserService.getUserById(userId).subscribe(
       (response: Usuario) => {
@@ -55,6 +54,8 @@ export class ProfileFormComponent {
           email: response.email,
           phone: response.telefone,
         });
+
+        const companyId = response.id_empresa;
 
         this.apiCompanyService.getCompanyById(companyId).subscribe(
           (companyResponse: any) => {
