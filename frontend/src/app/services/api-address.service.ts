@@ -16,13 +16,6 @@ export class ApiAddressService {
     return this.http.post(this.apiUrlAddress, addressData)
   }
 
-  getAddress(): Observable<any> {
-      return this.http.get<any[]>(`${this.apiUrlAddress}`).pipe(
-        map(addresses => addresses.length ? addresses[0] : null), // Retorna o primeiro item ou null se o array estiver vazio
-        catchError(this.handleError)
-      );
-    }
-
   // Função de tratamento de erro
       private handleError(error: HttpErrorResponse) {
         let errorMessage = 'Erro desconhecido';

@@ -109,6 +109,29 @@ export class RegisterFormComponent {
             ...usuarioData,
             id_usuario: response.id_usuario,
           };
+          
+          const loginCredentials = {
+              email: usuarioData.email,
+              senha: usuarioData.senha
+            }
+
+          this.apiService.loginUser(loginCredentials).subscribe(
+              (response) => {
+                console.log('Login bem-sucedido.');
+                // Armazenando o id do usuário e o token no localStorage
+                if (response.id_usuario && response.token) {
+                  localStorage.setItem('userId', response.id_usuario);
+                  localStorage.setItem('authToken', response.token);
+                  }
+                // Navega para o dashboard ou outra página após o login
+                setTimeout(() => {
+                  this.router.navigate(['/dashboard/notifications']);
+                  }, 2500);
+              },
+              (error) => {
+                console.error('Erro ao fazer login:', error);
+              }
+            );
         },
         error: (error) => {
           this.errorMessage = error.message;

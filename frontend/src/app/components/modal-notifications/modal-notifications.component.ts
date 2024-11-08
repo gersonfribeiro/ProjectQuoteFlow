@@ -17,7 +17,9 @@ export class ModalNotificationsComponent {
 
   ngOnInit(): void {
     // Carregar dados do usuário
-    this.apiUserService.getUser().subscribe(
+    const userId = localStorage.getItem('userId');
+
+    this.apiUserService.getUserById(userId).subscribe(
       (response: Usuario) => {
          this.userName = response.nome;
         }

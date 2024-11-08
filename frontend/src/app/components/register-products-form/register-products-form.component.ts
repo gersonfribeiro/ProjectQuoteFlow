@@ -18,7 +18,7 @@ import { ApiCompanyService } from "../../services/api-company.service";
     NgxMaskDirective
   ],
   templateUrl: './register-products-form.component.html',
-  styleUrl: './register-products-form.component.css'
+  styleUrls: ['./register-products-form.component.css']
 })
 export class RegisterProductsFormComponent {
   registerProductForm: FormGroup;
@@ -53,26 +53,22 @@ export class RegisterProductsFormComponent {
 
       console.log("Dados do produto:", productData);
 
-      this.apiCompanyService.getCompany().subscribe({
-        next: (response: any) => {
-          const companyId = response.id_empresa;
+      const companyId = localStorage.getItem('companyId');
 
-          // Chama o serviço para salvar o produto no backend
-          this.apiProductService.registerProduct(companyId, productData).subscribe({
-            next: (response: any) => {
-              console.log(productData);
-              this.toastr.success('Produto cadastrado com sucesso!');
-              this.registerProductForm.reset();
-            },
-            error: (error: any) => {  // Correção de tipagem
-              this.toastr.error(error.message);
-            }
-          });
-        },
-        error: (error: any) => { // Tratamento de erro para a requisição de empresa
-          this.toastr.error('Erro ao obter empresa: ' + error.message);
-        }
-      });
+      if (companyId) {
+        this.apiProductService.registerProduct(companyId, productData).subscribe({
+          next: (response: any) => {
+            console.log(productData);
+            this.toastr.success('Produto cadastrado com sucesso!');
+            this.registerProductForm.reset();
+          },
+          error: (error: any) => {  // Correção de tipagem
+            this.toastr.error(error.message);
+          }
+        });
+      } else {
+        this.toastr.error('Erro ao obter empresa: Empresa não encontrada.');
+      }
     } else {
       console.log('Formulário inválido');
       this.registerProductForm.markAllAsTouched();

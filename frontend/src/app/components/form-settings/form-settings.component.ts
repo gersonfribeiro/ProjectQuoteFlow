@@ -43,6 +43,13 @@ export class FormSettingsComponent {
             setTimeout(() => {
               this.router.navigate(['/login']);
             }, 2500);
+    const userId = localStorage.getItem('userId')
+
+        this.apiUserService.deleteUser(userId).subscribe(
+          response => {
+            this.toastr.success('Conta deletada com sucesso!');
+            localStorage.removeItem('userId');
+            this.router.navigate(['/logout']);
           },
           error => {
             this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
@@ -56,5 +63,4 @@ export class FormSettingsComponent {
       }
     );
   }
-
 }

@@ -14,8 +14,18 @@ export class ApiUserService {
   // URL de login de usuarios
   private apiUrlLoginUser = 'http://localhost:8080/usuarios/login'
 
+  private userId: string | null = null;
+
   constructor(private http: HttpClient) {
   }
+
+  setUserId(id: string): void {
+      this.userId = id;
+    }
+
+  getUserId(): string | null {
+      return this.userId;
+    }
 
   // Método para registrar um novo usuário
   registerUser(user: Usuario): Observable<any> {
@@ -31,23 +41,15 @@ export class ApiUserService {
     );
   }
 
-   // Método para pegar um usuário (retorna o primeiro do array)
-   getUser(): Observable<Usuario> {
-     return this.http.get<Usuario[]>(`${this.apiUrlUser}`).pipe(
-       map(users => users[0]), // Pega o primeiro usuário do array
-       catchError(this.handleError)
-      );
-   }
-
   // Método para pegar um usuário pelo ID
-  getUserById(userId: string): Observable<Usuario> {
+  getUserById(userId: string | null): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.apiUrlUser}/${userId}`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Método para atualizar informações de um usuário
-  updateUser(userId: string, updatedData: Partial<Usuario>): Observable<Usuario> {
+  updateUser(userId: string | null, updatedData: Partial<Usuario>): Observable<Usuario> {
     return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData).pipe(
       catchError(this.handleError)
     );

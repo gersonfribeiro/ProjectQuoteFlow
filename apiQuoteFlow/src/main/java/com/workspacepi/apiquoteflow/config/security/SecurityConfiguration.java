@@ -36,12 +36,12 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/usuarios/registrar").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/registrar").permitAll()
 //                        .requestMatchers(HttpMethod.GET, "/usuarios/{id_usuario}").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/empresas/{id_empresa}/produtos").hasRole("ASSOCIADO")
 //                        .requestMatchers(HttpMethod.POST, "/cotacoes").hasRole("ASSOCIADO")
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
