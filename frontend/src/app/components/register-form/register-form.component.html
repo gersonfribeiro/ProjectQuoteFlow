@@ -5,7 +5,7 @@
   <img
     src="images/undraw_create.svg"
     class="img-thumbnail d-none d-md-block"
-    style="height: 386px; max-width: 100%"
+    style="height: 460px; max-width: 100%"
     width="450px"
   />
 
@@ -15,6 +15,7 @@
     style="width: 100%; max-width: 350px; border: 1px solid #dee2e6"
     (ngSubmit)="register()"
   >
+    <!-- Nome do usuário -->
     <div class="mb-3">
       <label class="form-label text-dark">Usuário:</label>
       <input
@@ -25,9 +26,7 @@
         [maxlength]="30"
       />
       <div
-        *ngIf="
-          registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched
-        "
+        *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched"
         class="text-danger"
       >
         <div
@@ -40,6 +39,7 @@
       </div>
     </div>
 
+    <!-- Email -->
     <div class="mb-3">
       <label class="form-label text-dark">Email:</label>
       <input
@@ -48,7 +48,6 @@
         placeholder="Digite seu e-mail"
         formControlName="email"
       />
-
       <div
         *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
         class="text-danger"
@@ -68,7 +67,8 @@
       </div>
     </div>
 
-    <div class="mb-5 position-relative">
+    <!-- Senha -->
+    <div class="mb-3 position-relative">
       <label class="form-label text-dark">Senha:</label>
       <div class="input-group">
         <input
@@ -87,10 +87,7 @@
         </button>
       </div>
       <div
-        *ngIf="
-      registerForm.get('senha')?.invalid &&
-      registerForm.get('senha')?.touched
-    "
+        *ngIf="registerForm.get('senha')?.invalid && registerForm.get('senha')?.touched"
         class="text-danger"
       >
         <div
@@ -103,20 +100,44 @@
         <div
           class="alert alert-danger alert-small mb-2 mt-2"
           role="alert"
-          *ngIf="registerForm.get('senha')?.errors?.['minlength']"
+          *ngIf="registerForm.get('senha')?.errors?.['invalidPassword']"
         >
-          A senha deve ter no mínimo 12 caracteres.
-        </div>
-        <div
-          class="alert alert-danger alert-small mb-2 mt-2"
-          role="alert"
-          *ngIf="registerForm.get('senha')?.errors?.['minlength']"
-        >
-          A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.
+          A senha deve ter no mínimo 12 caracteres, conter letras maiúsculas, minúsculas, números e caracteres especiais.
         </div>
       </div>
     </div>
 
+    <!-- Confirmação de senha -->
+    <div class="mb-5 position-relative">
+      <label class="form-label text-dark">Confirme sua senha:</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        class="form-control"
+        placeholder="Confirme sua senha"
+        formControlName="confirmSenha"
+      />
+      <div
+        *ngIf="registerForm.get('confirmSenha')?.invalid && registerForm.get('confirmSenha')?.touched"
+        class="text-danger"
+      >
+        <div
+          class="alert alert-danger alert-small mb-2 mt-2"
+          role="alert"
+          *ngIf="registerForm.get('confirmSenha')?.errors?.['required']"
+        >
+          A confirmação de senha é <strong>obrigatória.</strong>
+        </div>
+        <div
+          class="alert alert-danger alert-small mb-2 mt-2"
+          role="alert"
+          *ngIf="registerForm.get('confirmSenha')?.errors?.['passwordMismatch']"
+        >
+          As senhas não coincidem.
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão de submissão -->
     <button
       class="btn w-100"
       type="submit"

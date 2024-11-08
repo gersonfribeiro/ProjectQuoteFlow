@@ -15,22 +15,17 @@ import {Usuario} from "../../models/user.model";
 })
 export class FormSettingsComponent {
 
-  constructor(private apiUserService: ApiUserService, private router: Router, private toastr: ToastrService) {
-  }
+  constructor(private apiUserService: ApiUserService, private router: Router, private toastr: ToastrService) {}
 
   // Método para deletar usuário
   delete() {
-    this.apiUserService.getUser().subscribe(
-      (response: Usuario) => {
-        const userId = response.id_usuario;
+    const userId = localStorage.getItem('userId');
 
-        // Verifica se o userId é válido
-        if (!userId) {
-          this.toastr.error('ID do usuário não encontrado.');
-          return;
-        }
-
-        console.log('Tentando deletar usuário com ID:', userId); // Para depuração
+  // Verifica se o userId é válido
+       if (!userId) {
+         this.toastr.error('ID do usuário não encontrado.');
+         return;
+       }
 
         this.apiUserService.deleteUser(userId).subscribe(
           response => {
@@ -40,27 +35,16 @@ export class FormSettingsComponent {
               progressAnimation: 'increasing',
               timeOut: 2000,
             });
-            setTimeout(() => {
-              this.router.navigate(['/login']);
-            }, 2500);
-    const userId = localStorage.getItem('userId')
-
-        this.apiUserService.deleteUser(userId).subscribe(
-          response => {
-            this.toastr.success('Conta deletada com sucesso!');
             localStorage.removeItem('userId');
-            this.router.navigate(['/logout']);
+            setTimeout(() => {
+              this.router.navigate(['/logout']);
+            }, 2500);
           },
           error => {
             this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
             console.error('Erro ao deletar a conta:', error);
           }
         );
-      },
-      error => {
-        console.error("Erro ao obter usuário:", error);
-        this.toastr.error('Não foi possível obter os dados do usuário.');
-      }
-    );
   }
+
 }

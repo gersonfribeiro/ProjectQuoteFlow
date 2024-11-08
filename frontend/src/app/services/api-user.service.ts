@@ -19,14 +19,6 @@ export class ApiUserService {
   constructor(private http: HttpClient) {
   }
 
-  setUserId(id: string): void {
-      this.userId = id;
-    }
-
-  getUserId(): string | null {
-      return this.userId;
-    }
-
   // Método para registrar um novo usuário
   registerUser(user: Usuario): Observable<any> {
     return this.http.post(this.apiUrlRegisterUser, user).pipe(
