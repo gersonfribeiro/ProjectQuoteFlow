@@ -11,7 +11,7 @@ import {Usuario} from "../../models/user.model";
   standalone: true,
   imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './form-settings.component.html',
-  styleUrls: ['./form-settings.component.css'], // Corrigido para 'styleUrls' ao invés de 'styleUrl'
+  styleUrls: ['./form-settings.component.css'],
 })
 export class FormSettingsComponent {
 
@@ -19,32 +19,20 @@ export class FormSettingsComponent {
 
   // Método para deletar usuário
   delete() {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userId')
 
-  // Verifica se o userId é válido
-       if (!userId) {
-         this.toastr.error('ID do usuário não encontrado.');
-         return;
-       }
-
-        this.apiUserService.deleteUser(userId).subscribe(
-          response => {
-            this.toastr.success('Conta deletada com sucesso!', '', {
-              positionClass: 'toast-top-right',
-              progressBar: true,
-              progressAnimation: 'increasing',
-              timeOut: 2000,
-            });
-            localStorage.removeItem('userId');
-            setTimeout(() => {
-              this.router.navigate(['/logout']);
-            }, 2500);
-          },
-          error => {
-            this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
-            console.error('Erro ao deletar a conta:', error);
-          }
-        );
+    this.apiUserService.deleteUser(userId).subscribe(
+      response => {
+        this.toastr.success('Conta deletada com sucesso!');
+        localStorage.removeItem('userId');
+        setTimeout(() => {
+          this.router.navigate(['/logout']);
+        }, 2500);
+      },
+      error => {
+        this.toastr.error('Ocorreu um erro ao tentar deletar a conta. Tente novamente.');
+        console.error('Erro ao deletar a conta:', error);
+      }
+    );
   }
-
 }
