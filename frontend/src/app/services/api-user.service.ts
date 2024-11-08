@@ -49,7 +49,7 @@ export class ApiUserService {
   }
 
   // Método para atualizar informações de um usuário
-  updateUser(userId: string, updatedData: Partial<Usuario>): Observable<Usuario> {
+  updateUser(userId: string | null, updatedData: Partial<Usuario>): Observable<Usuario> {
     return this.http.put<Usuario>(`${this.apiUrlUser}/${userId}`, updatedData).pipe(
       catchError(this.handleError)
     );
