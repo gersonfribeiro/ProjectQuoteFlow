@@ -26,38 +26,6 @@
 
       <h1 class="px-5"><strong>Solicitar cotação:</strong></h1>
 
-      <ul class="nav nav-tabs ms-5 mb-2" id="quotationTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="quotation-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#quotation"
-            type="button"
-            role="tab"
-            aria-controls="quotation"
-            aria-selected="true"
-          >
-            Produtos
-          </button>
-        </li>
-
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="supplier-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#supplier"
-            type="button"
-            role="tab"
-            aria-controls="supplier"
-            aria-selected="false"
-          >
-            Fornecedores
-          </button>
-        </li>
-      </ul>
-
       <div class="tab-content" id="quotationTabsContent">
         <div
           class="tab-pane fade show active"
@@ -132,103 +100,10 @@
                       Adicionar
                     </button>
 
-                    <button
-                      type="button"
-                      class="btn btn-success col-md-3"
-                      (click)="showSuppliersTab()"
-                    >
-                      Próximo
-                      <i class="bi bi-arrow-right"></i>
-                    </button>
                   </div>
                 </div>
               </div>
             </form>
-
-            <!-- Tabela de Produtos -->
-            <div class="p-4 mt-4 rounded"
-                 *ngIf="products.length > 0"
-                 style="
-                background-color: #e8e8e8;
-                box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-                  rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-              "
-            >
-              <p><strong>Produtos adicionados:</strong></p>
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th scope="col">Código SKU</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Categoria</th>
-                  <th scope="col">Descrição</th>
-                  <th scope="col">Variação</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let product of products">
-                  <td>{{ product.skuCode }}</td>
-                  <td>{{ product.quantity }}</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Aba de Fornecedores -->
-        <div
-          class="tab-pane fade"
-          id="supplier"
-          role="tabpanel"
-          aria-labelledby="supplier-tab"
-        >
-          <div class="ps-5 pt-0">
-            <form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
-              <div
-                class="p-4 rounded"
-                style="
-                  background-color: #e8e8e8;
-                  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-                    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-                "
-              >
-                <div class="form-floating">
-                  <p>Tabela de fornecedores:</p>
-                  <table class="table table-striped">
-                    <thead>
-                    <tr>
-                      <th scope="col">Fornecedor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let supplier of suppliers">
-                      <td>{{ supplier.name }}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-
-                  <div class="form-floating mt-4">
-                    <textarea
-                      class="form-control"
-                      placeholder="Deixe um comentário"
-                      formControlName="observation"
-                    ></textarea>
-                    <label>Observação:</label>
-                  </div>
-
-                  <button
-                    type="submit"
-                    class="btn btn-success mt-5 "
-                    [disabled]="quotationForm.invalid"
-                  >
-                    <i class="bi bi-send-plus-fill"></i>
-                    Enviar
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </div>
     </div>

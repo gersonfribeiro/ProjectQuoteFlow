@@ -78,13 +78,6 @@
           formControlName="senha"
           [maxlength]="30"
         />
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          (click)="togglePasswordVisibility()"
-        >
-          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
-        </button>
       </div>
       <div
         *ngIf="
@@ -119,13 +112,22 @@
 
     <div class="mb-5">
       <label class="form-label text-dark">Confirmar Senha:</label>
-      <input
-        [type]="showPassword ? 'text' : 'password'"
-        class="form-control"
-        placeholder="Confirme sua senha"
-        formControlName="confirmarSenha"
-        [maxlength]="30"
-      />
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Confirme sua senha"
+          formControlName="confirmarSenha"
+          [maxlength]="30"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
+      </div>
       <div *ngIf="registerForm.get('confirmarSenha')?.touched && registerForm.hasError('passwordMismatch')"
            class="alert alert-danger alert-small mb-2 mt-2">
         As senhas não coincidem.
