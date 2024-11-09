@@ -71,26 +71,6 @@ export class FormDashboardComponent implements OnInit {
     this.quotationForm.markAllAsTouched(); // Marca todos os campos como tocados
   }
 
-  onSupplierTabClick() {
-    // A lógica pode ser expandida conforme necessário
-    // Por enquanto, apenas loga no console
-    console.log('Aba de Fornecedores clicada');
-  }
-
-  // Método para mudar a aba
-  showSuppliersTab() {
-    if (this.products.length > 0) {
-      const supplierTabButton = document.getElementById('supplier-tab');
-      if (supplierTabButton) {
-        supplierTabButton.click(); // Simula um clique na aba "Fornecedores"
-      }
-    } else {
-      this.toastr.warning('Adicione pelo menos um produto antes de acessar a aba de fornecedores.', '', {
-        positionClass: 'toast-top-right',
-      });
-    }
-  }
-
   onProductSubmit() {
     if (this.productForm.valid) {
       const newProduct = {
