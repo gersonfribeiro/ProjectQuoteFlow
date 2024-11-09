@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <div class="mb-5 position-relative">
+    <div class="mb-3">
       <label class="form-label text-dark">Senha:</label>
       <div class="input-group">
         <input
@@ -114,6 +114,21 @@
         >
           A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.
         </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <label class="form-label text-dark">Confirmar Senha:</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        class="form-control"
+        placeholder="Confirme sua senha"
+        formControlName="confirmarSenha"
+        [maxlength]="30"
+      />
+      <div *ngIf="registerForm.get('confirmarSenha')?.touched && registerForm.hasError('passwordMismatch')"
+           class="alert alert-danger alert-small mb-2 mt-2">
+        As senhas não coincidem.
       </div>
     </div>
 
