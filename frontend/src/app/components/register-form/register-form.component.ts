@@ -51,7 +51,8 @@ export class RegisterFormComponent {
           this.passwordValidator,
         ],
       ],
-    });
+      confirmarSenha: ['', Validators.required],
+    }, {validators: this.passwordMatchValidator});
   }
 
   // Função de validação personalizada para e-mail
@@ -84,6 +85,13 @@ export class RegisterFormComponent {
     }
     return null;
   }
+
+  // Validação para confirmar que as senhas são iguais
+    passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
+      const senha = form.get('senha')?.value;
+      const confirmarSenha = form.get('confirmarSenha')?.value;
+      return senha === confirmarSenha ? null : { passwordMismatch: true };
+    }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
