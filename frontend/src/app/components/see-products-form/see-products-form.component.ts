@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {NgForOf} from "@angular/common";
 import {ApiProductService} from "../../services/api-product.service";
+import { ApiUserService } from "../../services/api-user.service";
 
 @Component({
   selector: 'app-see-products-form',
@@ -16,35 +17,26 @@ import {ApiProductService} from "../../services/api-product.service";
 export class SeeProductsFormComponent {
   products: any[] = [];
 
-  constructor(private productService: ApiProductService) {
+  constructor(private productService: ApiProductService,private apiUserService: ApiUserService ) {
   }
-
-  /* Funcionalidade em localStorage */
-
-// ngOnInit(): void {
-//   // Carrega os produtos do localStorage quando o componente for inicializado
-//   this.products = this.getProducts();
-// }
-//
-// // Método para pegar os produtos do localStorage
-// getProducts() {
-//   const products = localStorage.getItem('products');
-//   return products ? JSON.parse(products) : [];
-// }
 
   ngOnInit(): void {
       // Carrega os produtos do backend
-      const companyId = localStorage.getItem('companyId');
+      const userId = localStorage.getItem('userId');
 
-      if (companyId) {
-          this.productService.getProducts(companyId).subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-            error: (error) => {
-              console.error('Erro ao carregar produtos:', error);
-            }
-          });
-        }
+      this.apiUserService.getUserById(userId).subscribe(
+              response => {
+                  const companyId = response.id_empresa;
+
+                this.productService.getProducts(companyId).subscribe({
+                  next: (products) => {
+                    this.products = products;
+                  },
+                  error: (error) => {
+                    console.error('Erro ao carregar produtos:', error);
+                  }
+                });
+              }
+      );
     }
 }

@@ -38,7 +38,7 @@ export class ProfileFormComponent {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: false}, Validators.required],
       email: [{value: '', disabled: false}, [Validators.required, this.validateEmail]],
-      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
+      phone: [{value: '', disabled: false}, [this.validatePhone]],
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
     });
@@ -96,6 +96,8 @@ export class ProfileFormComponent {
   // Função de validação customizada para o telefone
   validatePhone(control: AbstractControl): ValidationErrors | null {
     const phone = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
+    if(!phone)
+      return null;
     if (phone?.length !== 10 && phone?.length !== 11) {
       return {invalidPhone: true};
     }
