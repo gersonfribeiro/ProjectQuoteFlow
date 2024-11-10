@@ -15,7 +15,8 @@ import {Usuario} from "../../models/user.model";
 })
 export class FormSettingsComponent {
 
-  constructor(private apiUserService: ApiUserService, private router: Router, private toastr: ToastrService) {}
+  constructor(private apiUserService: ApiUserService, private router: Router, private toastr: ToastrService) {
+  }
 
   // Método para deletar usuário
   delete() {
@@ -23,10 +24,15 @@ export class FormSettingsComponent {
 
     this.apiUserService.deleteUser(userId).subscribe(
       response => {
-        this.toastr.success('Conta deletada com sucesso!');
         localStorage.removeItem('userId');
+        this.toastr.success('Conta deletada com sucesso!', '', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'increasing',
+          timeOut: 2000,
+        });
         setTimeout(() => {
-          this.router.navigate(['/logout']);
+          this.router.navigate(['/login']);
         }, 2500);
       },
       error => {
