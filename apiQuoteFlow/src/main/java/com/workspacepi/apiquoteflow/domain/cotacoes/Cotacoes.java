@@ -1,5 +1,7 @@
 package com.workspacepi.apiquoteflow.domain.cotacoes;
 
+import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacao;
+import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,12 +24,13 @@ public class Cotacoes {
     private CotacaoStatus status;
     private UUID id_empresa;
     private Set<ProdutosCotacao> produtos;
+    private Set<Empresas> destinatarios;
 
 //  Construtores
 
     // Construtor para uso da inserção no banco de dados
 
-    public Cotacoes(int numero, CotacaoStatus status, UUID id_empresa, Set<ProdutosCotacao> produtos) {
+    public Cotacoes(int numero, CotacaoStatus status, UUID id_empresa, Set<ProdutosCotacao> produtos, Set<Empresas> destinatarios) {
         this.id_cotacao = UUID.randomUUID();
         this.data = Timestamp.from(Instant.now());
         this.numero = numero;
@@ -38,7 +41,7 @@ public class Cotacoes {
 
     // Construtor para uso da modificação no banco de dados
 
-    public Cotacoes(UUID id_cotacao, int numero, CotacaoStatus status, UUID id_empresa, Set<ProdutosCotacao> produtos) {
+    public Cotacoes(UUID id_cotacao, int numero, CotacaoStatus status, UUID id_empresa, Set<ProdutosCotacao> produtos, Set<Empresas> destinatarios) {
         this.id_cotacao = id_cotacao;
         this.data = Timestamp.from(Instant.now());
         this.numero = numero;
