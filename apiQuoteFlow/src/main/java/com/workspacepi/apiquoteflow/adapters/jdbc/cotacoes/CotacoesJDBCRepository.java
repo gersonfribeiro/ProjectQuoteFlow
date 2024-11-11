@@ -50,7 +50,7 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
             CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
             UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
-            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null);
+            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null, null);
         };
     }
 
@@ -63,7 +63,6 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
         params.addValue("numero", cotacoes.getNumero());
         params.addValue("status", cotacoes.getStatus().name());
         params.addValue("id_empresa", cotacoes.getId_empresa());
-        params.addValue("itens", cotacoes.getProdutos());
         return params;
     }
 
