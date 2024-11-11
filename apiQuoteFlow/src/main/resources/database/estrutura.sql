@@ -92,10 +92,10 @@ alter table produtos
 
 create table cotacao_produtos
 (
-    id_cotacao uuid    not null
+    id_cotacao uuid not null
         constraint fkmt7e8jk4b9rhrntcha4gsga9g
             references cotacoes,
-    id_produto uuid    not null
+    id_produto uuid not null
         constraint fkosiwxnjympldt5qimsdci2lr
             references produtos,
     quantidade integer not null,
