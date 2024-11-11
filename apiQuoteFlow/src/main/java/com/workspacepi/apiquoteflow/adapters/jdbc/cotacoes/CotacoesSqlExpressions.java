@@ -35,7 +35,7 @@ public class CotacoesSqlExpressions {
                             numero,
                             status,
                             id_empresa)
-                         values (
+                         VALUES(
                             :id_cotacao,
                             :data,
                             :numero,

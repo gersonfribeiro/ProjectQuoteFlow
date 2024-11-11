@@ -12,10 +12,10 @@ public interface ProdutosCotacaoRepository {
     ProdutosCotacao findProdutoByCotacaoAndId(UUID id_cotacao, UUID id_produto);
 
 //  Inserção
-    Boolean inserirProdutosCotacao(ProdutosCotacao produtos);
+    Boolean inserirProdutosCotacao(ProdutosCotacao produtos, UUID id_cotacao);
 
 //  Modificação
-    Boolean modificarProdutosCotacao(ProdutosCotacao produtos);
+    Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id_produto, UUID id_cotacao);
 
 //  Delete
     Boolean deleteProdutosByCotacaoAndId(UUID id_cotacao, UUID id_produto);
