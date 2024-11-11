@@ -109,6 +109,13 @@
             <version>2.1.0</version> <!-- Versão do Springdoc -->
         </dependency>
 
+        <!-- Dependência para leitura de variáveis de ambiente -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>java-dotenv</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
