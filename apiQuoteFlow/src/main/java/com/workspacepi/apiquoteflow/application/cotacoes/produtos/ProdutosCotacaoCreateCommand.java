@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-public class ProdutosCotacoesCreateCommand {
+public class ProdutosCotacaoCreateCommand {
 
     @JsonProperty("id_cotacao")
     private UUID id_cotacao;

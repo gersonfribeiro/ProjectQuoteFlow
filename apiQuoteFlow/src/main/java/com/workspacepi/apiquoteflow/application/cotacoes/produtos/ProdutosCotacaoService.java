@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ProdutosCotacoesService {
+public class ProdutosCotacaoService {
 
     private final ProdutosCotacaoRepository produtosCotacaoRepository;
     private final CotacoesRepository cotacaoRepository;
 
-    public ProdutosCotacoesService(ProdutosCotacaoRepository produtosCotacaoRepository, CotacoesRepository cotacaoRepository) {
+    public ProdutosCotacaoService(ProdutosCotacaoRepository produtosCotacaoRepository, CotacoesRepository cotacaoRepository) {
         this.produtosCotacaoRepository = produtosCotacaoRepository;
         this.cotacaoRepository = cotacaoRepository;
     }
@@ -33,21 +33,21 @@ public class ProdutosCotacoesService {
         return produtosCotacaoRepository.findProdutoByCotacaoAndId(id_cotacao, id_produto);
     }
 
-    public ProdutosCotacao inserirProdutosCotacao(ProdutosCotacoesCreateCommand produtos, UUID id_cotacao) {
+    public ProdutosCotacao inserirProdutosCotacao(ProdutosCotacaoCreateCommand produtos, UUID id_cotacao) {
         if(cotacaoRepository.findById(id_cotacao) == null)
             throw new RuntimeException("Cotacão não encontrada");
 
         ProdutosCotacao produtosCotacaoDomain = produtos.toProdutoCotacao();
-        produtosCotacaoRepository.inserirProdutosCotacao(produtosCotacaoDomain);
+        produtosCotacaoRepository.inserirProdutosCotacao(produtosCotacaoDomain, id_cotacao);
         return findProdutosCotacaoById(id_cotacao, produtosCotacaoDomain.getId());
     }
 
-    public ProdutosCotacao modificarProdutosCotacao(ProdutosCotacoesUpdateCommand produtos, UUID id_produto, UUID id_cotacao) {
+    public ProdutosCotacao modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, UUID id_produto, UUID id_cotacao) {
         if(cotacaoRepository.findById(id_cotacao) == null)
             throw new RuntimeException("Cotacão não encontrada");
 
         ProdutosCotacao produtosCotacaoDomain = produtos.toProdutoCotacao(id_produto);
-        produtosCotacaoRepository.modificarProdutosCotacao(produtosCotacaoDomain);
+        produtosCotacaoRepository.modificarProdutosCotacao(produtosCotacaoDomain, id_produto, id_cotacao);
         return findProdutosCotacaoById(id_cotacao, produtosCotacaoDomain.getId());
     }
 

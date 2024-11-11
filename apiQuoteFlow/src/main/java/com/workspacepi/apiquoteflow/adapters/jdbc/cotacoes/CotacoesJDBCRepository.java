@@ -1,24 +1,23 @@
 // Nosso repositório de acesso a dados
-
-
 package com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes;
-
 
 import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.domain.cotacoes.*;
+import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.Destinatarios;
+import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.DestinatariosRepository;
+import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacao;
+import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacaoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
 import static com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes.CotacoesSqlExpressions.*;
-
 
 // Nosso repositório que define os nossos métodos de query e de crud usando o JDBC
 
@@ -28,9 +27,15 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
 //  Um atributo para criar o nosso template do JDBC assim como o seu construtor
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final ProdutosCotacaoRepository produtosCotacaoRepository;
+    private final DestinatariosRepository destinatariosRepository;
 
-    public CotacoesJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+    public CotacoesJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate,
+                                  ProdutosCotacaoRepository produtosCotacaoRepository,
+                                  DestinatariosRepository destinatariosRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.produtosCotacaoRepository = produtosCotacaoRepository;
+        this.destinatariosRepository = destinatariosRepository;
     }
 
 
@@ -50,7 +55,11 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
             CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
             UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
-            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null, null);
+            List<ProdutosCotacao> produtos = produtosCotacaoRepository.findAllProdutosByCotacao(id_cotacao);
+
+            List<Destinatarios> destinatarios = destinatariosRepository.findAllDestinatariosByCotacao(id_cotacao);
+
+            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao, produtos, destinatarios);
         };
     }
 
