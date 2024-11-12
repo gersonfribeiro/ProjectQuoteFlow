@@ -85,13 +85,20 @@ export class LoginFormComponent {
       this.apiService.loginUser(credentials).subscribe(
         (response) => {
           console.log('Login bem-sucedido.');
+          this.toastr.success('Login realizado com sucesso!', '', {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            progressAnimation: 'increasing',
+            timeOut: 2000,
+          });
+          setTimeout(() => {
+            this.router.navigate(['/dashboard/notifications']);
+          }, 2500);
           // Armazenando o token no localStorage
-            if (response.id_usuario && response.token) {
-              localStorage.setItem('userId', response.id_usuario);
-              localStorage.setItem('authToken', response.token);
-            }
-          // Navega para o dashboard ou outra página após o login
-          this.router.navigate(['/dashboard/notifications']);
+          if (response.id_usuario && response.token) {
+            localStorage.setItem('userId', response.id_usuario);
+            localStorage.setItem('authToken', response.token);
+          }
         },
         (error) => {
           console.error('Erro ao fazer login:', error);
