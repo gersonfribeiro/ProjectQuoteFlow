@@ -3,7 +3,6 @@ package com.workspacepi.apiquoteflow.adapters.http.cotacoes.produtos;
 import com.workspacepi.apiquoteflow.application.cotacoes.produtos.ProdutosCotacaoCreateCommand;
 import com.workspacepi.apiquoteflow.application.cotacoes.produtos.ProdutosCotacaoUpdateCommand;
 import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacao;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

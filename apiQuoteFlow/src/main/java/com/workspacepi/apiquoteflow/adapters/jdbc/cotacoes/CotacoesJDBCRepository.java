@@ -79,10 +79,8 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
 
     @Override
     public List<Cotacoes> findAll() {
-        List<Cotacoes> cotacoes = List.of();
         try {
-            cotacoes = jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
-            return cotacoes;
+            return jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
 
         } catch (Exception e) {
             LOGGER.error("Houve um erro ao consultar as cotações: " + e.getMessage());
