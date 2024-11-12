@@ -156,4 +156,12 @@ public class ErrorHandler {
                 .body(errorResponse);
     }
 
+    // Método genérico para outras exceções
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRunTimeException(RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }
