@@ -4,7 +4,6 @@ import {Router, RouterModule} from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {ApiUserService} from "../../services/api-user.service";
 import {ToastrService} from 'ngx-toastr';
-import {Usuario} from "../../models/user.model";
 
 @Component({
   selector: 'app-form-settings',
