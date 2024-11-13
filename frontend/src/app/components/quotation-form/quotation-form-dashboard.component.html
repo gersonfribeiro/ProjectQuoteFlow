@@ -33,6 +33,7 @@
                         placeholder="YYY.Y.YY"
                         mask="AAA.A.AA"
                         (input)="onInputChange()"
+                        [disabled]="isQuotationStarted"
                       />
                       <div
                         *ngIf="
@@ -56,6 +57,7 @@
                         formControlName="quantity"
                         class="form-control mb-2"
                         placeholder="100"
+                        [disabled]="isQuotationStarted"
                       />
                       <div
                         *ngIf="
@@ -71,7 +73,12 @@
                   </div>
 
                   <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-success col-md-3">
+                    <button type="button" class="btn btn-success col-md-5 d-flex align-items-center justify-content-center gap-2" (click)="createQuotation()" [disabled]="isQuotationStarted">
+                      <i class="bi bi-bag-plus-fill"></i>
+                      Iniciar cotação
+                    </button>
+
+                    <button type="submit" class="btn btn-success col-md-5 d-flex align-items-center justify-content-center gap-2" [disabled]="!isAddButtonEnabled">
                       <i class="bi bi-bag-plus-fill"></i>
                       Adicionar
                     </button>

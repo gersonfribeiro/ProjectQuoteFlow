@@ -22,17 +22,17 @@ import {ApiProductService} from "../../services/api-product.service";
 export class FormDashboardComponent implements OnInit {
   quotationForm: FormGroup;
   showNotificationAlert: boolean = false;
-  suppliers: any;
+  isQuotationStarted: boolean = false;
+  isAddButtonEnabled: boolean = false;
+  quotationId: string = '';
 
   @ViewChild('notificationAlert') notificationAlert!: ElementRef;
   productForm: any;
-  products: { skuCode: string, quantity: number }[] = [];
 
   constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {
     this.quotationForm = this.fb.group({
-      skuCode: ['', [Validators.required]], // Corrigido para chamar o método corretamente
-      quantity: [null, [Validators.required, Validators.min(1)]],
-      observation: [''],
+      skuCode: [{ value: '', disabled: true}, [Validators.required]], // Corrigido para chamar o método corretamente
+      quantity: [{ value: null, disabled: true}, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -53,49 +53,69 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
+// Responsável por iniciar a cotação
+  createQuotation() {
+      const confirmation = window.confirm('Cadastre todos os produtos antes de iniciar a cotação.');
+
+      if (confirmation) {
+        this.isQuotationStarted = true;
+        this.isAddButtonEnabled = true;
+
+        this.quotationForm.get('skuCode')?.enable();
+        this.quotationForm.get('quantity')?.enable();
+
+        const userId = localStorage.getItem('userId');
+
+        this.apiUserService.getUserById(userId).subscribe(
+            response => {
+                const quotationData = {id_empresa: response.id_empresa};
+
+                this.apiQuotationService.requestQuotation(quotationData).subscribe(
+                    response => {
+                        console.log('Cotação iniciada!');
+                        this.quotationId = response.id_cotacao;
+                      },
+                    error => {
+                        console.log('Erro ao iniciar cotação.');
+                      }
+                  );
+              }
+          );
+      }
+    }
+
+// Responsável por adicionar os produtos na cotação
   onSubmit() {
       if (this.quotationForm.valid) {
         const userId = localStorage.getItem('userId');
-        const skuCode = this.quotationForm.value.skuCode;
-        const quantity = this.quotationForm.value.quantity;
+        const sku = this.quotationForm.value.skuCode;
+        const quantidade = this.quotationForm.value.quantity;
 
-            this.apiUserService.getUserById(userId).subscribe(
-                response1 => {
-                    const quotationData = {
-                      id_empresa: response1.id_empresa
-                    };
-
-                    this.apiProductService.getProductBySKU(quotationData.id_empresa, skuCode).subscribe(
-                      response2 => {
-                        this.apiQuotationService.requestQuotation(quotationData).subscribe(
-                          response3 => {
-                            const productToQuotationData = {
-                                id_produto: response2.id_produto,
-                                quantidade: quantity
-                              }
-
-                            const quotationId = response3.id_cotacao;
-
-                            this.apiQuotationService.registerProductOnQuotation(quotationId, productToQuotationData).subscribe(
-                                response4 => {
-                                    this.toastr.success('Produto adicionado na sua cotação!');
-                                  },
-                                error4 => {
-                                    this.toastr.error('Erro ao adicionar produto à cotação.');
-                                  }
-                              );
-                          },
-                        error3 => {
-                            this.toastr.error('Erro ao criar cotação.');
+        this.apiUserService.getUserById(userId).subscribe(
+            response => {
+                this.apiProductService.getProductBySKU(response.id_empresa, sku).subscribe(
+                    response => {
+                        const quotationProductData = {
+                            id_produto: response.id_produto,
+                            quantidade: quantidade
                           }
-                        );
+
+                        this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
+                            response => {
+                                this.toastr.success('Produto adicionado à sua cotação!');
+                              },
+                            error => {
+                                this.toastr.error('Erro ao adicionar produto à cotação.');
+                                console.log(quotationProductData);
+                              }
+                          );
                       },
-                      error2 => {
+                    error => {
                         this.toastr.error('SKU do produto não encontrado!');
                       }
-                    );
-                  }
-              );
+                  );
+              }
+          );
 
         this.quotationForm.reset(); // Limpa o formulário após o envio
       } else {
