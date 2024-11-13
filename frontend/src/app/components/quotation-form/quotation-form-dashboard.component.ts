@@ -79,12 +79,12 @@ export class FormDashboardComponent implements OnInit {
                             this.apiQuotationService.registerProductOnQuotation(quotationId, productToQuotationData).subscribe(
                                 response4 => {
                                     this.toastr.success('Produto adicionado na sua cotação!');
-                                  }
+                                  },
                                 error4 => {
                                     this.toastr.error('Erro ao adicionar produto à cotação.');
                                   }
                               );
-                          }
+                          },
                         error3 => {
                             this.toastr.error('Erro ao criar cotação.');
                           }
