@@ -25,24 +25,28 @@ create table cotacoes
     status     varchar(50) not null
         constraint cotacao_status_check
             check ((status)::text = ANY
-                   ((ARRAY['CONCLUIDO'::character varying, 'PREENCHENDO'::character varying, 'ENVIADO'::character varying, 'ENTREGUE'::character varying, 'RESPOSTA_PENDENTE'::character varying, 'RESPOSTA_RECEBIDA'::character varying, 'ACEITO'::character varying, 'RECUSADO'::character varying])::text[])),
+                   (ARRAY [('PREENCHENDO'::character varying)::text, ('CONCLUIDO'::character varying)::text, ('ENVIADO'::character varying)::text, ('ENTREGUE'::character varying)::text, ('RESPOSTA_PENDENTE'::character varying)::text, ('RESPOSTA_RECEBIDA'::character varying)::text, ('ACEITO'::character varying)::text, ('RECUSADO'::character varying)::text])),
     id_empresa uuid        not null
         constraint fk5xy7gse5lcuygba8ilnxlu1u8
             references empresas
 );
+
+comment on constraint cotacao_status_check on cotacoes is '
+
+';
 
 alter table cotacoes
     owner to postgres;
 
 create table cotacao_empresa_destinataria
 (
-    id                      uuid         not null
+    id              uuid         not null
         primary key,
-    data_envio              timestamp(6) not null,
-    id_cotacao_enviada      uuid         not null
+    data_envio      timestamp(6) not null,
+    id_cotacao      uuid         not null
         constraint fkgj3gv44149o2strta8mssqf07
             references cotacoes,
-    id_empresa_destinataria uuid         not null
+    id_destinatario uuid         not null
         constraint fkh2nkd76xrb90a59wytlfonyjj
             references empresas
 );
@@ -92,10 +96,10 @@ alter table produtos
 
 create table cotacao_produtos
 (
-    id_cotacao uuid not null
+    id_cotacao uuid    not null
         constraint fkmt7e8jk4b9rhrntcha4gsga9g
             references cotacoes,
-    id_produto uuid not null
+    id_produto uuid    not null
         constraint fkosiwxnjympldt5qimsdci2lr
             references produtos,
     quantidade integer not null,

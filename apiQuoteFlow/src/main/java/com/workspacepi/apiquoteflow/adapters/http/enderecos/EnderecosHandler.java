@@ -36,6 +36,11 @@ public class EnderecosHandler {
         return ResponseEntity.ok(enderecos);
     }
 
+    public ResponseEntity<Enderecos> findByEmpresa(String id_empresa) throws Exception{
+        Enderecos enderecos = enderecosService.findByEmpresa(UUID.fromString(id_empresa));
+        return ResponseEntity.ok(enderecos);
+    }
+
     public ResponseEntity<Enderecos> cadastrarEndereco(EnderecosCreateCommand enderecosCreateCommand) throws Exception{
         Enderecos enderecos = enderecosService.cadastrarEndereco(enderecosCreateCommand);
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecos);

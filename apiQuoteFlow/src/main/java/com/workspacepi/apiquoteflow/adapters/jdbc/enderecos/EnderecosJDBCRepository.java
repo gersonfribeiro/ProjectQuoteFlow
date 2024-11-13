@@ -75,7 +75,7 @@ public class EnderecosJDBCRepository implements EnderecosRepository {
     public List<Enderecos> findAll() {
         List<Enderecos> enderecos = List.of();
         try {
-            enderecos = jdbcTemplate.query(sqlSelectAllEnderecos(), createEnderecoRowMapper());
+            enderecos = jdbcTemplate.query(sqlFindAllEnderecos(), createEnderecoRowMapper());
             return enderecos;
 
         } catch (Exception e) {
@@ -84,13 +84,26 @@ public class EnderecosJDBCRepository implements EnderecosRepository {
         }
     }
 
+    @Override
+    public Enderecos findByEmpresa(UUID id_empresa) {
+        List<Enderecos> enderecos;
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("id_empresa", id_empresa);
+            enderecos = jdbcTemplate.query(sqlFindAllEnderecos(), params, createEnderecoRowMapper());
+            return enderecos.isEmpty() ? null : enderecos.get(0);
+
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar os endereços: " + e.getMessage());
+            throw e;
+        }
+    }
 
     @Override
     public Enderecos findById(UUID id_endereco) {
         List<Enderecos> enderecos;
         try {
             MapSqlParameterSource params = new MapSqlParameterSource("id_endereco", id_endereco);
-            enderecos = jdbcTemplate.query(sqlSelectEnderecosById(), params, createEnderecoRowMapper());
+            enderecos = jdbcTemplate.query(sqlFindEnderecosById(), params, createEnderecoRowMapper());
             return enderecos.isEmpty() ? null : enderecos.get(0);
         } catch (Exception e) {
             LOGGER.error("Houve um erro ao consultar o endereco : " + e.getMessage());

@@ -4,7 +4,7 @@
 package com.workspacepi.apiquoteflow.adapters.jdbc.enderecos;
 
 public class EnderecosSqlExpressions {
-    public static String sqlSelectAllEnderecos() {
+    public static String sqlFindAllEnderecos() {
         return """
                     SELECT bairro,
                         cep,
@@ -19,7 +19,24 @@ public class EnderecosSqlExpressions {
                """;
     }
 
-    public static String sqlSelectEnderecosById() {
+    public static String sqlFindByEmpresa() {
+        return """
+                    SELECT bairro,
+                        cep,
+                        complemento,
+                        localidade,
+                        logradouro,
+                        numero,
+                        uf,
+                        id_empresa,
+                        id_endereco
+                    FROM enderecos
+                    WHERE id_endereco = :id_endereco AND id_empresa = :id_empresa
+                """;
+    
+    }
+
+    public static String sqlFindEnderecosById() {
         return """
                     SELECT bairro,
                         cep,
@@ -33,8 +50,9 @@ public class EnderecosSqlExpressions {
                     FROM enderecos
                     WHERE id_endereco = :id_endereco
                 """;
-    
-}
+
+    }
+
     public static String sqlCadastrarEndereco() {
         return """
                     INSERT INTO enderecos(
