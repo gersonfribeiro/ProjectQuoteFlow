@@ -6,24 +6,21 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes;
 public class CotacoesSqlExpressions {
     public static String sqlSelectAllQuotations() {
         return """
-                    SELECT id_cotacao,
-                        data,
-                        numero,
-                        status,
-                        id_empresa
-                    FROM cotacoes
+                    SELECT * FROM cotacoes
                 """;
     }
 
     public static String sqlSelectQuotationById() {
         return """
-                    SELECT id_cotacao,
-                        data,
-                        numero,
-                        status,
-                        id_empresa
-                    FROM cotacoes
+                    SELECT * FROM cotacoes
                     WHERE id_cotacao = :id_cotacao
+                """;
+    }
+
+    public static String sqlFindAllByEmpresa() {
+        return """
+                    SELECT * FROM cotacoes
+                    WHERE id_empresa = :id_empresa
                 """;
     }
 
@@ -49,7 +46,7 @@ public class CotacoesSqlExpressions {
                     UPDATE cotacoes
                     SET id_cotacao = :id_cotacao,
                         data = :data,
-                        numero_cotacao = :numero_cotacao,
+                        numero = :numero,
                         status = :status,
                         id_empresa  = :id_empresa
                     WHERE id_cotacao = :id_cotacao

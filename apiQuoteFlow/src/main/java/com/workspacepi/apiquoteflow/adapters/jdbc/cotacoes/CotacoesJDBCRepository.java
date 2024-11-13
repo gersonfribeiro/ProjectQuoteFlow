@@ -38,11 +38,9 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
         this.destinatariosRepository = destinatariosRepository;
     }
 
-
 //  Logger cuida do envio das nossas exceptions específicas ao invés das exceptions padrões
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
-
 
 //  Função da RowMapper para aproveitamento de código
 //  Essa função é usada para mapear o resultado de uma consulta SQL
@@ -50,13 +48,13 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
     private RowMapper<Cotacoes> createCotacaoRowMapper() {
         return (rs, rowNum) -> {
             UUID id_cotacao = UUID.fromString(rs.getString("id_cotacao"));
+
             Timestamp data_cotacao = rs.getTimestamp("data");
             int numero_cotacao = rs.getInt("numero");
             CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
             UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
             List<ProdutosCotacao> produtos = produtosCotacaoRepository.findAllProdutosByCotacao(id_cotacao);
-
             List<Destinatarios> destinatarios = destinatariosRepository.findAllDestinatariosByCotacao(id_cotacao);
 
             return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao, produtos, destinatarios);
@@ -79,10 +77,20 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
 
     @Override
     public List<Cotacoes> findAll() {
-        List<Cotacoes> cotacoes = List.of();
         try {
-            cotacoes = jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
-            return cotacoes;
+            return jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
+
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar as cotações: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Cotacoes> findAllByEmpresa(UUID id_empresa) {
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("id_empresa", id_empresa);
+            return jdbcTemplate.query(sqlFindAllByEmpresa(), params, createCotacaoRowMapper());
 
         } catch (Exception e) {
             LOGGER.error("Houve um erro ao consultar as cotações: " + e.getMessage());
@@ -132,7 +140,6 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
             throw e;
         }
     }
-
 
     @Override
     public Boolean deleteCotacaoById(UUID id_cotacao) {

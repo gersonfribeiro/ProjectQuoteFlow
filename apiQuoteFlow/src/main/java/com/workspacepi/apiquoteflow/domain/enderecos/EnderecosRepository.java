@@ -10,6 +10,9 @@ public interface EnderecosRepository {
     List<Enderecos> findAll();
 
 //  Buscar por ID
+    Enderecos findByEmpresa(UUID id_empresa);
+
+//  Buscar por ID
     Enderecos findById(UUID id_endereco);
 
 //  Inserção

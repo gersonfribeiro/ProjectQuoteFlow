@@ -38,33 +38,22 @@ public class DestinatariosJDBCRepository implements DestinatariosRepository {
         };
     }
 
-
-    private MapSqlParameterSource parameterSource(Destinatarios destinatarios, UUID id_cotacao) {
+    private MapSqlParameterSource parameterSource(Destinatarios destinatarios) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", destinatarios.getId());
         params.addValue("data_envio", destinatarios.getData_envio());
-        params.addValue("id_cotacao", id_cotacao);
+        params.addValue("id_cotacao", destinatarios.getId_cotacao());
         params.addValue("id_destinatario", destinatarios.getId_destinatario());
-
-        return params;
-    }
-
-    private MapSqlParameterSource parameterSource(Destinatarios destinatarios, UUID id_destinatario, UUID id_cotacao) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id", destinatarios.getId());
-        params.addValue("data_envio", destinatarios.getData_envio());
-        params.addValue("id_cotacao", id_cotacao);
-        params.addValue("id_destinatario", id_destinatario);
 
         return params;
     }
 
     @Override
     public List<Destinatarios> findAllDestinatariosByCotacao(UUID id_cotacao) {
-        List<Destinatarios> destinatarios;
         try {
-            destinatarios = jdbcTemplate.query(sqlFindAllDestinatariosByCotacao(), createDestinatariosRowMapper());
-            return destinatarios;
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("id_cotacao", id_cotacao);
+            return jdbcTemplate.query(sqlFindAllDestinatariosByCotacao(), params, createDestinatariosRowMapper());
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw e;
@@ -89,7 +78,8 @@ public class DestinatariosJDBCRepository implements DestinatariosRepository {
     @Override
     public Boolean inserirDestinatario(Destinatarios destinatario, UUID id_cotacao) {
         try {
-            MapSqlParameterSource params = parameterSource(destinatario, id_cotacao);
+            MapSqlParameterSource params = parameterSource(destinatario);
+            params.addValue("id_cotacao", id_cotacao);
             int numLinhasAfetas = jdbcTemplate.update(sqlInserirDestinatario(), params);
             return numLinhasAfetas > 0;
         } catch (Exception e) {
@@ -99,9 +89,11 @@ public class DestinatariosJDBCRepository implements DestinatariosRepository {
     }
 
     @Override
-    public Boolean modificarDestinatario(Destinatarios destinatario, UUID id_destinatario, UUID id_cotacao) {
+    public Boolean modificarDestinatario(Destinatarios destinatario, UUID id_cotacao, UUID id_destinatario) {
         try {
-            MapSqlParameterSource params = parameterSource(destinatario, id_destinatario, id_cotacao);
+            MapSqlParameterSource params = parameterSource(destinatario);
+            params.addValue("id_cotacao", id_cotacao);
+            params.addValue("id_destinatario", id_destinatario);
             int numLinhasAfetas = jdbcTemplate.update(sqlModificarDestinatario(), params);
             return numLinhasAfetas > 0;
         } catch (Exception e) {
@@ -111,11 +103,11 @@ public class DestinatariosJDBCRepository implements DestinatariosRepository {
     }
 
     @Override
-    public Boolean removerDestinatario(UUID id_destinatario, UUID id_cotacao) {
+    public Boolean removerDestinatario(UUID id_cotacao, UUID id_destinatario) {
         try {
             MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("id_destinatario", id_destinatario);
             params.addValue("id_cotacao", id_cotacao);
+            params.addValue("id_destinatario", id_destinatario);
             int numLinhasAfetadas = jdbcTemplate.update(sqlRemoverDestinatario(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {

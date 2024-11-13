@@ -9,6 +9,9 @@ public interface CotacoesRepository {
 //  Buscar todas as cotações
     List<Cotacoes> findAll();
 
+//  Buscar todas as cotações
+    List<Cotacoes> findAllByEmpresa(UUID id_empresa);
+
 //  Buscar por ID
     Cotacoes findById(UUID id_cotacao);
 

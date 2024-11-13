@@ -14,8 +14,8 @@ public interface DestinatariosRepository {
 
     Boolean inserirDestinatario(Destinatarios destinatario, UUID id_cotacao);
 
-    Boolean modificarDestinatario(Destinatarios destinatario, UUID id_destinatario, UUID id_cotacao);
+    Boolean modificarDestinatario(Destinatarios destinatario, UUID id_cotacao, UUID id_destinatario);
 
-    Boolean removerDestinatario(UUID id_destinatario, UUID id_cotacao);
+    Boolean removerDestinatario(UUID id_cotacao, UUID id_destinatario);
 
 }

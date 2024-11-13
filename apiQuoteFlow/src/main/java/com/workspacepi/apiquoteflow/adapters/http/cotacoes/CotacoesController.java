@@ -31,7 +31,12 @@ public class CotacoesController {
 
 //  Método get para a rota de uma cotação especifica.
 
-    @GetMapping("/cotacoes/{id_cotacao}")
+    @GetMapping("/cotacoes/empresa/{id_empresa}")
+    public ResponseEntity<List<Cotacoes>> findAllByEmpresa(@PathVariable String id_empresa) throws Exception {
+        return cotacoesHandler.findAllByEmpresa(id_empresa);
+    }
+
+    @GetMapping("/cotacoes/cotacao/{id_cotacao}")
     public ResponseEntity<Cotacoes> findById(@PathVariable String id_cotacao) throws Exception {
         return cotacoesHandler.findById(id_cotacao);
     }

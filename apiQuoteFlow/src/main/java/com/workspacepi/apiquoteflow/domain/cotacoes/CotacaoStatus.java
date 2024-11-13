@@ -2,6 +2,7 @@ package com.workspacepi.apiquoteflow.domain.cotacoes;
 
 // Uma enum class criada apenas para definir alguma propriedade
 public enum CotacaoStatus {
+    PREENCHENDO,
     CONCLUIDO,
     ENVIADO,
     ENTREGUE,

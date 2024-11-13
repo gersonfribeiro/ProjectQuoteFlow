@@ -41,7 +41,7 @@ public class SecurityConfiguration {
 //                        .requestMatchers(HttpMethod.GET, "/usuarios/{id_usuario}").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/empresas/{id_empresa}/produtos").hasRole("ASSOCIADO")
 //                        .requestMatchers(HttpMethod.POST, "/cotacoes").hasRole("ASSOCIADO")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -1,5 +1,6 @@
 package com.workspacepi.apiquoteflow.application.enderecos;
 
+import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaIdNaoEncontradaException;
 import com.workspacepi.apiquoteflow.application.enderecos.exceptions.EnderecoNaoEncontradoException;
 import com.workspacepi.apiquoteflow.domain.enderecos.Enderecos;
 import com.workspacepi.apiquoteflow.domain.enderecos.EnderecosRepository;
@@ -35,6 +36,15 @@ public class EnderecosService {
 
         if(enderecos == null)
             throw new EnderecoNaoEncontradoException(id_endereco);
+
+        return enderecos;
+    }
+
+    public Enderecos findByEmpresa(UUID id_empresa) throws Exception{
+        Enderecos enderecos = enderecosRepository.findByEmpresa(id_empresa);
+
+        if(enderecos == null)
+            throw new EmpresaIdNaoEncontradaException(id_empresa);
 
         return enderecos;
     }

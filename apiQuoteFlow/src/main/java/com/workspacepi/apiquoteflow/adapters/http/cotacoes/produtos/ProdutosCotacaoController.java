@@ -3,7 +3,6 @@ package com.workspacepi.apiquoteflow.adapters.http.cotacoes.produtos;
 import com.workspacepi.apiquoteflow.application.cotacoes.produtos.ProdutosCotacaoCreateCommand;
 import com.workspacepi.apiquoteflow.application.cotacoes.produtos.ProdutosCotacaoUpdateCommand;
 import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacao;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class ProdutosCotacaoController {
     }
 
     @GetMapping("/{id_produto}")
-    public ResponseEntity<ProdutosCotacao>  findProdutoByCotacaoAndId(@PathVariable String id_cotacao, @PathVariable String id_produto) {
+    public ResponseEntity<ProdutosCotacao> findProdutoByCotacaoAndId(@PathVariable String id_cotacao, @PathVariable String id_produto) {
         return produtosCotacaoHandler.findProdutoByCotacaoAndId(id_cotacao, id_produto);
     }
 
@@ -34,9 +33,11 @@ public class ProdutosCotacaoController {
         return produtosCotacaoHandler.inserirProdutosCotacao(produtos, id_cotacao);
     }
 
-    @PutMapping("/{id_produto}")
-    public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(@RequestBody ProdutosCotacaoUpdateCommand produto, @PathVariable String id_produto, @PathVariable String id_cotacao) {
-        return produtosCotacaoHandler.modificarProdutosCotacao(produto,id_produto, id_cotacao);
+    @PutMapping("/{id}/{id_produto}")
+    public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(@RequestBody ProdutosCotacaoUpdateCommand produto,
+                                                                    @PathVariable String id_cotacao,
+                                                                    @PathVariable String id) {
+        return produtosCotacaoHandler.modificarProdutosCotacao(produto, id, id_cotacao);
     }
 
     @DeleteMapping("/{id_produto}")

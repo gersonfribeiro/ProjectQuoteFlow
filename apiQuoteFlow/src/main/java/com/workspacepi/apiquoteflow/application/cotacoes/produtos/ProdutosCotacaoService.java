@@ -26,7 +26,7 @@ public class ProdutosCotacaoService {
         return produtosCotacaoRepository.findAllProdutosByCotacao(id_cotacao);
     }
 
-    public ProdutosCotacao findProdutosCotacaoById(UUID id_cotacao, UUID id_produto) {
+    public ProdutosCotacao findProdutosByCotacaoAndId(UUID id_cotacao, UUID id_produto) {
         if(cotacaoRepository.findById(id_cotacao) == null)
             throw new RuntimeException("Cotacão não encontrada");
 
@@ -39,7 +39,7 @@ public class ProdutosCotacaoService {
 
         ProdutosCotacao produtosCotacaoDomain = produtos.toProdutoCotacao();
         produtosCotacaoRepository.inserirProdutosCotacao(produtosCotacaoDomain, id_cotacao);
-        return findProdutosCotacaoById(id_cotacao, produtosCotacaoDomain.getId());
+        return findProdutosByCotacaoAndId(id_cotacao, produtosCotacaoDomain.getId_produto());
     }
 
     public ProdutosCotacao modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, UUID id_produto, UUID id_cotacao) {
@@ -48,15 +48,12 @@ public class ProdutosCotacaoService {
 
         ProdutosCotacao produtosCotacaoDomain = produtos.toProdutoCotacao(id_produto);
         produtosCotacaoRepository.modificarProdutosCotacao(produtosCotacaoDomain, id_produto, id_cotacao);
-        return findProdutosCotacaoById(id_cotacao, produtosCotacaoDomain.getId());
+        return findProdutosByCotacaoAndId(id_cotacao, produtosCotacaoDomain.getId());
     }
 
     public void deleteProdutosCotacaoById(UUID id_cotacao, UUID id_produto) {
         if(cotacaoRepository.findById(id_cotacao) == null)
             throw new RuntimeException("Cotacão não encontrada");
-
-        if(cotacaoRepository.findById(id_produto) == null)
-            throw new RuntimeException("Produto não encontrado");
 
         produtosCotacaoRepository.deleteProdutosByCotacaoAndId(id_cotacao, id_produto);
     }
