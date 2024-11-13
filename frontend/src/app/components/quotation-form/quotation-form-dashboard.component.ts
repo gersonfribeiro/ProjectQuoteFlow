@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
+import {ApiQuotationService} from "../../services/api-quotation.service";
+import {ApiUserService} from "../../services/api-user.service";
+import {ApiProductService} from "../../services/api-product.service";
 
 @Component({
   selector: 'app-quotation-form-dashboard',
@@ -25,7 +28,7 @@ export class FormDashboardComponent implements OnInit {
   productForm: any;
   products: { skuCode: string, quantity: number }[] = [];
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {
     this.quotationForm = this.fb.group({
       skuCode: ['', [Validators.required]], // Corrigido para chamar o método corretamente
       quantity: [null, [Validators.required, Validators.min(1)]],
@@ -34,52 +37,12 @@ export class FormDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const quotationNotificationsPage = localStorage.getItem(
-      'quotationNotificationsPage'
-    );
-    this.showNotificationAlert = !quotationNotificationsPage;
-  }
 
-  onSubmit() {
-    if (this.quotationForm.valid) {
-      this.toastr.success('Solicitação enviada com sucesso!', '', {
-        positionClass: 'toast-top-right',
-        progressBar: true,
-        progressAnimation: 'increasing',
-        timeOut: 2000,
-      });
-
-      console.log(this.quotationForm.value);
-      this.quotationForm.reset(); // Limpa o formulário após o envio
-    } else {
-      this.showFormErrors(); // Mostra os erros caso o formulário seja inválido
-    }
-  }
-
-  closeButton() {
-    if (this.notificationAlert) {
-      this.notificationAlert.nativeElement.classList.add('alert-closing');
-      setTimeout(() => {
-        this.showNotificationAlert = false;
-        localStorage.setItem('quotationNotificationsPage', 'true');
-      }, 250);
-    }
   }
 
   // Método para mostrar erros nos campos do formulário
   showFormErrors() {
     this.quotationForm.markAllAsTouched(); // Marca todos os campos como tocados
-  }
-
-  onProductSubmit() {
-    if (this.productForm.valid) {
-      const newProduct = {
-        skuCode: this.productForm.value.productSku,
-        quantity: this.productForm.value.productQuantity,
-      };
-      this.products.push(newProduct);
-      this.productForm.reset();
-    }
   }
 
   onInputChange() {
@@ -90,16 +53,54 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
-  addProduct() {
-    const skuCode = this.quotationForm.get('skuCode')?.value;
-    const quantity = this.quotationForm.get('quantity')?.value;
+  onSubmit() {
+      if (this.quotationForm.valid) {
+        const userId = localStorage.getItem('userId');
+        const skuCode = this.quotationForm.value.skuCode;
+        const quantity = this.quotationForm.value.quantity;
 
-    if (skuCode && quantity > 0) {
-      this.products.push({skuCode, quantity});
-      this.quotationForm.reset();  // Reseta o formulário após adicionar
-    } else {
-      this.showFormErrors();
+            this.apiUserService.getUserById(userId).subscribe(
+                response1 => {
+                    const quotationData = {
+                      id_empresa: response1.id_empresa
+                    };
+
+                    this.apiProductService.getProductBySKU(quotationData.id_empresa, skuCode).subscribe(
+                      response2 => {
+                        this.apiQuotationService.requestQuotation(quotationData).subscribe(
+                          response3 => {
+                            const productToQuotationData = {
+                                id_produto: response2.id_produto,
+                                quantidade: quantity
+                              }
+
+                            const quotationId = response3.id_cotacao;
+
+                            this.apiQuotationService.registerProductOnQuotation(quotationId, productToQuotationData).subscribe(
+                                response4 => {
+                                    this.toastr.success('Produto adicionado na sua cotação!');
+                                  }
+                                error4 => {
+                                    this.toastr.error('Erro ao adicionar produto à cotação.');
+                                  }
+                              );
+                          }
+                        error3 => {
+                            this.toastr.error('Erro ao criar cotação.');
+                          }
+                        );
+                      },
+                      error2 => {
+                        this.toastr.error('SKU do produto não encontrado!');
+                      }
+                    );
+                  }
+              );
+
+        this.quotationForm.reset(); // Limpa o formulário após o envio
+      } else {
+        this.showFormErrors(); // Mostra os erros caso o formulário seja inválido
+      }
     }
-  }
 
 }
