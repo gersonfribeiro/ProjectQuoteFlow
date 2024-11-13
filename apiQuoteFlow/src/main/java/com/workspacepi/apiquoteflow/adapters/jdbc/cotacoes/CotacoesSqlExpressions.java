@@ -17,6 +17,13 @@ public class CotacoesSqlExpressions {
                 """;
     }
 
+    public static String sqlFindAllByEmpresa() {
+        return """
+                    SELECT * FROM cotacoes
+                    WHERE id_empresa = :id_empresa
+                """;
+    }
+
     public static String sqlSolicitarCotacao() {
         return """
                      INSERT INTO cotacoes(

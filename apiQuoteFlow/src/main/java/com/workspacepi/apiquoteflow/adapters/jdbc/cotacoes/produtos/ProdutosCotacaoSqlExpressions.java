@@ -10,7 +10,7 @@ public class ProdutosCotacaoSqlExpressions {
 
     public static String sqlFindProdutoByCotacaoAndId() {
         return """
-            SELECT * FROM cotacao_produtos WHERE id_cotacao = :id_cotacao AND id = :id
+            SELECT * FROM cotacao_produtos WHERE id_cotacao = :id_cotacao AND id_produto = :id_produto
         """;
     }
 
@@ -31,18 +31,18 @@ public class ProdutosCotacaoSqlExpressions {
 
     public static String sqlModificarProdutosCotacao() {
         return """
-            UPDATE cotacao_produtos(
-                id = :id,
+            UPDATE cotacao_produtos
+            SET id = :id,
                 id_cotacao = :id_cotacao,
                 id_produto = :id_produto,
-                quantidade = :quantidade)
-            WHERE id = :id AND id_cotacao = :id_cotacao
+                quantidade = :quantidade
+            WHERE id_cotacao = :id_cotacao AND id_produto = :id_produto
         """;
     }
 
     public static String sqlDeleteProdutosByCotacaoAndId() {
         return """
-            DELETE * FROM cotacao_produtos WHERE id_cotacao = :id_cotacao AND id = :id
+            DELETE FROM cotacao_produtos WHERE id_cotacao = :id_cotacao AND id_produto = :id_produto
         """;
     }
 

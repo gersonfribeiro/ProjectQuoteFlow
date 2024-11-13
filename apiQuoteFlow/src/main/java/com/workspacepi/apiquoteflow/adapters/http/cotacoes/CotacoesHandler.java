@@ -32,6 +32,11 @@ public class CotacoesHandler {
         return ResponseEntity.ok(cotacoes);
     }
 
+    public ResponseEntity<List<Cotacoes>> findAllByEmpresa(String id_empresa) {
+        List<Cotacoes> cotacoes = cotacoesService.findAllByEmpresa(UUID.fromString(id_empresa));
+        return ResponseEntity.ok(cotacoes);
+    }
+
 //    Método findById definido nos Serviços de cotação, o retorno é uma cotação ou uma Exception
 
     public ResponseEntity<Cotacoes> findById(String id_cotacao) throws Exception{

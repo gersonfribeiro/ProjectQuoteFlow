@@ -29,11 +29,24 @@ public class Cotacoes {
 //  Construtores
 
     // Construtor para uso da inserção no banco de dados
-
-    public Cotacoes(int numero, CotacaoStatus status, UUID id_empresa, List<ProdutosCotacao> produtos, List<Destinatarios> destinatarios) {
+    public Cotacoes(UUID id_empresa) {
         this.id_cotacao = UUID.randomUUID();
         this.data = Timestamp.from(Instant.now());
+        this.status = CotacaoStatus.PREENCHENDO;
+        this.id_empresa = id_empresa;
+    }
+
+    public Cotacoes(UUID id_cotacao, Timestamp data, int numero, CotacaoStatus status, UUID id_empresa) {
+        this.id_cotacao = id_cotacao;
+        this.data = data;
         this.numero = numero;
+        this.status = status;
+        this.id_empresa = id_empresa;
+    }
+
+    public Cotacoes(CotacaoStatus status, UUID id_empresa, List<ProdutosCotacao> produtos, List<Destinatarios> destinatarios) {
+        this.id_cotacao = UUID.randomUUID();
+        this.data = Timestamp.from(Instant.now());
         this.status = status;
         this.id_empresa = id_empresa;
         this.produtos = produtos;

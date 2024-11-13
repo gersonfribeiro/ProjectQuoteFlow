@@ -37,19 +37,10 @@ public class ProdutosCotacaoJDBCRepository implements ProdutosCotacaoRepository 
         };
     }
 
-    private MapSqlParameterSource parameterSource(ProdutosCotacao produtosCotacao, UUID id_produto, UUID id_cotacao) {
+    private MapSqlParameterSource parameterSource(ProdutosCotacao produtosCotacao) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", produtosCotacao.getId());
-        params.addValue("id_cotacao", id_cotacao);
-        params.addValue("id_produto", id_produto);
-        params.addValue("quantidade", produtosCotacao.getQuantidade());
-        return params;
-    }
-
-    private MapSqlParameterSource parameterSource(ProdutosCotacao produtosCotacao, UUID id_cotacao) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id", produtosCotacao.getId());
-        params.addValue("id_cotacao", id_cotacao);
+        params.addValue("id_cotacao", produtosCotacao.getId_cotacao());
         params.addValue("id_produto", produtosCotacao.getId_produto());
         params.addValue("quantidade", produtosCotacao.getQuantidade());
         return params;
@@ -58,7 +49,8 @@ public class ProdutosCotacaoJDBCRepository implements ProdutosCotacaoRepository 
     @Override
     public List<ProdutosCotacao> findAllProdutosByCotacao(UUID id_cotacao) {
         try {
-            MapSqlParameterSource params = new MapSqlParameterSource("id_cotacao", id_cotacao);
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("id_cotacao", id_cotacao);
             return jdbcTemplate.query(sqlFindAllProdutosByCotacao(), params, createProdutosCotacaoRowMapper());
 
         } catch (Exception e) {
@@ -71,7 +63,8 @@ public class ProdutosCotacaoJDBCRepository implements ProdutosCotacaoRepository 
     public ProdutosCotacao findProdutoByCotacaoAndId(UUID id_cotacao, UUID id_produto) {
         List<ProdutosCotacao> produtosCotacao;
         try {
-            MapSqlParameterSource params = new MapSqlParameterSource("id_cotacao", id_cotacao);
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("id_cotacao", id_cotacao);
             params.addValue("id_produto", id_produto);
             produtosCotacao = jdbcTemplate.query(sqlFindProdutoByCotacaoAndId(), params, createProdutosCotacaoRowMapper());
             return produtosCotacao.isEmpty() ? null : produtosCotacao.get(0);
@@ -84,7 +77,8 @@ public class ProdutosCotacaoJDBCRepository implements ProdutosCotacaoRepository 
     @Override
     public Boolean inserirProdutosCotacao(ProdutosCotacao produtos, UUID id_cotacao) {
         try {
-            MapSqlParameterSource params = parameterSource(produtos, id_cotacao);
+            MapSqlParameterSource params = parameterSource(produtos);
+            params.addValue("id_cotacao", id_cotacao);
             int numLinhasAfetadas = jdbcTemplate.update(sqlInserirProdutosCotacao(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {
@@ -94,9 +88,12 @@ public class ProdutosCotacaoJDBCRepository implements ProdutosCotacaoRepository 
     }
 
     @Override
-    public Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id_produto, UUID id_cotacao) {
+    public Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id, UUID id_cotacao) {
         try {
-            MapSqlParameterSource params = parameterSource(produtos, id_produto, id_cotacao);
+            MapSqlParameterSource params = parameterSource(produtos);
+            params.addValue("id", id);
+            params.addValue("id_cotacao", id_cotacao);
+            params.addValue("id_produto", produtos.getId_produto());
             int numLinhasAfetadas = jdbcTemplate.update(sqlModificarProdutosCotacao(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {

@@ -15,24 +15,12 @@ import java.util.UUID;
 @Getter
 public class CotacoesCreateCommand {
 
-    @JsonProperty("numero")
-    private int numero;
-
-    @JsonProperty("status")
-    private CotacaoStatus status;
-
     @JsonProperty("id_empresa")
     private UUID id_empresa;
 
-    @JsonProperty("produtos")
-    private List<ProdutosCotacao> produtos;
-
-    @JsonProperty("destinatarios")
-    private List<Destinatarios> destinatarios;
-
 //  Conversão para cotacao
     public Cotacoes toCotacao() {
-        return new Cotacoes(numero, status, id_empresa, produtos, destinatarios);
+        return new Cotacoes(id_empresa);
     }
 
 }

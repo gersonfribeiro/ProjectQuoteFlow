@@ -25,7 +25,7 @@ public class ProdutosCotacaoHandler {
     }
 
     public ResponseEntity<ProdutosCotacao> findProdutoByCotacaoAndId(String id_cotacao, String id_produto) {
-        ProdutosCotacao produto = produtosCotacaoService.findProdutosCotacaoById(UUID.fromString(id_cotacao), UUID.fromString(id_produto));
+        ProdutosCotacao produto = produtosCotacaoService.findProdutosByCotacaoAndId(UUID.fromString(id_cotacao), UUID.fromString(id_produto));
         return ResponseEntity.ok(produto);
     }
 
@@ -34,8 +34,8 @@ public class ProdutosCotacaoHandler {
         return ResponseEntity.ok(produtosDomain);
     }
 
-    public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, String id_produto, String id_cotacao) {
-        ProdutosCotacao produtosDomain = produtosCotacaoService.modificarProdutosCotacao(produtos, UUID.fromString(id_produto), UUID.fromString(id_cotacao));
+    public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, String id, String id_cotacao) {
+        ProdutosCotacao produtosDomain = produtosCotacaoService.modificarProdutosCotacao(produtos, UUID.fromString(id), UUID.fromString(id_cotacao));
         return ResponseEntity.ok(produtosDomain);
     }
 

@@ -25,7 +25,7 @@ create table cotacoes
     status     varchar(50) not null
         constraint cotacao_status_check
             check ((status)::text = ANY
-                   ((ARRAY ['CONCLUIDO'::character varying, 'ENVIADO'::character varying, 'ENTREGUE'::character varying, 'RESPOSTA_PENDENTE'::character varying, 'RESPOSTA_RECEBIDA'::character varying, 'ACEITO'::character varying, 'RECUSADO'::character varying])::text[])),
+                   ((ARRAY['CONCLUIDO'::character varying, 'PREENCHENDO'::character varying, 'ENVIADO'::character varying, 'ENTREGUE'::character varying, 'RESPOSTA_PENDENTE'::character varying, 'RESPOSTA_RECEBIDA'::character varying, 'ACEITO'::character varying, 'RECUSADO'::character varying])::text[])),
     id_empresa uuid        not null
         constraint fk5xy7gse5lcuygba8ilnxlu1u8
             references empresas

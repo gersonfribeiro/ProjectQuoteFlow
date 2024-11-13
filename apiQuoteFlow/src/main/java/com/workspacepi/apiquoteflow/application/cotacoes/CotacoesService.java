@@ -28,6 +28,10 @@ public class CotacoesService {
         return cotacoesRepository.findAll();
     }
 
+    public List<Cotacoes> findAllByEmpresa(UUID id_empresa) {
+        return cotacoesRepository.findAllByEmpresa(id_empresa);
+    }
+
 //  Retorno do método findById com a possíbilidade de retornar uma exception criada manualmente
 
     public Cotacoes findById(UUID id_cotacao) throws Exception{
@@ -41,6 +45,11 @@ public class CotacoesService {
 
     public Cotacoes solicitarCotacao(CotacoesCreateCommand cotacoesCreateCommand) throws Exception {
         Cotacoes cotacoesDomain = cotacoesCreateCommand.toCotacao();
+
+        List<Cotacoes> numCotacoesEmpresa = cotacoesRepository.findAllByEmpresa(cotacoesDomain.getId_empresa());
+        cotacoesDomain.setNumero(numCotacoesEmpresa.size() + 1);
+        System.out.println(numCotacoesEmpresa.size());
+
         cotacoesRepository.solicitarCotacao(cotacoesDomain);
 
         return findById(cotacoesDomain.getId_cotacao());

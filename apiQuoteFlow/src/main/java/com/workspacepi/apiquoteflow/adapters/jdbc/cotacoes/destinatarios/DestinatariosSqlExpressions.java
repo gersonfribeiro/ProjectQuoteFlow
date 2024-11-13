@@ -10,7 +10,7 @@ public class DestinatariosSqlExpressions {
 
     public static String sqlFindEmpresaDestinatariaByCotacaoAndId(){
         return """
-            SELECT * FROM cotacao_empresa_destinataria WHERE id_cotacao = :id_cotacao
+            SELECT * FROM cotacao_empresa_destinataria WHERE id_cotacao = :id_cotacao AND id_destinatario = :id_destinatario
         """;
     }
 
@@ -31,18 +31,18 @@ public class DestinatariosSqlExpressions {
 
     public static String sqlModificarDestinatario(){
         return """
-            UPDATE cotacao_empresa_destinataria(
-                id = :id,
+            UPDATE cotacao_empresa_destinataria
+            SET id = :id,
                 data_envio = :data_envio,
                 id_cotacao = :id_cotacao,
-                id_destinatario = :id_destinatario)
-            WHERE id = :id AND id_cotacao = :id_cotacao
+                id_destinatario = :id_destinatario
+            WHERE id_cotacao = :id_cotacao AND id_destinatario = :id_destinatario
         """;
     }
 
     public static String sqlRemoverDestinatario(){
         return """
-            DELETE * FROM cotacao_empresa_destinataria WHERE id_destinatario = :id_destinatario AND id_cotacao = :id_cotacao
+            DELETE * FROM cotacao_empresa_destinataria WHERE id_cotacao = :id_cotacao AND id_destinatario = :id_destinatario
         """;
     }
 
