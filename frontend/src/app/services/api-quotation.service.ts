@@ -12,22 +12,13 @@ export class ApiQuotationService {
   constructor(private http: HttpClient) {
   }
 
-  // Método para solicitar uma cotação usando o ID de cotação e os dados da cotação
-  requestQuotation(quotationId: string, quotationData: any): Observable<any> {
-    return this.http.post(`${this.apiUrlQuotation}/${quotationId}`, quotationData)
+  // Método para solicitar uma cotação usando os dados da cotação
+  requestQuotation(quotationData: any): Observable<any> {
+    return this.http.post(`${this.apiUrlQuotation}`, quotationData)
       .pipe(
         catchError(this.handleError)
       );
   }
-
-  // O usuário precisa ter empresa cadastrada
-  // O usuário precisar ter produtos criados com SKU para traze-los
-  // Podemos criar um dropdown com os SKUS cadastrados na página de produtos
-  // e mostrar na página de cotações, o que acha? No caso
-  // ele não vai poder digitar um SKU na cotações apenas escolher o SKU que existe cadastrado, não
-  // porque no caso a gente pode entrar em outro usuario é trazer do banco esses dados do SKU,
-  // meio que todos os usuários vao alimentar a tabela de produtos e qualquer empresa consegue trazer
-  // esses dados
 
   // Método para obter as cotações de uma outra empresa usando o ID da empresa
   getQuotationsByCompanyId(companyId: string): Observable<any[]> {
@@ -36,6 +27,14 @@ export class ApiQuotationService {
         catchError(this.handleError)
       );
   }
+
+  // Método para adicionar um produto à uma cotação
+  registerProductOnQuotation(quotationId: string, productToQuotationData: any): Observable<any> {
+      return this.http.post(`http://localhost:8080/${quotationId}/produtos/cotados`, productToQuotationData)
+      .pipe(
+          catchError(this.handleError)
+        );
+    }
 
   // Função para tratamento de erro
   private handleError(error: HttpErrorResponse) {
