@@ -11,6 +11,7 @@ import { RegisterCompanyPageComponent } from "./components/register-company-page
 import { DashboardChartComponent } from "./components/dashboard-chart/dashboard-chart.component";
 import { SeeProductsPageComponent } from "./components/see-products-page/see-products-page.component";
 import { RegisterProductsPageComponent } from "./components/register-products-page/register-products-page.component";
+import { SeeQuotationsPageComponent } from "./components/see-quotations-page/see-quotations-page.component";
 import { authGuard } from './auth/auth.guard';
 import { companyGuard } from './auth/company.guard';
 
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'dashboard/register-companies', component: RegisterCompanyPageComponent, canActivate: [authGuard] }, // Página de cadastro de empresas
   { path: 'dashboard/register-products', component: RegisterProductsPageComponent, canActivate: [authGuard, companyGuard] }, // Página de cadastro de produtos
   { path: 'dashboard/products', component: SeeProductsPageComponent, canActivate: [authGuard, companyGuard] }, // Página de produtos cadastrados
+  { path: 'dashboard/quotations', component: SeeQuotationsPageComponent, canActivate: [authGuard, companyGuard] }, // Página de cotações cadastradas
 
   // Outras rotas
 ];
