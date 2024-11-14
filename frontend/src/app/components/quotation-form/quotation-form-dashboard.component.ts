@@ -31,96 +31,104 @@ export class FormDashboardComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {
     this.quotationForm = this.fb.group({
-      skuCode: [{ value: '', disabled: true}, [Validators.required]], // Corrigido para chamar o método corretamente
+      skuCode: [{ value: '', disabled: true}, [Validators.required]],
       quantity: [{ value: null, disabled: true}, [Validators.required, Validators.min(1)]],
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
-
-  // Método para mostrar erros nos campos do formulário
   showFormErrors() {
-    this.quotationForm.markAllAsTouched(); // Marca todos os campos como tocados
+    this.quotationForm.markAllAsTouched();
   }
 
   onInputChange() {
     const skuCodeControl = this.quotationForm.get('skuCode');
     if (skuCodeControl) {
-      // Transforma o valor do campo em letras maiúsculas
       skuCodeControl.setValue(skuCodeControl.value.toUpperCase(), {emitEvent: false});
     }
   }
 
-// Responsável por iniciar a cotação
   createQuotation() {
-      const confirmation = window.confirm('Cadastre todos os produtos antes de iniciar a cotação.');
+    const confirmation = window.confirm('Certifique-se de que todos os produtos foram cadastrados antes de iniciar a cotação.');
 
-      if (confirmation) {
-        this.isQuotationStarted = true;
-        this.isAddButtonEnabled = true;
+    if (confirmation) {
+      this.isQuotationStarted = true;
+      this.isAddButtonEnabled = true;
 
-        this.quotationForm.get('skuCode')?.enable();
-        this.quotationForm.get('quantity')?.enable();
+      this.quotationForm.get('skuCode')?.enable();
+      this.quotationForm.get('quantity')?.enable();
 
-        const userId = localStorage.getItem('userId');
+      const userId = localStorage.getItem('userId');
 
-        this.apiUserService.getUserById(userId).subscribe(
+      this.apiUserService.getUserById(userId).subscribe(
+        response => {
+          const quotationData = {id_empresa: response.id_empresa};
+
+          this.apiQuotationService.requestQuotation(quotationData).subscribe(
             response => {
-                const quotationData = {id_empresa: response.id_empresa};
-
-                this.apiQuotationService.requestQuotation(quotationData).subscribe(
-                    response => {
-                        console.log('Cotação iniciada!');
-                        this.quotationId = response.id_cotacao;
-                      },
-                    error => {
-                        console.log('Erro ao iniciar cotação.');
-                      }
-                  );
-              }
+              console.log('Cotação iniciada!');
+              this.quotationId = response.id_cotacao;
+            },
+            error => {
+              console.log('Erro ao iniciar cotação.');
+            }
           );
-      }
+        }
+      );
     }
+  }
 
-// Responsável por adicionar os produtos na cotação
+  // Método para parar a cotação
+  stopQuotation() {
+    const confirmation = window.confirm('Tem certeza que deseja parar a cotação?');
+
+    if (confirmation) {
+      this.isQuotationStarted = false;
+      this.isAddButtonEnabled = false;
+
+      this.quotationForm.get('skuCode')?.disable();
+      this.quotationForm.get('quantity')?.disable();
+
+       this.toastr.success('Cotação finalizada!');
+    }
+  }
+
   onSubmit() {
-      if (this.quotationForm.valid) {
-        const userId = localStorage.getItem('userId');
-        const sku = this.quotationForm.value.skuCode;
-        const quantidade = this.quotationForm.value.quantity;
+    if (this.quotationForm.valid) {
+      const userId = localStorage.getItem('userId');
+      const sku = this.quotationForm.value.skuCode;
+      const quantidade = this.quotationForm.value.quantity;
 
-        this.apiUserService.getUserById(userId).subscribe(
+      this.apiUserService.getUserById(userId).subscribe(
+        response => {
+          this.apiProductService.getProductBySKU(response.id_empresa, sku).subscribe(
             response => {
-                this.apiProductService.getProductBySKU(response.id_empresa, sku).subscribe(
-                    response => {
-                        const quotationProductData = {
-                            id_produto: response.id_produto,
-                            quantidade: quantidade
-                          }
+              const quotationProductData = {
+                id_produto: response.id_produto,
+                quantidade: quantidade
+              };
 
-                        this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
-                            response => {
-                                this.toastr.success('Produto adicionado à sua cotação!');
-                              },
-                            error => {
-                                this.toastr.error('Erro ao adicionar produto à cotação.');
-                                console.log(quotationProductData);
-                              }
-                          );
-                      },
-                    error => {
-                        this.toastr.error('SKU do produto não encontrado!');
-                      }
-                  );
-              }
+              this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
+                response => {
+                  this.toastr.success('Produto adicionado à sua cotação!');
+                },
+                error => {
+                  this.toastr.error('Erro ao adicionar produto à cotação.');
+                  console.log(quotationProductData);
+                }
+              );
+            },
+            error => {
+              this.toastr.error('SKU do produto não encontrado!');
+            }
           );
+        }
+      );
 
-        this.quotationForm.reset(); // Limpa o formulário após o envio
-      } else {
-        this.showFormErrors(); // Mostra os erros caso o formulário seja inválido
-      }
+      this.quotationForm.reset();
+    } else {
+      this.showFormErrors();
     }
-
+  }
 }
