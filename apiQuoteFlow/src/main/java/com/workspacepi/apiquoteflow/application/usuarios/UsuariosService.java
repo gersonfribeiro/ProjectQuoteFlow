@@ -27,19 +27,6 @@ public class UsuariosService {
     }
 
     public List<Usuarios> findAll() {
-
-//        Permissoes permissaoAtual = SecurityUtils.getPermissaoDoUsuarioAtual();
-//
-//        // Lança exceção se o usuário não estiver autenticado
-//        if (permissaoAtual == Permissoes.ANONYMOUS) {
-//            throw new UsuarioNaoAutenticadoException();
-//        }
-//
-//        // Lança exceção se o usuário autenticado não tiver a permissão de ADMIN
-//        if (permissaoAtual != Permissoes.ADMIN) {
-//            throw new UsuarioPermissaoNegadaException(permissaoAtual);
-//        }
-
         return usuariosRepository.findAll();
     }
 
