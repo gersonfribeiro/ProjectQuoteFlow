@@ -31,6 +31,11 @@ public class EnderecosController {
         return enderecosHandler.findById(id_endereco);
     }
 
+    @GetMapping("/{id_empresa}/enderecos")
+    public ResponseEntity<Enderecos> findByEmpresa(@PathVariable String id_empresa) throws Exception {
+        return enderecosHandler.findByEmpresa(id_empresa);
+    }
+
     //  Método post para solicitar uma nova cotação (necessita de modificações
     @PostMapping("/enderecos")
     public ResponseEntity<Enderecos> cadastrarEndereco(@RequestBody EnderecosCreateCommand enderecosCreateCommand) throws Exception {

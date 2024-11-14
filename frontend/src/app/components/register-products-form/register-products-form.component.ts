@@ -7,6 +7,7 @@ import { NgIf } from "@angular/common";
 import { NgxMaskDirective } from "ngx-mask";
 import { ApiProductService } from "../../services/api-product.service";
 import { ApiCompanyService } from "../../services/api-company.service";
+import { ApiUserService } from "../../services/api-user.service";
 
 @Component({
   selector: 'app-register-products-form',
@@ -18,7 +19,7 @@ import { ApiCompanyService } from "../../services/api-company.service";
     NgxMaskDirective
   ],
   templateUrl: './register-products-form.component.html',
-  styleUrl: './register-products-form.component.css'
+  styleUrls: ['./register-products-form.component.css']
 })
 export class RegisterProductsFormComponent {
   registerProductForm: FormGroup;
@@ -28,7 +29,8 @@ export class RegisterProductsFormComponent {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private apiProductService: ApiProductService,
-    private apiCompanyService: ApiCompanyService // Correção aqui
+    private apiCompanyService: ApiCompanyService,
+    private apiUserService: ApiUserService
   ) {
     this.registerProductForm = this.fb.group({
       sku: ['', [Validators.required, Validators.minLength(6)]],
@@ -53,26 +55,28 @@ export class RegisterProductsFormComponent {
 
       console.log("Dados do produto:", productData);
 
-      this.apiCompanyService.getCompany().subscribe({
-        next: (response: any) => {
-          const companyId = response.id_empresa;
+      const userId = localStorage.getItem('userId');
 
-          // Chama o serviço para salvar o produto no backend
-          this.apiProductService.registerProduct(companyId, productData).subscribe({
-            next: (response: any) => {
-              console.log(productData);
-              this.toastr.success('Produto cadastrado com sucesso!');
-              this.registerProductForm.reset();
-            },
-            error: (error: any) => {  // Correção de tipagem
-              this.toastr.error(error.message);
+      this.apiUserService.getUserById(userId).subscribe(
+        response => {
+            const companyId = response.id_empresa;
+
+            if (companyId) {
+              this.apiProductService.registerProduct(companyId, productData).subscribe({
+                next: (response: any) => {
+                  console.log(productData);
+                  this.toastr.success('Produto cadastrado com sucesso!');
+                  this.registerProductForm.reset();
+                },
+                error: (error: any) => {
+                  this.toastr.error(error.message);
+                }
+              });
+            } else {
+              this.toastr.error('Erro ao obter empresa: Empresa não encontrada.');
             }
-          });
-        },
-        error: (error: any) => { // Tratamento de erro para a requisição de empresa
-          this.toastr.error('Erro ao obter empresa: ' + error.message);
-        }
-      });
+          }
+        );
     } else {
       console.log('Formulário inválido');
       this.registerProductForm.markAllAsTouched();

@@ -2,6 +2,7 @@ package com.workspacepi.apiquoteflow.application.empresas;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
+import com.workspacepi.apiquoteflow.domain.enderecos.Enderecos;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +24,12 @@ public class EmpresasUpdateCommand {
     @JsonProperty("telefone")
     private String telefone_empresa;
 
+    @JsonProperty("endereco")
+    private Enderecos endereco;
+
     //  Conversão para usuario
     public Empresas toEmpresa(UUID id_empresa) {
-        return new Empresas(id_empresa, cnpj_empresa, email_empresa, nome_empresa, telefone_empresa);
+        return new Empresas(id_empresa, cnpj_empresa, email_empresa, nome_empresa, telefone_empresa, endereco);
     }
 
 }

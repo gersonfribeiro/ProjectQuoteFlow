@@ -51,7 +51,8 @@ export class RegisterFormComponent {
           this.passwordValidator,
         ],
       ],
-    });
+      confirmarSenha: ['', Validators.required],
+    }, {validators: this.passwordMatchValidator});
   }
 
   // Função de validação personalizada para e-mail
@@ -85,6 +86,13 @@ export class RegisterFormComponent {
     return null;
   }
 
+  // Validação para confirmar que as senhas são iguais
+  passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
+    const senha = form.get('senha')?.value;
+    const confirmarSenha = form.get('confirmarSenha')?.value;
+    return senha === confirmarSenha ? null : {passwordMismatch: true};
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
@@ -101,15 +109,37 @@ export class RegisterFormComponent {
             progressAnimation: 'increasing',
             timeOut: 2000,
           });
+          setTimeout(() => {
+            this.router.navigate(['/dashboard/notifications']);
+          }, 2500);
 
           const usuarioComId: Usuario = {
             ...usuarioData,
             id_usuario: response.id_usuario,
           };
 
-          setTimeout(() => {
-            this.router.navigate(['/dashboard/notifications']);
-          }, 2500);
+          const loginCredentials = {
+            email: usuarioData.email,
+            senha: usuarioData.senha
+          }
+
+          this.apiService.loginUser(loginCredentials).subscribe(
+            (response) => {
+              console.log('Login bem-sucedido.');
+              // Armazenando o id do usuário e o token no localStorage
+              if (response.id_usuario && response.token) {
+                localStorage.setItem('userId', response.id_usuario);
+                localStorage.setItem('authToken', response.token);
+              }
+              // Navega para o dashboard ou outra página após o login
+              setTimeout(() => {
+                this.router.navigate(['/dashboard/notifications']);
+              }, 2500);
+            },
+            (error) => {
+              console.error('Erro ao fazer login:', error);
+            }
+          );
         },
         error: (error) => {
           this.errorMessage = error.message;

@@ -3,6 +3,8 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.empresas;
 import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.domain.empresas.Empresas;
 import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
+import com.workspacepi.apiquoteflow.domain.enderecos.Enderecos;
+import com.workspacepi.apiquoteflow.domain.enderecos.EnderecosRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,8 +20,14 @@ import static com.workspacepi.apiquoteflow.adapters.jdbc.empresas.EmpresasSqlExp
 
 @Repository
 public class EmpresasJDBCRepository implements EmpresasRepository {
+
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    public EmpresasJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
+    private final EnderecosRepository enderecosRepository;
+
+    public EmpresasJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate, EnderecosRepository enderecosRepository) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.enderecosRepository = enderecosRepository;
+    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
@@ -30,7 +38,10 @@ public class EmpresasJDBCRepository implements EmpresasRepository {
             String email_empresa = rs.getString("email");
             String nome_empresa = rs.getString("nome");
             String telefone_empresa = rs.getString("telefone");
-            return new Empresas(id_empresa, cpnj_empresa, email_empresa, nome_empresa, telefone_empresa);
+
+            Enderecos endereco = enderecosRepository.findByEmpresa(id_empresa);
+
+            return new Empresas(id_empresa, cpnj_empresa, email_empresa, nome_empresa, telefone_empresa, endereco);
         };
     }
 

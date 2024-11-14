@@ -1,69 +1,87 @@
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\CotacaoController.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\CotacaoHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\error\CotacaoErrorHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\error\CotacaoErrorResponse.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\EmpresasController.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\EmpresasHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\error\EmpresasErrorHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\error\EmpresasErrorResponse.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\EnderecosController.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\EnderecosHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\error\EnderecosErrorHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\error\EnderecosErrorResponse.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\error\ProdutosErrorHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\error\ProdutosErrorResponse.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\ProdutosController.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\ProdutosHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\usuarios\error\UsuarioErrorHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\usuarios\error\UsuarioErrorResponse.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\usuarios\UsuariosController.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\usuarios\UsuariosHandler.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\cotacoes\CotacoesJDBCRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\cotacoes\CotacoesSqlExpressions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\empresas\EmpresasJDBCRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\empresas\EmpresasSqlExpressions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\enderecos\EnderecosJDBCRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\enderecos\EnderecosSqlExpressions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\produtos\ProdutosJDBCRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\produtos\ProdutoSQLRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\usuarios\UsuariosJDBCRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\usuarios\UsuariosSqlExpressions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\ApiQuoteFlowApplication.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacao\CotacaoCreateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacao\CotacaoService.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacao\CotacaoUpdateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacao\exceptions\CotacaoExceptions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacao\exceptions\CotacaoNaoEncontradaException.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\EmpresasCreateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\EmpresasService.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\EmpresasUpdateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresaNaoEncontradaException.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresasExceptions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\EnderecosCreateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\EnderecosService.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\EnderecosUpdateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\exceptions\EnderecoNaoEncontradoException.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\exceptions\EnderecosExceptions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\exceptions\ProdutoNaoEncontradoException.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\exceptions\ProdutosExceptions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\ProdutosCreateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\ProdutosService.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\ProdutosUpdateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\exceptions\UsuarioNaoEncontradoException.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\exceptions\UsuariosExceptions.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuariosCreateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuariosService.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuariosUpdateCommand.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacao\Categoria.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacao\Cotacao.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacao\CotacaoRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacao\CotacaoStatus.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacao\ItensCotacao.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\empresas\Empresa.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\empresas\EmpresaRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\enderecos\Endereco.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\enderecos\EnderecoRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\produtos\Produtos.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\produtos\ProdutosRepository.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\usuarios\Usuarios.java
-C:\Users\gerso\IdeaProjects\QuoteFlow\backend\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\usuarios\UsuariosRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\allErrors\ErrorHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\allErrors\ErrorResponse.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\CotacoesController.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\CotacoesHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\error\CotacoesErrorHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\cotacoes\error\CotacoesErrorResponse.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\EmpresasController.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\EmpresasHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\error\EmpresasErrorHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\empresas\error\EmpresasErrorResponse.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\EnderecosController.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\EnderecosHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\error\EnderecosErrorHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\enderecos\error\EnderecosErrorResponse.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\error\ProdutosErrorHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\error\ProdutosErrorResponse.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\ProdutosController.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\produtos\ProdutosHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\usuarios\UsuariosController.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\http\usuarios\UsuariosHandler.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\cotacoes\CotacoesJDBCRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\cotacoes\CotacoesSqlExpressions.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\empresas\EmpresasJDBCRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\empresas\EmpresasSqlExpressions.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\enderecos\EnderecosJDBCRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\enderecos\EnderecosSqlExpressions.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\produtos\ProdutosJDBCRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\produtos\ProdutosSqlRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\usuarios\UsuariosJDBCRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\adapters\jdbc\usuarios\UsuariosSqlExpressions.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\ApiQuoteFlowApplication.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacoes\CotacoesCreateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacoes\CotacoesService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacoes\CotacoesUpdateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacoes\exceptions\CotacaoNaoEncontradaException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\cotacoes\exceptions\CotacoesExceptions.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\EmpresasCreateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\EmpresasService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\EmpresasUpdateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresaCNPJCadastradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresaCNPJNaoEncontradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresaEmailCadastradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresaEmailNaoEncontradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\empresas\exceptions\EmpresaIdNaoEncontradaException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\EnderecosCreateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\EnderecosService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\EnderecosUpdateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\exceptions\EnderecoNaoEncontradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\enderecos\exceptions\EnderecosExceptions.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\exceptions\ProdutoNaoEncontradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\exceptions\ProdutoSkuCadastradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\exceptions\ProdutoSkuNaoEncontradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\ProdutosCreateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\ProdutosService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\produtos\ProdutosUpdateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\security\AuthorizationService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\exceptions\UsuarioEmailCadastradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\exceptions\UsuarioNaoAutenticadoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\exceptions\UsuarioNaoEncontradoException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\exceptions\UsuarioPermissaoNegadaException.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\SecurityUtils.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuarioAuthenticationDTO.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuarioResponseDTO.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuarioResponseLoginDTO.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuariosCreateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuariosService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\application\usuarios\UsuariosUpdateCommand.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\config\Cors\WebConfig.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\config\documentation\SwaggerConfig.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\config\environments\EnvConfig.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\config\security\SecurityConfiguration.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\config\security\SecurityFilter.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\config\security\TokenService.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacoes\CotacaoStatus.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacoes\Cotacoes.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacoes\CotacoesRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\cotacoes\ProdutosCotacao.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\empresas\Empresas.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\empresas\EmpresasRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\enderecos\Enderecos.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\enderecos\EnderecosRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\produtos\CategoriaProduto.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\produtos\Produtos.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\produtos\ProdutosRepository.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\usuarios\Permissoes.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\usuarios\Usuarios.java
+C:\Users\gerso\OneDrive\Área de Trabalho\ProjectQuoteFlow\apiQuoteFlow\src\main\java\com\workspacepi\apiquoteflow\domain\usuarios\UsuariosRepository.java

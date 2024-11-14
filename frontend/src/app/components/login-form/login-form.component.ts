@@ -10,6 +10,7 @@ import {
 import {Router, RouterModule} from '@angular/router';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ApiUserService} from "../../services/api-user.service";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-form',
@@ -29,7 +30,7 @@ export class LoginFormComponent {
   errorMessage: string | null = null;
   showPassword = false; // Controle de visibilidade da senha
 
-  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiUserService, private toastr: ToastrService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, this.validateEmail]],
       senha: [
@@ -83,13 +84,21 @@ export class LoginFormComponent {
       const credentials = this.loginForm.value;
       this.apiService.loginUser(credentials).subscribe(
         (response) => {
-          console.log('Login bem-sucedido:', response);
+          console.log('Login bem-sucedido.');
+          this.toastr.success('Login realizado com sucesso!', '', {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            progressAnimation: 'increasing',
+            timeOut: 2000,
+          });
+          setTimeout(() => {
+            this.router.navigate(['/dashboard/notifications']);
+          }, 2500);
           // Armazenando o token no localStorage
-            if (response.token) {
-              localStorage.setItem('authToken', response.token);
-            }
-          // Navega para o dashboard ou outra página após o login
-          this.router.navigate(['/dashboard/notifications']);
+          if (response.id_usuario && response.token) {
+            localStorage.setItem('userId', response.id_usuario);
+            localStorage.setItem('authToken', response.token);
+          }
         },
         (error) => {
           console.error('Erro ao fazer login:', error);
@@ -99,6 +108,7 @@ export class LoginFormComponent {
       );
     } else {
       this.loginForm.markAllAsTouched();
+      this.toastr.warning("Email ou senha incorretos. Tente novamente!")
       console.log('Formulário inválido:', this.loginForm.errors);
     }
   }

@@ -38,31 +38,39 @@ export class ProfileFormComponent {
     this.profileForm = this.fb.group({
       name: [{value: '', disabled: false}, Validators.required],
       email: [{value: '', disabled: false}, [Validators.required, this.validateEmail]],
-      phone: [{value: '', disabled: false}, [Validators.required, this.validatePhone]],
+      phone: [{value: '', disabled: false}, [this.validatePhone]],
       company: [{value: '', disabled: true}],
       cnpj: [{value: '', disabled: true}],
     });
   }
 
   ngOnInit(): void {
-    this.apiUserService.getUser().subscribe(
+    const userId = localStorage.getItem('userId');
+
+    this.apiUserService.getUserById(userId).subscribe(
       (response: Usuario) => {
         this.profileForm.patchValue({
           name: response.nome,
           email: response.email,
-          phone: response.telefone
+          phone: response.telefone,
         });
-        this.apiCompanyService.getCompany().subscribe(
-            (response: any) => {
-                this.profileForm.patchValue({
-                    company: response.nome,
-                    cnpj: response.cnpj
-                  })
-              }
-          );
+
+        const companyId = response.id_empresa;
+
+        this.apiCompanyService.getCompanyById(companyId).subscribe(
+          (companyResponse: any) => {
+            this.profileForm.patchValue({
+              company: companyResponse.nome,
+              cnpj: companyResponse.cnpj,
+            });
+          },
+          (error) => {
+            console.error('Erro ao buscar dados da empresa', error);
+          }
+        );
       },
-      error => {
-        console.error("Erro");
+      (error) => {
+        console.error('Erro ao buscar dados do usuário', error);
       }
     );
   }
@@ -88,6 +96,8 @@ export class ProfileFormComponent {
   // Função de validação customizada para o telefone
   validatePhone(control: AbstractControl): ValidationErrors | null {
     const phone = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
+    if(!phone)
+      return null;
     if (phone?.length !== 10 && phone?.length !== 11) {
       return {invalidPhone: true};
     }
@@ -96,30 +106,40 @@ export class ProfileFormComponent {
 
   // Submissão do formulário
   onSubmit() {
-    if (this.profileForm.valid) {
-    this.apiUserService.getUser().subscribe(
-          (response: Usuario) => {
-            const updatedData = {
-                    nome: this.profileForm.value.name,
-                    email: this.profileForm.value.email,
-                    senha: response.senha,
-                    telefone: this.profileForm.value.phone,
-                    id_empresa: response.id_empresa,
-                    permissao: response.permissao,
-                    id_usuario: response.id_usuario
-                  };
+    const userId = localStorage.getItem('userId');
 
-                this.apiUserService.updateUser(response.id_usuario, updatedData).subscribe(
-                        response => {
-                          this.toastr.success('Dados atualizados com sucesso!');
-                        }
-                      );
-                }
-            );
+    if (this.profileForm.valid && userId) {
+      this.apiUserService.getUserById(userId).subscribe(
+        (response: Usuario) => {
+          const updatedData = {
+            nome: this.profileForm.value.name,
+            email: this.profileForm.value.email,
+            senha: response.senha,
+            telefone: this.profileForm.value.phone,
+            id_empresa: response.id_empresa,
+            permissao: response.permissao,
+            id_usuario: userId
+          };
+
+          this.apiUserService.updateUser(userId, updatedData).subscribe(
+            (response) => {
+              this.toastr.success('Dados atualizados com sucesso!');
+            },
+            (error) => {
+              console.error('Erro ao atualizar os dados:', error);
+              this.toastr.error('Erro ao atualizar os dados.');
+            }
+          );
+        },
+        (error) => {
+          console.error('Erro ao buscar os dados do usuário:', error);
+          this.toastr.error('Erro ao buscar os dados do usuário.');
+        }
+      );
       console.log('Formulário enviado:', this.profileForm.value);
     } else {
       console.log('Formulário inválido');
-      this.toastr.warning("Para salvar a informação, clique em salvar apenas uma vez.")
+      this.toastr.warning("Para salvar a informação, clique em salvar apenas uma vez.");
       this.profileForm.markAllAsTouched();
     }
   }

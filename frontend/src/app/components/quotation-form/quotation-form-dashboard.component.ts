@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {ToastrService} from 'ngx-toastr';
+import {ApiQuotationService} from "../../services/api-quotation.service";
+import {ApiUserService} from "../../services/api-user.service";
+import {ApiProductService} from "../../services/api-product.service";
 
 @Component({
   selector: 'app-quotation-form-dashboard',
@@ -19,87 +22,27 @@ import {ToastrService} from 'ngx-toastr';
 export class FormDashboardComponent implements OnInit {
   quotationForm: FormGroup;
   showNotificationAlert: boolean = false;
-  suppliers: any;
+  isQuotationStarted: boolean = false;
+  isAddButtonEnabled: boolean = false;
+  quotationId: string = '';
 
   @ViewChild('notificationAlert') notificationAlert!: ElementRef;
   productForm: any;
-  products: { skuCode: string, quantity: number }[] = [];
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {
     this.quotationForm = this.fb.group({
-      skuCode: ['', [Validators.required]], // Corrigido para chamar o método corretamente
-      quantity: [null, [Validators.required, Validators.min(1)]],
-      observation: [''],
+      skuCode: [{ value: '', disabled: true}, [Validators.required]], // Corrigido para chamar o método corretamente
+      quantity: [{ value: null, disabled: true}, [Validators.required, Validators.min(1)]],
     });
   }
 
   ngOnInit(): void {
-    const quotationNotificationsPage = localStorage.getItem(
-      'quotationNotificationsPage'
-    );
-    this.showNotificationAlert = !quotationNotificationsPage;
-  }
 
-  onSubmit() {
-    if (this.quotationForm.valid) {
-      this.toastr.success('Solicitação enviada com sucesso!', '', {
-        positionClass: 'toast-top-right',
-        progressBar: true,
-        progressAnimation: 'increasing',
-        timeOut: 2000,
-      });
-
-      console.log(this.quotationForm.value);
-      this.quotationForm.reset(); // Limpa o formulário após o envio
-    } else {
-      this.showFormErrors(); // Mostra os erros caso o formulário seja inválido
-    }
-  }
-
-  closeButton() {
-    if (this.notificationAlert) {
-      this.notificationAlert.nativeElement.classList.add('alert-closing');
-      setTimeout(() => {
-        this.showNotificationAlert = false;
-        localStorage.setItem('quotationNotificationsPage', 'true');
-      }, 250);
-    }
   }
 
   // Método para mostrar erros nos campos do formulário
   showFormErrors() {
     this.quotationForm.markAllAsTouched(); // Marca todos os campos como tocados
-  }
-
-  onSupplierTabClick() {
-    // A lógica pode ser expandida conforme necessário
-    // Por enquanto, apenas loga no console
-    console.log('Aba de Fornecedores clicada');
-  }
-
-  // Método para mudar a aba
-  showSuppliersTab() {
-    if (this.products.length > 0) {
-      const supplierTabButton = document.getElementById('supplier-tab');
-      if (supplierTabButton) {
-        supplierTabButton.click(); // Simula um clique na aba "Fornecedores"
-      }
-    } else {
-      this.toastr.warning('Adicione pelo menos um produto antes de acessar a aba de fornecedores.', '', {
-        positionClass: 'toast-top-right',
-      });
-    }
-  }
-
-  onProductSubmit() {
-    if (this.productForm.valid) {
-      const newProduct = {
-        skuCode: this.productForm.value.productSku,
-        quantity: this.productForm.value.productQuantity,
-      };
-      this.products.push(newProduct);
-      this.productForm.reset();
-    }
   }
 
   onInputChange() {
@@ -110,16 +53,74 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
-  addProduct() {
-    const skuCode = this.quotationForm.get('skuCode')?.value;
-    const quantity = this.quotationForm.get('quantity')?.value;
+// Responsável por iniciar a cotação
+  createQuotation() {
+      const confirmation = window.confirm('Cadastre todos os produtos antes de iniciar a cotação.');
 
-    if (skuCode && quantity > 0) {
-      this.products.push({skuCode, quantity});
-      this.quotationForm.reset();  // Reseta o formulário após adicionar
-    } else {
-      this.showFormErrors();
+      if (confirmation) {
+        this.isQuotationStarted = true;
+        this.isAddButtonEnabled = true;
+
+        this.quotationForm.get('skuCode')?.enable();
+        this.quotationForm.get('quantity')?.enable();
+
+        const userId = localStorage.getItem('userId');
+
+        this.apiUserService.getUserById(userId).subscribe(
+            response => {
+                const quotationData = {id_empresa: response.id_empresa};
+
+                this.apiQuotationService.requestQuotation(quotationData).subscribe(
+                    response => {
+                        console.log('Cotação iniciada!');
+                        this.quotationId = response.id_cotacao;
+                      },
+                    error => {
+                        console.log('Erro ao iniciar cotação.');
+                      }
+                  );
+              }
+          );
+      }
     }
-  }
+
+// Responsável por adicionar os produtos na cotação
+  onSubmit() {
+      if (this.quotationForm.valid) {
+        const userId = localStorage.getItem('userId');
+        const sku = this.quotationForm.value.skuCode;
+        const quantidade = this.quotationForm.value.quantity;
+
+        this.apiUserService.getUserById(userId).subscribe(
+            response => {
+                this.apiProductService.getProductBySKU(response.id_empresa, sku).subscribe(
+                    response => {
+                        const quotationProductData = {
+                            id_produto: response.id_produto,
+                            quantidade: quantidade
+                          }
+
+                        this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
+                            response => {
+                                this.toastr.success('Produto adicionado à sua cotação!');
+                              },
+                            error => {
+                                this.toastr.error('Erro ao adicionar produto à cotação.');
+                                console.log(quotationProductData);
+                              }
+                          );
+                      },
+                    error => {
+                        this.toastr.error('SKU do produto não encontrado!');
+                      }
+                  );
+              }
+          );
+
+        this.quotationForm.reset(); // Limpa o formulário após o envio
+      } else {
+        this.showFormErrors(); // Mostra os erros caso o formulário seja inválido
+      }
+    }
 
 }

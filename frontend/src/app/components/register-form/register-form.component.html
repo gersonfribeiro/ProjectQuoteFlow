@@ -5,7 +5,7 @@
   <img
     src="images/undraw_create.svg"
     class="img-thumbnail d-none d-md-block"
-    style="height: 386px; max-width: 100%"
+    style="height: 460px; max-width: 100%"
     width="450px"
   />
 
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <div class="mb-5 position-relative">
+    <div class="mb-3">
       <label class="form-label text-dark">Senha:</label>
       <div class="input-group">
         <input
@@ -78,13 +78,6 @@
           formControlName="senha"
           [maxlength]="30"
         />
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          (click)="togglePasswordVisibility()"
-        >
-          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
-        </button>
       </div>
       <div
         *ngIf="
@@ -114,6 +107,30 @@
         >
           A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.
         </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <label class="form-label text-dark">Confirmar senha:</label>
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Confirme sua senha"
+          formControlName="confirmarSenha"
+          [maxlength]="30"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
+      </div>
+      <div *ngIf="registerForm.get('confirmarSenha')?.touched && registerForm.hasError('passwordMismatch')"
+           class="alert alert-danger alert-small mb-2 mt-2">
+        As senhas não coincidem.
       </div>
     </div>
 

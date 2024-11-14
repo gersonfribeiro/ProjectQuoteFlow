@@ -1,24 +1,23 @@
 // Nosso repositório de acesso a dados
-
-
 package com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes;
-
 
 import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.domain.cotacoes.*;
+import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.Destinatarios;
+import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.DestinatariosRepository;
+import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacao;
+import com.workspacepi.apiquoteflow.domain.cotacoes.produtos.ProdutosCotacaoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
 import static com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes.CotacoesSqlExpressions.*;
-
 
 // Nosso repositório que define os nossos métodos de query e de crud usando o JDBC
 
@@ -28,16 +27,20 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
 //  Um atributo para criar o nosso template do JDBC assim como o seu construtor
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final ProdutosCotacaoRepository produtosCotacaoRepository;
+    private final DestinatariosRepository destinatariosRepository;
 
-    public CotacoesJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+    public CotacoesJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate,
+                                  ProdutosCotacaoRepository produtosCotacaoRepository,
+                                  DestinatariosRepository destinatariosRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.produtosCotacaoRepository = produtosCotacaoRepository;
+        this.destinatariosRepository = destinatariosRepository;
     }
-
 
 //  Logger cuida do envio das nossas exceptions específicas ao invés das exceptions padrões
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
-
 
 //  Função da RowMapper para aproveitamento de código
 //  Essa função é usada para mapear o resultado de uma consulta SQL
@@ -45,12 +48,16 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
     private RowMapper<Cotacoes> createCotacaoRowMapper() {
         return (rs, rowNum) -> {
             UUID id_cotacao = UUID.fromString(rs.getString("id_cotacao"));
+
             Timestamp data_cotacao = rs.getTimestamp("data");
             int numero_cotacao = rs.getInt("numero");
             CotacaoStatus status_cotacao = CotacaoStatus.valueOf(rs.getString("status"));
             UUID id_empresa_cotacao = UUID.fromString(rs.getString("id_empresa"));
 
-            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao,null);
+            List<ProdutosCotacao> produtos = produtosCotacaoRepository.findAllProdutosByCotacao(id_cotacao);
+            List<Destinatarios> destinatarios = destinatariosRepository.findAllDestinatariosByCotacao(id_cotacao);
+
+            return new Cotacoes(id_cotacao, data_cotacao, numero_cotacao, status_cotacao, id_empresa_cotacao, produtos, destinatarios);
         };
     }
 
@@ -63,7 +70,6 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
         params.addValue("numero", cotacoes.getNumero());
         params.addValue("status", cotacoes.getStatus().name());
         params.addValue("id_empresa", cotacoes.getId_empresa());
-        params.addValue("itens", cotacoes.getProdutos());
         return params;
     }
 
@@ -71,10 +77,20 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
 
     @Override
     public List<Cotacoes> findAll() {
-        List<Cotacoes> cotacoes = List.of();
         try {
-            cotacoes = jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
-            return cotacoes;
+            return jdbcTemplate.query(sqlSelectAllQuotations(), createCotacaoRowMapper());
+
+        } catch (Exception e) {
+            LOGGER.error("Houve um erro ao consultar as cotações: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Cotacoes> findAllByEmpresa(UUID id_empresa) {
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource("id_empresa", id_empresa);
+            return jdbcTemplate.query(sqlFindAllByEmpresa(), params, createCotacaoRowMapper());
 
         } catch (Exception e) {
             LOGGER.error("Houve um erro ao consultar as cotações: " + e.getMessage());
@@ -124,7 +140,6 @@ public class CotacoesJDBCRepository implements CotacoesRepository {
             throw e;
         }
     }
-
 
     @Override
     public Boolean deleteCotacaoById(UUID id_cotacao) {

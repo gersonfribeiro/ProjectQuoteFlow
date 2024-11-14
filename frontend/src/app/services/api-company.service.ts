@@ -16,12 +16,11 @@ export class ApiCompanyService {
     return this.http.post<{ id_empresa: string }>(this.apiUrlCompany, companyData)
   }
 
-  getCompany(): Observable<any> {
-    return this.http.get<any[]>(`${this.apiUrlCompany}`).pipe(
-      map(companies => companies.length ? companies[0] : null), // Retorna o primeiro item ou null se o array estiver vazio
-      catchError(this.handleError)
-    );
-  }
+  getCompanyById(companyId: string | null): Observable<any> {
+      return this.http.get<any>(`${this.apiUrlCompany}/id/${companyId}`).pipe(
+        catchError(this.handleError)
+      );
+    }
 
   // Função de tratamento de erro
     private handleError(error: HttpErrorResponse) {
