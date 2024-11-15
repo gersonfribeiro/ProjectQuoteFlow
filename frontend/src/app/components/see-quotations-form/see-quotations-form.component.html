@@ -10,19 +10,19 @@
         <!-- Aplica *ngIf à tabela -->
         <table *ngIf="quotations.length > 0" class="table table-striped table-bordered">
           <thead>
-          <tr>
-            <th scope="col">Número</th>
-            <th scope="col">Data</th>
+          <tr class="text-center align-middle">
+            <th scope="col">Número da cotação</th>
+            <th scope="col">Data da cotação</th>
             <th scope="col">Produtos</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let quotation of quotations">
-            <td>{{ quotation.numero }}</td>
-            <td>{{ quotation.data }}</td>
+            <td class="text-center align-middle">{{ quotation.numero }}</td>
+            <td class="text-center align-middle">{{ quotation.data }}</td>
             <td>
               <div *ngFor="let produto of quotation.produtos">
-                <p>ID Produto: {{ produto.id_produto }} - Quantidade: {{ produto.quantidade }}</p>
+                <p><strong>SKU:</strong> {{ produto.sku }} &nbsp;&nbsp; <strong>Descrição:</strong> {{ produto.descricao }} &nbsp;&nbsp; <strong>Variação:</strong> {{ produto.variacao }} &nbsp;&nbsp; <strong>Quantidade:</strong> {{ produto.quantidade }}</p>
               </div>
             </td>
           </tr>

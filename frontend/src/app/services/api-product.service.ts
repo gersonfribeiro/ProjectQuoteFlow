@@ -35,6 +35,14 @@ export class ApiProductService {
         );
     }
 
+  // Função para obter um produto pelo id dele
+    getProductById(companyId: string, productId: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrlProduct}/${companyId}/produtos/id/${productId}`)
+        .pipe(
+            catchError(this.handleError)
+          );
+      }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Erro desconhecido';
     if (error.error instanceof ErrorEvent) {
