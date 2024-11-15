@@ -11,11 +11,12 @@ import {ToastrService} from 'ngx-toastr';
 import {ApiQuotationService} from "../../services/api-quotation.service";
 import {ApiUserService} from "../../services/api-user.service";
 import {ApiProductService} from "../../services/api-product.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-quotation-form-dashboard',
   standalone: true,
-  imports: [NgxMaskDirective, NgxMaskPipe, ReactiveFormsModule, CommonModule],
+  imports: [NgxMaskDirective, NgxMaskPipe, ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './quotation-form-dashboard.component.html',
   styleUrls: ['./quotation-form-dashboard.component.css'],
 })

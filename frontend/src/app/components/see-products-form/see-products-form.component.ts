@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {NgForOf} from "@angular/common";
+import {CommonModule, NgForOf} from "@angular/common";
 import {ApiProductService} from "../../services/api-product.service";
 import { ApiUserService } from "../../services/api-user.service";
 
@@ -9,6 +9,7 @@ import { ApiUserService } from "../../services/api-user.service";
   standalone: true,
   imports: [
     RouterLink,
+    CommonModule,
     NgForOf
   ],
   templateUrl: './see-products-form.component.html',
