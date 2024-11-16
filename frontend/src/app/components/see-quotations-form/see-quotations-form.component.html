@@ -32,15 +32,11 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let produto of quotation.produtos">
-                  <td class="text-center align-middle w-auto">{{ produto.sku }}</td>
-                  <td class="text-center align-middle w-auto">{{ produto.quantidade }}</td>
-                  <td class="text-center align-middle w-auto">{{ produto.descricao }}</td>
-                  <td class="text-center align-middle w-auto">{{ produto.variacao }}</td>
-                  <td class="text-center align-middle">{{ produto.sku }}</td>
-                  <td class="text-center align-middle">{{ produto.quantidade }}</td>
-                  <td class="text-center align-middle">{{ produto.descricao }}</td>
-                  <td class="text-center align-middle">{{ produto.variacao }}</td>
-                  <td class="text-center align-middle">{{ produto.observacao }}</td>
+                  <td class="align-middle w-auto">{{ produto.sku }}</td>
+                  <td class="align-middle w-auto">{{ produto.quantidade }}</td>
+                  <td class="align-middle w-auto">{{ produto.descricao }}</td>
+                  <td class="align-middle w-auto">{{ produto.variacao }}</td>
+                  <td class="align-middle w-auto">{{ produto.observacao }}</td>
                 </tr>
                 </tbody>
               </table>
