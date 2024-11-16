@@ -32,7 +32,7 @@ public class ProdutosCotacaoSqlExpressions {
     public static String sqlModificarProdutosCotacao() {
         return """
             UPDATE cotacao_produtos
-            SET id = :id,
+            SET
                 id_cotacao = :id_cotacao,
                 id_produto = :id_produto,
                 quantidade = :quantidade

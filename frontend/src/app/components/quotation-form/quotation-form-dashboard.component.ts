@@ -13,6 +13,8 @@ import {ApiUserService} from "../../services/api-user.service";
 import {ApiProductService} from "../../services/api-product.service";
 import {RouterLink} from "@angular/router";
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-quotation-form-dashboard',
   standalone: true,
@@ -48,10 +50,7 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
-  createQuotation() {
-    const confirmation = window.confirm('Certifique-se de que todos os produtos foram cadastrados antes de iniciar a cotação.');
-
-    if (confirmation) {
+  openQuotation() {
       this.isQuotationStarted = true;
       this.isAddButtonEnabled = true;
 
@@ -68,6 +67,10 @@ export class FormDashboardComponent implements OnInit {
             response => {
               console.log('Cotação iniciada!');
               this.quotationId = response.id_cotacao;
+
+              const modal = document.getElementById('openQuotationModal') as any;
+              const modalInstance = bootstrap.Modal.getInstance(modal);
+              modalInstance.hide();
             },
             error => {
               console.log('Erro ao iniciar cotação.');
@@ -76,13 +79,10 @@ export class FormDashboardComponent implements OnInit {
         }
       );
     }
-  }
 
   // Método para parar a cotação
-  stopQuotation() {
-    const confirmation = window.confirm('Tem certeza que deseja parar a cotação?');
+  closeQuotation() {
 
-    if (confirmation) {
       this.isQuotationStarted = false;
       this.isAddButtonEnabled = false;
 
@@ -90,8 +90,11 @@ export class FormDashboardComponent implements OnInit {
       this.quotationForm.get('quantity')?.disable();
 
        this.toastr.success('Cotação finalizada!');
+
+       const modal = document.getElementById('closeQuotationModal') as any;
+       const modalInstance = bootstrap.Modal.getInstance(modal);
+       modalInstance.hide();
     }
-  }
 
   onSubmit() {
     if (this.quotationForm.valid) {

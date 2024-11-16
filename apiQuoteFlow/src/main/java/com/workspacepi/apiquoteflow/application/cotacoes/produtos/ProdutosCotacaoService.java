@@ -53,13 +53,17 @@ public class ProdutosCotacaoService {
         return findProdutosByCotacaoAndId(id_cotacao, produtosCotacaoDomain.getId_produto());
     }
 
-    public ProdutosCotacao modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, UUID id_produto, UUID id_cotacao) {
+    public ProdutosCotacao modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, UUID id_cotacao, UUID id_produto) {
         if(cotacaoRepository.findById(id_cotacao) == null)
             throw new RuntimeException("Cotacão não encontrada");
 
-        ProdutosCotacao produtosCotacaoDomain = produtos.toProdutoCotacao(id_produto);
-        produtosCotacaoRepository.modificarProdutosCotacao(produtosCotacaoDomain, id_produto, id_cotacao);
-        return findProdutosByCotacaoAndId(id_cotacao, produtosCotacaoDomain.getId());
+        ProdutosCotacao registro = produtosCotacaoRepository.findProdutoByCotacaoAndId(id_cotacao, id_produto);
+        if (registro == null)
+            throw new RuntimeException("Produto não enocntrado!");
+
+        ProdutosCotacao produtosCotacaoDomain = produtos.toProdutoCotacao(registro.getId());
+        produtosCotacaoRepository.modificarProdutosCotacao(produtosCotacaoDomain, id_cotacao, id_produto);
+        return findProdutosByCotacaoAndId(id_cotacao, id_produto);
     }
 
     public void deleteProdutosCotacaoById(UUID id_cotacao, UUID id_produto) {

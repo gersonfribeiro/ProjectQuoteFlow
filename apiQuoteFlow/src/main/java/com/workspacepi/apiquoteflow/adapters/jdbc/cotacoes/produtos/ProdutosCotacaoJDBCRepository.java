@@ -88,12 +88,11 @@ public class ProdutosCotacaoJDBCRepository implements ProdutosCotacaoRepository 
     }
 
     @Override
-    public Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id, UUID id_cotacao) {
+    public Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id_cotacao, UUID id_produto) {
         try {
             MapSqlParameterSource params = parameterSource(produtos);
-            params.addValue("id", id);
             params.addValue("id_cotacao", id_cotacao);
-            params.addValue("id_produto", produtos.getId_produto());
+            params.addValue("id_produto", id_produto);
             int numLinhasAfetadas = jdbcTemplate.update(sqlModificarProdutosCotacao(), params);
             return numLinhasAfetadas > 0;
         } catch (Exception e) {

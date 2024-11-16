@@ -74,22 +74,22 @@
 
               <!-- Botões com Flexbox para ajustar -->
               <div class="d-flex gap-3">
-                <button type="button" class="btn btn-success d-flex align-items-center justify-content-center gap-2" (click)="createQuotation()" [disabled]="isQuotationStarted">
+                <button type="button" class="btn btn-success d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#openQuotationModal" [disabled]="isQuotationStarted">
                   <i class="bi bi-arrow-right-circle-fill"></i>
                   Começar
                 </button>
 
-                <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center gap-2" (click)="stopQuotation()" [disabled]="!isQuotationStarted">
+                <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#closeQuotationModal" [disabled]="!isQuotationStarted">
                   <i class="bi bi-x-circle-fill"></i>
                   Finalizar
                 </button>
 
                 <button type="submit" class="btn btn-success d-flex align-items-center justify-content-center gap-2" [disabled]="!isAddButtonEnabled">
                   <i class="bi bi-bag-plus-fill"></i>
-                  Adicionar
+                  Adicionar produto
                 </button>
 
-                <button type="button" class="btn btn-success d-flex align-items-center justify-content-center gap-2" [routerLink]="'/dashboard/quotations'" [disabled]="isQuotationStarted">
+                <button type="button" class="btn btn-secondary d-flex align-items-center justify-content-center gap-2" [routerLink]="'/dashboard/quotations'" [disabled]="isQuotationStarted">
                   <i class="bi bi-arrow-left"></i>
                   Voltar
                 </button>
@@ -97,6 +97,44 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação para abrir a cotação -->
+  <div class="modal fade" id="openQuotationModal" tabindex="-1" aria-labelledby="openQuotationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="openQuotationModalLabel">Confirmar Ação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Certifique-se de que todos os produtos foram cadastrados antes de iniciar a cotação.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" (click)="openQuotation()">Abrir Cotação</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação para fechar a cotação -->
+  <div class="modal fade" id="closeQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="closeQuotationModalLabel">Confirmar Ação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja parar a cotação?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="closeQuotation()">Fechar Cotação</button>
+        </div>
       </div>
     </div>
   </div>

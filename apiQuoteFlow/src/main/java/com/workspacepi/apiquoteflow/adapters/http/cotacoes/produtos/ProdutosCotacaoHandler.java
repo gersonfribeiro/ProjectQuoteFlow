@@ -34,8 +34,8 @@ public class ProdutosCotacaoHandler {
         return ResponseEntity.ok(produtosDomain);
     }
 
-    public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, String id, String id_cotacao) {
-        ProdutosCotacao produtosDomain = produtosCotacaoService.modificarProdutosCotacao(produtos, UUID.fromString(id), UUID.fromString(id_cotacao));
+    public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(ProdutosCotacaoUpdateCommand produtos, String id_cotacao, String id_produto) {
+        ProdutosCotacao produtosDomain = produtosCotacaoService.modificarProdutosCotacao(produtos, UUID.fromString(id_cotacao), UUID.fromString(id_produto));
         return ResponseEntity.ok(produtosDomain);
     }
 
