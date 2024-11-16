@@ -68,6 +68,7 @@ export class SeeQuotationsFormComponent {
                   product.sku = produto.sku;
                   product.descricao = produto.descricao;
                   product.variacao = produto.variacao;
+                  product.observacao = produto.observacao;
                 },
                 error => {
                   console.error('Erro ao carregar produto:', error);
