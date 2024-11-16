@@ -29,7 +29,7 @@ replay_pid*
 .idea/
 
 # Angular cache files
-.angular/cache
+frontend/.angular/cache
 
 # Compiled output
 /dist

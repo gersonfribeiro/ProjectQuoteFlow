@@ -2,8 +2,11 @@ package com.workspacepi.apiquoteflow.config.documentation;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 
 /**
  * Classe de configuração para a documentação da API utilizando Swagger.
@@ -23,7 +26,12 @@ public class SwaggerConfig {
                 .info(new Info()  // Cria uma nova instância de Info para definir os metadados da API
                         .title("Spring Boot REST API")  // Define o título da API
                         .description("Projeto QuoteFlow")  // Descrição da API
-                        .version("1.0.0")  // Define a versão da API
-                );
+                        .version("1.0.0"))  // Define a versão da API
+                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
+                .components(new io.swagger.v3.oas.models.Components()
+                    .addSecuritySchemes("BearerAuth", new SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")));
     }
 }
