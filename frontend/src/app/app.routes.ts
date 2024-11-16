@@ -21,7 +21,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginPageComponent }, // Página de login
   { path: 'register', component: RegisterPageComponent }, // Página de registro
   { path: 'forgot_password', component: ForgotPasswordPageComponent }, // Página de recuperar senha
-  { path: 'dashboard/quotation', component: DashboardQuotationsComponent, canActivate: [authGuard, companyGuard, quotationGuard] }, // Página de cotação
+  { path: 'dashboard/quotation', component: DashboardQuotationsComponent, canActivate: [authGuard, companyGuard], canDeactivate: [quotationGuard] }, // Página de cotação
   { path: 'dashboard/notifications', component: DashboardNotificationsComponent, canActivate: [authGuard] }, // Página de notificações
   { path: 'dashboard/notifications_historic', component: NotificationsHistoricComponent, canActivate: [authGuard] }, // Página de histórico de notificações
   { path: 'dashboard/profile', component: DashboardProfileComponent, canActivate: [authGuard] }, // Página de perfil
