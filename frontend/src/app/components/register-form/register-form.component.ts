@@ -109,7 +109,7 @@ export class RegisterFormComponent {
     // Preenche o campo de senha no formulário
     this.registerForm.get('senha')?.setValue(password);
 
-    this.toastr.success("Senha forte e aleatória gerada com sucesso");
+    this.toastr.success("Senha gerada com sucesso");
   }
 
   // Função auxiliar para embaralhar a string
