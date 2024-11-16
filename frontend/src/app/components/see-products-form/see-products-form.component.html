@@ -11,19 +11,19 @@
         <table *ngIf="products.length > 0" class="table table-striped table-bordered">
           <thead>
           <tr>
-            <th scope="col">SKU</th>
             <th scope="col">Categoria</th>
-            <th scope="col" class="w-25">Variação</th>
+            <th scope="col">SKU</th>
             <th scope="col" class="w-25">Descrição</th>
+            <th scope="col" class="w-25">Variação</th>
             <th scope="col" class="w-25">Observação</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let product of products">
-            <td>{{ product.sku }}</td>
             <td>{{ product.categoria }}</td>
-            <td>{{ product.variacao }}</td>
+            <td>{{ product.sku }}</td>
             <td>{{ product.descricao }}</td>
+            <td>{{ product.variacao }}</td>
             <td>{{ product.observacao }}</td>
           </tr>
           </tbody>
