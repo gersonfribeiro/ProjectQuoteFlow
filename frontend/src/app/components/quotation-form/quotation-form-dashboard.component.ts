@@ -88,7 +88,7 @@ export class FormDashboardComponent implements OnInit {
      this.apiUserService.getUserById(userId).subscribe(
         response => {
             const updatedQuotationData = {
-                status: "PREENCHIDA",
+                status: "RESPOSTA_PENDENTE",
                 id_empresa: response.id_empresa
               };
 
