@@ -24,4 +24,10 @@ public class RespostaCotacao {
         this.id_empresa_autora = id_empresa_autora;
         this.id_cotacao = id_cotacao;
     }
+
+    public RespostaCotacao(UUID id_resposta, UUID id_empresa_autora, UUID id_cotacao) {
+        this.id_resposta = id_resposta;
+        this.id_empresa_autora = id_empresa_autora;
+        this.id_cotacao = id_cotacao;
+    }
 }

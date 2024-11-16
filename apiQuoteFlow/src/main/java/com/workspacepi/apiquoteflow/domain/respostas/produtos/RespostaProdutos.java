@@ -11,16 +11,16 @@ import java.util.UUID;
 public class RespostaProdutos {
 
     private UUID id;
-    private String observacao;
-    private float preco;
-    private UUID id_produto;
     private UUID id_resposta;
+    private UUID id_produto;
+    private float preco;
+    private String observacao;
 
-    public RespostaProdutos(String observacao, float preco, UUID id_produto, UUID id_resposta) {
+    public RespostaProdutos(UUID id_resposta, UUID id_produto, float preco, String observacao) {
         this.id = UUID.randomUUID();
-        this.observacao = observacao;
-        this.preco = preco;
-        this.id_produto = id_produto;
         this.id_resposta = id_resposta;
+        this.id_produto = id_produto;
+        this.preco = preco;
+        this.observacao = observacao;
     }
 }
