@@ -84,6 +84,18 @@
           </div>
         </div>
 
+        <div class="col-md-12 mb-3">
+          <label class="form-label"><strong>*</strong> Descrição:</label>
+          <div class="input-group mb-2">
+            <textarea
+              class="form-control"
+              formControlName="description"
+              [maxlength]="100"
+              placeholder="Nome do produto"
+            ></textarea>
+          </div>
+        </div>
+
         <hr>
 
         <div class="col-md-12 mb-3">
@@ -95,17 +107,6 @@
               formControlName="variation"
               [maxlength]="50"
               placeholder="Exemplo.: Cadeira com braço / Cadeira sem braço"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="col-md-12 mb-3">
-          <label class="form-label">Descrição:</label>
-          <div class="input-group mb-2">
-            <textarea
-              class="form-control"
-              formControlName="description"
-              [maxlength]="100"
             ></textarea>
           </div>
         </div>
