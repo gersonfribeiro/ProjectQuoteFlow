@@ -22,12 +22,10 @@ import {RouterLink} from "@angular/router";
 })
 export class FormDashboardComponent implements OnInit {
   quotationForm: FormGroup;
-  showNotificationAlert: boolean = false;
   isQuotationStarted: boolean = false;
   isAddButtonEnabled: boolean = false;
   quotationId: string = '';
 
-  @ViewChild('notificationAlert') notificationAlert!: ElementRef;
   productForm: any;
 
   constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {

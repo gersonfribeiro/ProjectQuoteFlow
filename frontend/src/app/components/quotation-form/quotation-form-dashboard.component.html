@@ -76,12 +76,12 @@
               <div class="d-flex gap-3">
                 <button type="button" class="btn btn-success d-flex align-items-center justify-content-center gap-2" (click)="createQuotation()" [disabled]="isQuotationStarted">
                   <i class="bi bi-arrow-right-circle-fill"></i>
-                  Iniciar cotação
+                  Começar
                 </button>
 
                 <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center gap-2" (click)="stopQuotation()" [disabled]="!isQuotationStarted">
                   <i class="bi bi-x-circle-fill"></i>
-                  Parar cotação
+                  Finalizar
                 </button>
 
                 <button type="submit" class="btn btn-success d-flex align-items-center justify-content-center gap-2" [disabled]="!isAddButtonEnabled">
