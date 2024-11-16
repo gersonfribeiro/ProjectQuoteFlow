@@ -32,12 +32,13 @@ export class FormDashboardComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {
     this.quotationForm = this.fb.group({
-      skuCode: [{ value: '', disabled: true}, [Validators.required]],
-      quantity: [{ value: null, disabled: true}, [Validators.required, Validators.min(1)]],
+      skuCode: [{value: '', disabled: true}, [Validators.required]],
+      quantity: [{value: null, disabled: true}, [Validators.required, Validators.min(1)]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   showFormErrors() {
     this.quotationForm.markAllAsTouched();
@@ -51,50 +52,50 @@ export class FormDashboardComponent implements OnInit {
   }
 
   openQuotation() {
-      this.isQuotationStarted = true;
-      this.isAddButtonEnabled = true;
+    this.isQuotationStarted = true;
+    this.isAddButtonEnabled = true;
 
-      this.quotationForm.get('skuCode')?.enable();
-      this.quotationForm.get('quantity')?.enable();
+    this.quotationForm.get('skuCode')?.enable();
+    this.quotationForm.get('quantity')?.enable();
 
-      const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userId');
 
-      this.apiUserService.getUserById(userId).subscribe(
-        response => {
-          const quotationData = {id_empresa: response.id_empresa};
+    this.apiUserService.getUserById(userId).subscribe(
+      response => {
+        const quotationData = {id_empresa: response.id_empresa};
 
-          this.apiQuotationService.requestQuotation(quotationData).subscribe(
-            response => {
-              console.log('Cotação iniciada!');
-              this.quotationId = response.id_cotacao;
+        this.apiQuotationService.requestQuotation(quotationData).subscribe(
+          response => {
+            console.log('Cotação iniciada!');
+            this.quotationId = response.id_cotacao;
 
-              const modal = document.getElementById('openQuotationModal') as any;
-              const modalInstance = bootstrap.Modal.getInstance(modal);
-              modalInstance.hide();
-            },
-            error => {
-              console.log('Erro ao iniciar cotação.');
-            }
-          );
-        }
-      );
-    }
+            const modal = document.getElementById('openQuotationModal') as any;
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            modalInstance.hide();
+          },
+          error => {
+            console.log('Erro ao iniciar cotação.');
+          }
+        );
+      }
+    );
+  }
 
   // Método para parar a cotação
   closeQuotation() {
 
-      this.isQuotationStarted = false;
-      this.isAddButtonEnabled = false;
+    this.isQuotationStarted = false;
+    this.isAddButtonEnabled = false;
 
-      this.quotationForm.get('skuCode')?.disable();
-      this.quotationForm.get('quantity')?.disable();
+    this.quotationForm.get('skuCode')?.disable();
+    this.quotationForm.get('quantity')?.disable();
 
-       this.toastr.success('Cotação finalizada!');
+    this.toastr.success('Cotação finalizada!');
 
-       const modal = document.getElementById('closeQuotationModal') as any;
-       const modalInstance = bootstrap.Modal.getInstance(modal);
-       modalInstance.hide();
-    }
+    const modal = document.getElementById('closeQuotationModal') as any;
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+  }
 
   onSubmit() {
     if (this.quotationForm.valid) {
