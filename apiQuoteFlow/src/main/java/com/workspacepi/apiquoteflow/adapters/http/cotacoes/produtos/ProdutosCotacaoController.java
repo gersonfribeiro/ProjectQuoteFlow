@@ -33,11 +33,11 @@ public class ProdutosCotacaoController {
         return produtosCotacaoHandler.inserirProdutosCotacao(produtos, id_cotacao);
     }
 
-    @PutMapping("/{id}/{id_produto}")
+    @PutMapping("/{id_produto}")
     public ResponseEntity<ProdutosCotacao> modificarProdutosCotacao(@RequestBody ProdutosCotacaoUpdateCommand produto,
                                                                     @PathVariable String id_cotacao,
-                                                                    @PathVariable String id) {
-        return produtosCotacaoHandler.modificarProdutosCotacao(produto, id, id_cotacao);
+                                                                    @PathVariable String id_produto) {
+        return produtosCotacaoHandler.modificarProdutosCotacao(produto, id_cotacao, id_produto);
     }
 
     @DeleteMapping("/{id_produto}")

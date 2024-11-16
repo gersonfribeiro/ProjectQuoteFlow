@@ -15,7 +15,7 @@ public interface ProdutosCotacaoRepository {
     Boolean inserirProdutosCotacao(ProdutosCotacao produtos, UUID id_cotacao);
 
 //  Modificação
-    Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id, UUID id_cotacao);
+    Boolean modificarProdutosCotacao(ProdutosCotacao produtos, UUID id_cotacao, UUID id_produto);
 
 //  Delete
     Boolean deleteProdutosByCotacaoAndId(UUID id_cotacao, UUID id_produto);
