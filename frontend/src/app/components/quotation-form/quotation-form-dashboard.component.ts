@@ -83,14 +83,28 @@ export class FormDashboardComponent implements OnInit {
 
   // Método para parar a cotação
   closeQuotation() {
+    const userId = localStorage.getItem('userId');
+
+     this.apiUserService.getUserById(userId).subscribe(
+        response => {
+            const updatedQuotationData = {
+                status: "RESPOSTA_PENDENTE",
+                id_empresa: response.id_empresa
+              };
+
+            this.apiQuotationService.putQuotation(this.quotationId, updatedQuotationData).subscribe(
+                response => {
+                    this.toastr.success('Cotação finalizada!');
+                  }
+              );
+          }
+       );
 
     this.isQuotationStarted = false;
     this.isAddButtonEnabled = false;
 
     this.quotationForm.get('skuCode')?.disable();
     this.quotationForm.get('quantity')?.disable();
-
-    this.toastr.success('Cotação finalizada!');
 
     const modal = document.getElementById('closeQuotationModal') as any;
     const modalInstance = bootstrap.Modal.getInstance(modal);
