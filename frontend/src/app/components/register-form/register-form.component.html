@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-1">
       <label class="form-label text-dark">Senha:</label>
       <div class="input-group">
         <input
@@ -78,6 +78,13 @@
           formControlName="senha"
           [maxlength]="30"
         />
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
       </div>
       <div
         *ngIf="
@@ -110,29 +117,16 @@
       </div>
     </div>
 
-    <div class="mb-5">
-      <label class="form-label text-dark">Confirmar senha:</label>
-      <div class="input-group">
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          class="form-control"
-          placeholder="Confirme sua senha"
-          formControlName="confirmarSenha"
-          [maxlength]="30"
-        />
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          (click)="togglePasswordVisibility()"
-        >
-          <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
-        </button>
-      </div>
-      <div *ngIf="registerForm.get('confirmarSenha')?.touched && registerForm.hasError('passwordMismatch')"
-           class="alert alert-danger alert-small mb-2 mt-2">
-        As senhas não coincidem.
-      </div>
+    <div class="d-flex">
+      <p
+        style="font-size: 11px; background-color: #0b5389; color: #fff; padding: 10px; text-align: center; cursor: pointer;"
+        (click)="generatePassword()" class="mb-2 w-100">
+        Clique aqui e gere uma senha aleatória e segura
+      </p>
     </div>
+
+
+    <hr>
 
     <button
       class="btn w-100"
