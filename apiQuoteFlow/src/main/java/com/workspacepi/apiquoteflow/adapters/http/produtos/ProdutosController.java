@@ -51,7 +51,7 @@ public class ProdutosController {
     }
 
     @DeleteMapping("/id/{id_produto}")
-    public ResponseEntity<Void> deleteProdutoByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) throws Exception {
+    public ResponseEntity<String> deleteProdutoByIdAndEmpresa(@PathVariable String id_empresa, @PathVariable String id_produto) throws Exception {
         return produtosHandler.deleteProdutoByIdAndEmpresa(id_empresa, id_produto);
     }
 }

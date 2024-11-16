@@ -8,13 +8,13 @@ import java.util.UUID;
 @Getter
 public class RespostaCotacaoCreateCommand {
 
-    @JsonProperty("id_empresa_autora")
-    private UUID id_empresa_autora;
+    @JsonProperty("id_empresa_resposta")
+    private UUID id_empresa_resposta;
 
     @JsonProperty("id_cotacao")
     private UUID id_cotacao;
 
-    public RespostaCotacao toRespostaCotaca() {
-        return new RespostaCotacao(id_empresa_autora, id_cotacao);
+    public RespostaCotacao toRespostaCotacao() {
+        return new RespostaCotacao(id_empresa_resposta, id_cotacao);
     }
 }

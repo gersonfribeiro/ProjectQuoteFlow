@@ -50,7 +50,7 @@ public class ProdutosHandler {
         return ResponseEntity.ok(produto);
     }
 
-    public ResponseEntity<Void> deleteProdutoByIdAndEmpresa(String id_empresa, String id_produto) throws Exception {
+    public ResponseEntity<String> deleteProdutoByIdAndEmpresa(String id_empresa, String id_produto) throws Exception {
         produtosService.deleteProdutoByIdAndEmpresa(UUID.fromString(id_empresa), UUID.fromString(id_produto));
         return ResponseEntity.noContent().build();
     }

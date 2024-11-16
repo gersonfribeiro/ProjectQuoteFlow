@@ -15,7 +15,7 @@ public class RespostaCotacaoUpdateCommand {
     @JsonProperty("id_cotacao")
     private UUID id_cotacao;
 
-    public RespostaCotacao toRespostaCotaca(UUID id_resposta) {
+    public RespostaCotacao toRespostaCotacao(UUID id_resposta) {
         return new RespostaCotacao(id_resposta, id_empresa_autora, id_cotacao);
     }
 }

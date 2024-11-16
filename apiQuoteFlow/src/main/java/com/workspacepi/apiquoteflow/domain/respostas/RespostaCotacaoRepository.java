@@ -8,14 +8,14 @@ import java.util.UUID;
 @Repository
 public interface RespostaCotacaoRepository {
 
-    List<RespostaCotacao> respostaCotacao(UUID id_empresa);
+    List<RespostaCotacao> respostasCotacao(UUID id_empresa_resposta);
 
-    RespostaCotacao respostaCotacao(UUID id_empresa, UUID id_cotacao);
+    RespostaCotacao respostaCotacao(UUID id_empresa_resposta, UUID id_cotacao);
 
-    Boolean registrarResposta(RespostaCotacao resposta, UUID id_empresa, UUID id_cotacao);
+    Boolean registrarResposta(RespostaCotacao resposta, UUID id_empresa_resposta, UUID id_cotacao);
 
-    Boolean modificarResposta(RespostaCotacao resposta, UUID id_empresa, UUID id_cotacao);
+    Boolean modificarResposta(RespostaCotacao resposta, UUID id_empresa_resposta, UUID id_cotacao);
 
-    Boolean deletarResposta(UUID id_empresa, UUID id_cotacao);
+    Boolean deletarResposta(UUID id_empresa_resposta, UUID id_cotacao);
 
 }
