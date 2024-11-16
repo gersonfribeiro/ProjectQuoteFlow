@@ -53,6 +53,7 @@ export class FormDashboardComponent implements OnInit {
 
   openQuotation() {
     this.isQuotationStarted = true;
+    localStorage.setItem('isQuotationStarted', 'true');
     this.isAddButtonEnabled = true;
 
     this.quotationForm.get('skuCode')?.enable();
@@ -101,6 +102,7 @@ export class FormDashboardComponent implements OnInit {
        );
 
     this.isQuotationStarted = false;
+    localStorage.setItem('isQuotationStarted', 'false');
     this.isAddButtonEnabled = false;
 
     this.quotationForm.get('skuCode')?.disable();
