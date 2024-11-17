@@ -70,7 +70,7 @@
 
     <div class="mb-1">
       <label class="form-label text-dark">Senha:</label>
-      <div class="input-group">
+      <div class="input-group d-flex">
         <input
           [type]="showPassword ? 'text' : 'password'"
           class="form-control"
@@ -84,6 +84,12 @@
           (click)="togglePasswordVisibility()"
         >
           <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
+        <button
+          (click)="generatePassword()"
+          class="btn btn-outline-dark"
+        >
+          <i class="bi bi-dice-6-fill"></i>
         </button>
       </div>
       <div
@@ -115,14 +121,6 @@
           A senha deve conter letras maiúsculas, letras minúsculas, números e caracteres especiais.
         </div>
       </div>
-    </div>
-
-    <div class="d-flex">
-      <p
-        style="font-size: 11px; background-color: #0b5389; color: #fff; padding: 10px; text-align: center; cursor: pointer;"
-        (click)="generatePassword()" class="mb-2 w-100">
-        Clique aqui e gere uma senha aleatória e segura
-      </p>
     </div>
 
     <hr>
