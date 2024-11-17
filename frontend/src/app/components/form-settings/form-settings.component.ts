@@ -40,4 +40,9 @@ export class FormSettingsComponent {
       }
     );
   }
+
+  // Método chamado ao confirmar a exclusão
+    confirmDelete() {
+      this.delete();
+    }
 }
