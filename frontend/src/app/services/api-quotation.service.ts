@@ -44,6 +44,10 @@ export class ApiQuotationService {
           );
       }
 
+  insertDestinatarioInCotacao(quotationId: string, destinatarioData: any): Observable <any> {
+      return this.http.post(`http://localhost:8080/${quotationId}/destinatarios`, destinatarioData)
+    }
+
   // Função para tratamento de erro
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Erro desconhecido';

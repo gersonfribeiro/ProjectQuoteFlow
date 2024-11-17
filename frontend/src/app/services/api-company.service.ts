@@ -22,6 +22,12 @@ export class ApiCompanyService {
       );
     }
 
+  getCompanies(): Observable <any[]> {
+      return this.http.get<any[]>(`${this.apiUrlCompany}`).pipe(
+              catchError(this.handleError)
+      );
+    }
+
   // Função de tratamento de erro
     private handleError(error: HttpErrorResponse) {
       let errorMessage = 'Erro desconhecido';
