@@ -24,8 +24,8 @@ public class RespostaCotacaoHandler {
         return ResponseEntity.ok(respostas);
     }
 
-    public ResponseEntity<RespostaCotacao> respostaCotacao(String id_empresa_resposta, String id_produto) {
-        RespostaCotacao resposta = respostaCotacaoService.respostaCotacao(UUID.fromString(id_empresa_resposta), UUID.fromString(id_produto));
+    public ResponseEntity<RespostaCotacao> respostaCotacao(String id_empresa_resposta, String id_cotacao) {
+        RespostaCotacao resposta = respostaCotacaoService.respostaCotacao(UUID.fromString(id_empresa_resposta), UUID.fromString(id_cotacao));
         return ResponseEntity.ok(resposta);
     }
 

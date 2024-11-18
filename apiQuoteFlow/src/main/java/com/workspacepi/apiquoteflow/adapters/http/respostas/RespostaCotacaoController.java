@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("{id_empresa_resposta}")
 public class RespostaCotacaoController {
-
+    
     private final RespostaCotacaoHandler respostaCotacaoHandler;
 
     public RespostaCotacaoController(RespostaCotacaoHandler respostaCotacaoHandler) {
