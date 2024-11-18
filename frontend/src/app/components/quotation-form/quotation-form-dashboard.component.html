@@ -130,12 +130,18 @@
                 <tr class="text-center">
                   <th scope="col">Código SKU</th>
                   <th scope="col">Quantidade</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Variação</th>
+                  <th scope="col">Observação</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let product of products;">
                   <td class="text-center align-middle w-auto">{{ product.sku }}</td>
                   <td class="text-center align-middle w-auto">{{ product.quantidade }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.descricao }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.variacao }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.observacao }}</td>
                 </tr>
                 </tbody>
               </table>

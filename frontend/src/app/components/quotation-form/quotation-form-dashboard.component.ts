@@ -210,8 +210,11 @@ export class FormDashboardComponent implements OnInit {
               };
 
               const productsForTable = {
+                  sku: sku,
                   quantidade: quantidade,
-                  sku: sku
+                  descricao: response.descricao,
+                  variacao: response.variacao,
+                  observacao: response.observacao
                 }
 
               this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
