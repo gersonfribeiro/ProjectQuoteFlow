@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ApiQuotationService} from "../../services/api-quotation.service";
 import {ApiUserService} from "../../services/api-user.service";
 import {ApiProductService} from "../../services/api-product.service";
+import {Router} from "@angular/router";
 import {RouterLink} from "@angular/router";
 import {ApiCompanyService} from "../../services/api-company.service";
 
@@ -30,11 +31,12 @@ export class FormDashboardComponent implements OnInit {
   isAddButtonEnabled: boolean = false;
   quotationId: string = '';
   empresas: any[] = [];
-  selectedEmpresa: string = '';
+  selectedEmpresas: string[] = [];
 
-  productForm: any;
+  // Lista para armazenar os produtos adicionados
+  products: any[] = [];
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService, private apiCompanyService: ApiCompanyService) {
+  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService, private apiCompanyService: ApiCompanyService) {
     this.quotationForm = this.fb.group({
       skuCode: [{value: '', disabled: true}, [Validators.required]],
       quantity: [{value: null, disabled: true}, [Validators.required, Validators.min(1)]],
@@ -46,16 +48,26 @@ export class FormDashboardComponent implements OnInit {
   }
 
   loadEmpresas() {
-      this.apiCompanyService.getCompanies().subscribe(
-        (response) => {
-          this.empresas = response;
-          console.log('Empresas carregadas:', response);
-        },
-        (error) => {
-          this.toastr.error('Erro ao carregar as empresas.');
-        }
-      );
+    this.apiCompanyService.getCompanies().subscribe(
+      (response) => {
+        // Recupera o ID da empresa do usuário logado
+        const userId = localStorage.getItem('userId');
+        this.apiUserService.getUserById(userId).subscribe(userResponse => {
+          // Filtra a empresa do usuário logado
+          this.empresas = response.filter(empresa => empresa.id_empresa !== userResponse.id_empresa);
+
+          // Inicializa todos os checkboxes como desmarcados
+          this.empresas.forEach((empresa) => {
+            empresa.selected = false;
+          });
+        });
+      },
+      (error) => {
+        this.toastr.error('Erro ao carregar as empresas.');
+      }
+    );
   }
+
 
   showFormErrors() {
     this.quotationForm.markAllAsTouched();
@@ -118,8 +130,6 @@ export class FormDashboardComponent implements OnInit {
 //           }
 //        );
 
-    this.isQuotationStarted = false;
-    localStorage.setItem('isQuotationStarted', 'false');
     this.isAddButtonEnabled = false;
 
     this.quotationForm.get('skuCode')?.disable();
@@ -147,19 +157,41 @@ export class FormDashboardComponent implements OnInit {
       }
   }
 
-  inserirDestinatarioNaCotacao() {
-      const destinatarioData = {
-          id_destinatario: this.selectedEmpresa
-        };
+  inserirDestinatariosNaCotacao() {
+    // Filtra as empresas selecionadas
+    const empresasSelecionadas = this.empresas.filter(empresa => empresa.selected);
 
-      this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarioData).subscribe(
-          response => {
-              this.toastr.success("Cotação enviada para o destinatário");
-            },
-          error => {
-              this.toastr.error("Erro ao enviar cotação para o destinatário");
-            }
-        );
+    if (empresasSelecionadas.length > 0) {
+      // Cria um array de objetos com id_destinatario
+      const destinatarios = empresasSelecionadas.map(empresa => ({
+        id_destinatario: empresa.id_empresa
+      }));
+
+      // Chama o serviço passando o array de destinatários
+      this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarios).subscribe(
+        (response) => {
+          this.toastr.success("Cotação enviada para os destinatários selecionados");
+          this.isQuotationStarted = false;
+          localStorage.setItem('isQuotationStarted', 'false');
+          this.router.navigate(['/dashboard/quotations']);
+        },
+        (error) => {
+          this.toastr.error("Erro ao enviar cotação para os destinatários");
+        }
+      );
+    } else {
+      this.toastr.warning("Selecione pelo menos uma empresa.");
+    }
+  }
+
+  cancelQuotation() {
+      const modal = document.getElementById('cancelQuotationModal') as any;
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+
+      this.isQuotationStarted = false;
+      localStorage.setItem('isQuotationStarted', 'false');
+      this.router.navigate(['/dashboard/quotations']);
     }
 
   onSubmit() {
@@ -177,8 +209,17 @@ export class FormDashboardComponent implements OnInit {
                 quantidade: quantidade
               };
 
+              const productsForTable = {
+                  sku: sku,
+                  quantidade: quantidade,
+                  descricao: response.descricao,
+                  variacao: response.variacao,
+                  observacao: response.observacao
+                }
+
               this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
                 response => {
+                  this.products.push(productsForTable);
                   this.toastr.success('Produto adicionado à sua cotação!');
                 },
                 error => {
@@ -193,7 +234,6 @@ export class FormDashboardComponent implements OnInit {
           );
         }
       );
-
       this.quotationForm.reset();
     } else {
       this.showFormErrors();

@@ -121,6 +121,33 @@
                 </div>
               </div>
             </form>
+
+            <hr>
+
+            <!-- Tabela de Produtos -->
+            <div *ngIf="products.length > 0" class="table-responsive mt-4">
+              <h4>Produtos adicionados:</h4>
+              <table class="table table-striped mt-4">
+                <thead>
+                <tr class="text-center">
+                  <th scope="col">Código SKU</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Variação</th>
+                  <th scope="col">Observação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of products;">
+                  <td class="text-center align-middle w-auto">{{ product.sku }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.quantidade }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.descricao }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.variacao }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.observacao }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -129,23 +156,44 @@
             class="p-4 rounded"
             style="background-color: #e8e8e8; box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;"
           >
-            <!-- Menu Dropdown de Empresas -->
+            <!-- Menu de Empresas com Checkboxes -->
             <div class="mb-3">
-              <label for="empresaDropdown" class="form-label"><strong>Selecione as empresas destinatárias:</strong></label>
-              <select id="empresaDropdown" class="form-select" [(ngModel)]="selectedEmpresa">
-                <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.nome }}</option>
-              </select>
+              <label class="form-label"><strong>Selecione as empresas destinatárias:</strong></label>
+              <div *ngFor="let empresa of empresas">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="'empresa-' + empresa.id_empresa"
+                    [value]="empresa.id_empresa"
+                    [(ngModel)]="empresa.selected"
+                  />
+                  <label class="form-check-label" [for]="'empresa-' + empresa.id_empresa">
+                    {{ empresa.nome }}
+                  </label>
+                </div>
+              </div>
             </div>
 
-            <!-- Botão de Enviar -->
-            <div class="d-flex justify-content-end">
+            <!-- Botões de Enviar e Cancelar -->
+            <div class="d-flex justify-content-between">
               <button
                 type="button"
                 class="btn btn-success d-flex align-items-center justify-content-center gap-2"
-                (click)="inserirDestinatarioNaCotacao()"
+                (click)="inserirDestinatariosNaCotacao()"
               >
                 <i class="bi bi-arrow-right-circle-fill"></i>
                 Enviar
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary d-flex align-items-center justify-content-center gap-2"
+                data-bs-toggle="modal"
+                data-bs-target="#cancelQuotationModal"
+              >
+                <i class="bi bi-x-circle-fill"></i>
+                Cancelar
               </button>
             </div>
           </div>
@@ -156,7 +204,8 @@
   </div>
 
   <!-- Modal de Confirmação para abrir a cotação -->
-  <div class="modal fade" id="openQuotationModal" tabindex="-1" aria-labelledby="openQuotationModalLabel" aria-hidden="true">
+  <div class="modal fade" id="openQuotationModal" tabindex="-1" aria-labelledby="openQuotationModalLabel"
+       aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -175,7 +224,8 @@
   </div>
 
   <!-- Modal de Confirmação para fechar a cotação -->
-  <div class="modal fade" id="closeQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel" aria-hidden="true">
+  <div class="modal fade" id="closeQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel"
+       aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -189,6 +239,26 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-danger" (click)="closeQuotation()">Confirmar</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmação para cancelar a cotação -->
+<div class="modal fade" id="cancelQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelQuotationModalLabel">Atenção!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja cancelar a cotação?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="cancelQuotation()">Confirmar</button>
       </div>
     </div>
   </div>

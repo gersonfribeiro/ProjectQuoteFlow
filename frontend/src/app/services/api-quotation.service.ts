@@ -44,8 +44,8 @@ export class ApiQuotationService {
           );
       }
 
-  insertDestinatarioInCotacao(quotationId: string, destinatarioData: any): Observable <any> {
-      return this.http.post(`http://localhost:8080/${quotationId}/destinatarios`, destinatarioData)
+  insertDestinatarioInCotacao(quotationId: string, destinatarios: any[]): Observable <any> {
+      return this.http.post(`http://localhost:8080/${quotationId}/destinatarios`, destinatarios)
     }
 
   // Função para tratamento de erro

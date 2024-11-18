@@ -23,6 +23,7 @@
               <table class="table table-sm table-bordered">
                 <thead>
                 <tr class="text-center">
+                  <th scope="col">Categoria</th>
                   <th scope="col">SKU</th>
                   <th scope="col">Quantidade</th>
                   <th scope="col">Descrição</th>
@@ -32,6 +33,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let produto of quotation.produtos">
+                  <td class="text-center align-middle w-auto">{{ produto.categoria }}</td>
                   <td class="text-center align-middle w-auto">{{ produto.sku }}</td>
                   <td class="text-center align-middle w-auto">{{ produto.quantidade }}</td>
                   <td class="text-center align-middle w-auto">{{ produto.descricao }}</td>
@@ -57,7 +59,7 @@
           style="width: 247px; height: 37px;"
         >
           <i class="bi bi-archive"></i>
-          Realizar cotação
+          Solicitar cotação
         </a>
       </form>
     </div>
