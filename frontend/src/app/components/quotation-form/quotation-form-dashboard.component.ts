@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ApiQuotationService} from "../../services/api-quotation.service";
 import {ApiUserService} from "../../services/api-user.service";
 import {ApiProductService} from "../../services/api-product.service";
+import {Router} from "@angular/router";
 import {RouterLink} from "@angular/router";
 import {ApiCompanyService} from "../../services/api-company.service";
 
@@ -32,9 +33,10 @@ export class FormDashboardComponent implements OnInit {
   empresas: any[] = [];
   selectedEmpresas: string[] = [];
 
-  productForm: any;
+  // Lista para armazenar os produtos adicionados
+  products: any[] = [];
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService, private apiCompanyService: ApiCompanyService) {
+  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService, private apiCompanyService: ApiCompanyService) {
     this.quotationForm = this.fb.group({
       skuCode: [{value: '', disabled: true}, [Validators.required]],
       quantity: [{value: null, disabled: true}, [Validators.required, Validators.min(1)]],
@@ -46,18 +48,26 @@ export class FormDashboardComponent implements OnInit {
   }
 
   loadEmpresas() {
-      this.apiCompanyService.getCompanies().subscribe(
-        (response) => {
-          this.empresas = response;
+    this.apiCompanyService.getCompanies().subscribe(
+      (response) => {
+        // Recupera o ID da empresa do usuário logado
+        const userId = localStorage.getItem('userId');
+        this.apiUserService.getUserById(userId).subscribe(userResponse => {
+          // Filtra a empresa do usuário logado
+          this.empresas = response.filter(empresa => empresa.id_empresa !== userResponse.id_empresa);
+
+          // Inicializa todos os checkboxes como desmarcados
           this.empresas.forEach((empresa) => {
-            empresa.selected = false; // Inicializa todos os checkboxes como desmarcados
+            empresa.selected = false;
           });
-        },
-        (error) => {
-          this.toastr.error('Erro ao carregar as empresas.');
-        }
-      );
-    }
+        });
+      },
+      (error) => {
+        this.toastr.error('Erro ao carregar as empresas.');
+      }
+    );
+  }
+
 
   showFormErrors() {
     this.quotationForm.markAllAsTouched();
@@ -120,8 +130,6 @@ export class FormDashboardComponent implements OnInit {
 //           }
 //        );
 
-    this.isQuotationStarted = false;
-    localStorage.setItem('isQuotationStarted', 'false');
     this.isAddButtonEnabled = false;
 
     this.quotationForm.get('skuCode')?.disable();
@@ -163,6 +171,9 @@ export class FormDashboardComponent implements OnInit {
       this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarios).subscribe(
         (response) => {
           this.toastr.success("Cotação enviada para os destinatários selecionados");
+          this.isQuotationStarted = false;
+          localStorage.setItem('isQuotationStarted', 'false');
+          this.router.navigate(['/dashboard/quotations']);
         },
         (error) => {
           this.toastr.error("Erro ao enviar cotação para os destinatários");
@@ -172,6 +183,16 @@ export class FormDashboardComponent implements OnInit {
       this.toastr.warning("Selecione pelo menos uma empresa.");
     }
   }
+
+  cancelQuotation() {
+      const modal = document.getElementById('cancelQuotationModal') as any;
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+
+      this.isQuotationStarted = false;
+      localStorage.setItem('isQuotationStarted', 'false');
+      this.router.navigate(['/dashboard/quotations']);
+    }
 
   onSubmit() {
     if (this.quotationForm.valid) {
@@ -188,8 +209,14 @@ export class FormDashboardComponent implements OnInit {
                 quantidade: quantidade
               };
 
+              const productsForTable = {
+                  quantidade: quantidade,
+                  sku: sku
+                }
+
               this.apiQuotationService.registerProductOnQuotation(this.quotationId, quotationProductData).subscribe(
                 response => {
+                  this.products.push(productsForTable);
                   this.toastr.success('Produto adicionado à sua cotação!');
                 },
                 error => {
@@ -204,7 +231,6 @@ export class FormDashboardComponent implements OnInit {
           );
         }
       );
-
       this.quotationForm.reset();
     } else {
       this.showFormErrors();

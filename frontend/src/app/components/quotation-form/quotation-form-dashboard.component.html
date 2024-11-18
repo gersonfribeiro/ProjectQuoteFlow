@@ -121,6 +121,25 @@
                 </div>
               </div>
             </form>
+
+            <!-- Tabela de Produtos -->
+            <div *ngIf="products.length > 0" class="table-responsive mt-4">
+              <h3>Produtos adicionados:</h3>
+              <table class="table table-striped mt-4">
+                <thead>
+                <tr class="text-center">
+                  <th scope="col">Código SKU</th>
+                  <th scope="col">Quantidade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of products;">
+                  <td class="text-center align-middle w-auto">{{ product.sku }}</td>
+                  <td class="text-center align-middle w-auto">{{ product.quantidade }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -148,8 +167,8 @@
               </div>
             </div>
 
-            <!-- Botão de Enviar -->
-            <div class="d-flex justify-content-end">
+            <!-- Botões de Enviar e Cancelar -->
+            <div class="d-flex justify-content-between">
               <button
                 type="button"
                 class="btn btn-success d-flex align-items-center justify-content-center gap-2"
@@ -157,6 +176,16 @@
               >
                 <i class="bi bi-arrow-right-circle-fill"></i>
                 Enviar
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary d-flex align-items-center justify-content-center gap-2"
+                data-bs-toggle="modal"
+                data-bs-target="#cancelQuotationModal"
+              >
+                <i class="bi bi-x-circle-fill"></i>
+                Cancelar
               </button>
             </div>
           </div>
@@ -200,6 +229,25 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-danger" (click)="closeQuotation()">Confirmar</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmação para cancelar a cotação -->
+<div class="modal fade" id="cancelQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelQuotationModalLabel">Atenção!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja cancelar a cotação?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="cancelQuotation()">Confirmar</button>
       </div>
     </div>
   </div>
