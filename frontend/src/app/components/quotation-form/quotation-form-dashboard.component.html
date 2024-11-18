@@ -129,12 +129,23 @@
             class="p-4 rounded"
             style="background-color: #e8e8e8; box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;"
           >
-            <!-- Menu Dropdown de Empresas -->
+            <!-- Menu de Empresas com Checkboxes -->
             <div class="mb-3">
-              <label for="empresaDropdown" class="form-label"><strong>Selecione as empresas destinatárias:</strong></label>
-              <select id="empresaDropdown" class="form-select" [(ngModel)]="selectedEmpresa">
-                <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.nome }}</option>
-              </select>
+              <label class="form-label"><strong>Selecione as empresas destinatárias:</strong></label>
+              <div *ngFor="let empresa of empresas">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="'empresa-' + empresa.id_empresa"
+                    [value]="empresa.id_empresa"
+                    [(ngModel)]="empresa.selected"
+                  />
+                  <label class="form-check-label" [for]="'empresa-' + empresa.id_empresa">
+                    {{ empresa.nome }}
+                  </label>
+                </div>
+              </div>
             </div>
 
             <!-- Botão de Enviar -->
@@ -142,7 +153,7 @@
               <button
                 type="button"
                 class="btn btn-success d-flex align-items-center justify-content-center gap-2"
-                (click)="inserirDestinatarioNaCotacao()"
+                (click)="inserirDestinatariosNaCotacao()"
               >
                 <i class="bi bi-arrow-right-circle-fill"></i>
                 Enviar

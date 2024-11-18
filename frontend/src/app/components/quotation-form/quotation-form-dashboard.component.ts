@@ -30,7 +30,7 @@ export class FormDashboardComponent implements OnInit {
   isAddButtonEnabled: boolean = false;
   quotationId: string = '';
   empresas: any[] = [];
-  selectedEmpresa: string = '';
+  selectedEmpresas: string[] = [];
 
   productForm: any;
 
@@ -49,13 +49,15 @@ export class FormDashboardComponent implements OnInit {
       this.apiCompanyService.getCompanies().subscribe(
         (response) => {
           this.empresas = response;
-          console.log('Empresas carregadas:', response);
+          this.empresas.forEach((empresa) => {
+            empresa.selected = false; // Inicializa todos os checkboxes como desmarcados
+          });
         },
         (error) => {
           this.toastr.error('Erro ao carregar as empresas.');
         }
       );
-  }
+    }
 
   showFormErrors() {
     this.quotationForm.markAllAsTouched();
@@ -147,20 +149,29 @@ export class FormDashboardComponent implements OnInit {
       }
   }
 
-  inserirDestinatarioNaCotacao() {
-      const destinatarioData = {
-          id_destinatario: this.selectedEmpresa
-        };
+  inserirDestinatariosNaCotacao() {
+    // Filtra as empresas selecionadas
+    const empresasSelecionadas = this.empresas.filter(empresa => empresa.selected);
 
-      this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarioData).subscribe(
-          response => {
-              this.toastr.success("Cotação enviada para o destinatário");
-            },
-          error => {
-              this.toastr.error("Erro ao enviar cotação para o destinatário");
-            }
-        );
+    if (empresasSelecionadas.length > 0) {
+      // Cria um array de objetos com id_destinatario
+      const destinatarios = empresasSelecionadas.map(empresa => ({
+        id_destinatario: empresa.id_empresa
+      }));
+
+      // Chama o serviço passando o array de destinatários
+      this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarios).subscribe(
+        (response) => {
+          this.toastr.success("Cotação enviada para os destinatários selecionados");
+        },
+        (error) => {
+          this.toastr.error("Erro ao enviar cotação para os destinatários");
+        }
+      );
+    } else {
+      this.toastr.warning("Selecione pelo menos uma empresa.");
     }
+  }
 
   onSubmit() {
     if (this.quotationForm.valid) {
