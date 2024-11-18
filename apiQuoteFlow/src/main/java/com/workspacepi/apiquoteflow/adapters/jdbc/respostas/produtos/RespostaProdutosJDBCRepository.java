@@ -76,10 +76,9 @@ public class RespostaProdutosJDBCRepository implements RespostaProdutosRepositor
     }
 
     @Override
-    public Boolean registrarRespostaProduto(RespostaProdutos respostaProdutos, UUID id_resposta, UUID id_produto) {
+    public Boolean registrarRespostaProduto(RespostaProdutos respostaProdutos, UUID id_produto) {
         try {
             MapSqlParameterSource params = parameterSource(respostaProdutos);
-            params.addValue("id_resposta", id_resposta);
             params.addValue("id_produto", id_produto);
 
             return jdbcTemplate.update(sqlEnviarResposta(), params) > 0;

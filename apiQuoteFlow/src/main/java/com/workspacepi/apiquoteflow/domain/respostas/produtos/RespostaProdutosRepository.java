@@ -12,7 +12,7 @@ public interface RespostaProdutosRepository {
 
     RespostaProdutos respostaProduto(UUID id_resposta, UUID id_produto);
 
-    Boolean registrarRespostaProduto(RespostaProdutos resposta, UUID id_resposta, UUID id_produto);
+    Boolean registrarRespostaProduto(RespostaProdutos resposta, UUID id_produto);
 
     Boolean modificarRespostaProduto(RespostaProdutos resposta, UUID id_resposta, UUID id_produto);
 
