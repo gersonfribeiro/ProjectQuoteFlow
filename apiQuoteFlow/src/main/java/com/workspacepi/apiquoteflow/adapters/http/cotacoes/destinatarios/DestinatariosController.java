@@ -29,8 +29,8 @@ public class DestinatariosController {
     }
 
     @PostMapping
-    public ResponseEntity<Destinatarios> inserirDestinatario(@RequestBody DestinatariosCreateCommand destinatario, @PathVariable String id_cotacao) {
-        return destinatariosHandler.inserirDestinatario(destinatario, id_cotacao);
+    public ResponseEntity<List<Destinatarios>> inserirDestinatario(@RequestBody List<DestinatariosCreateCommand> destinatarios, @PathVariable String id_cotacao) {
+        return destinatariosHandler.inserirDestinatarios(destinatarios, id_cotacao);
     }
 
     @PutMapping("/{id_destinatario}")

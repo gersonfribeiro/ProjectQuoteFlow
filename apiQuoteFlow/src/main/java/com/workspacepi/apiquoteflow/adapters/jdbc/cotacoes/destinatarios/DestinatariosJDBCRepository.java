@@ -11,10 +11,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import static com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes.destinatarios.DestinatariosSqlExpressions.*;
+import static com.workspacepi.apiquoteflow.adapters.jdbc.cotacoes.destinatarios.DestinatariosSqlExpressions.sqlInserirDestinatario;
 
 @Repository
 public class DestinatariosJDBCRepository implements DestinatariosRepository {
@@ -76,12 +78,18 @@ public class DestinatariosJDBCRepository implements DestinatariosRepository {
     }
 
     @Override
-    public Boolean inserirDestinatario(Destinatarios destinatario, UUID id_cotacao) {
+    public Boolean inserirDestinatario(List<Destinatarios> destinatarios, UUID id_cotacao) {
         try {
-            MapSqlParameterSource params = parameterSource(destinatario);
-            params.addValue("id_cotacao", id_cotacao);
-            int numLinhasAfetas = jdbcTemplate.update(sqlInserirDestinatario(), params);
-            return numLinhasAfetas > 0;
+            List<MapSqlParameterSource> batchParams = destinatarios.stream()
+                .map(destinatario -> {
+                    MapSqlParameterSource params = parameterSource(destinatario);
+                    params.addValue("id_cotacao", id_cotacao);
+                    return params;
+                })
+                .toList();
+
+            int[] result = jdbcTemplate.batchUpdate(sqlInserirDestinatario(), batchParams.toArray(new MapSqlParameterSource[0]));
+            return Arrays.stream(result).allMatch(rows -> rows > 0);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw e;
