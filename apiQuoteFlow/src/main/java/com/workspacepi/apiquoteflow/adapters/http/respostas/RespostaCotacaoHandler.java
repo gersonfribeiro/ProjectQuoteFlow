@@ -1,8 +1,10 @@
 package com.workspacepi.apiquoteflow.adapters.http.respostas;
 
+import com.workspacepi.apiquoteflow.application.respostas.CotacaoComProdutosDTO;
 import com.workspacepi.apiquoteflow.application.respostas.RespostaCotacaoCreateCommand;
 import com.workspacepi.apiquoteflow.application.respostas.RespostaCotacaoService;
 import com.workspacepi.apiquoteflow.application.respostas.RespostaCotacaoUpdateCommand;
+import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.Destinatarios;
 import com.workspacepi.apiquoteflow.domain.respostas.RespostaCotacao;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,11 @@ public class RespostaCotacaoHandler {
 
     public ResponseEntity<List<RespostaCotacao>> respostasCotacao(String id_empresa_resposta) {
         List<RespostaCotacao> respostas = respostaCotacaoService.respostasCotacao(UUID.fromString(id_empresa_resposta));
+        return ResponseEntity.ok(respostas);
+    }
+
+    public ResponseEntity<List<CotacaoComProdutosDTO>> buscarCotacoesComProdutos(String id_empresa_resposta) {
+        List<CotacaoComProdutosDTO> respostas = respostaCotacaoService.buscarCotacoesComProdutos(UUID.fromString(id_empresa_resposta));
         return ResponseEntity.ok(respostas);
     }
 

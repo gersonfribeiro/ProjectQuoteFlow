@@ -2,6 +2,7 @@ package com.workspacepi.apiquoteflow.application.respostas;
 
 import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaIdNaoEncontradaException;
 import com.workspacepi.apiquoteflow.domain.cotacoes.CotacoesRepository;
+import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.Destinatarios;
 import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import com.workspacepi.apiquoteflow.domain.produtos.ProdutosRepository;
 import com.workspacepi.apiquoteflow.domain.respostas.RespostaCotacao;
@@ -33,6 +34,13 @@ public class RespostaCotacaoService {
             throw new RuntimeException("Empresa não encontrada!");
 
         return respostaCotacaoRepository.respostasCotacao(id_empresa_resposta);
+    }
+
+    public List<CotacaoComProdutosDTO> buscarCotacoesComProdutos(UUID id_empresa_resposta) {
+        if(empresasRepository.findById(id_empresa_resposta) == null)
+            throw new RuntimeException("Empresa não encontrada!");
+
+        return respostaCotacaoRepository.buscarCotacoesComProdutos(id_empresa_resposta);
     }
 
     public RespostaCotacao respostaCotacao(UUID id_empresa_resposta, UUID id_cotacao) {
