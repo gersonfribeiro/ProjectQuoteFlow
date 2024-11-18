@@ -25,13 +25,15 @@ create table cotacoes
     status     varchar(50) not null
         constraint cotacao_status_check
             check ((status)::text = ANY
-                   (ARRAY [('PREENCHENDO'::character varying)::text, ('CONCLUIDO'::character varying)::text, ('ENVIADO'::character varying)::text, ('ENTREGUE'::character varying)::text, ('RESPOSTA_PENDENTE'::character varying)::text, ('RESPOSTA_RECEBIDA'::character varying)::text, ('ACEITO'::character varying)::text, ('RECUSADO'::character varying)::text])),
+        (ARRAY [('PREENCHENDO':: character varying)::text, ('CONCLUIDO':: character varying)::text, ('ENVIADO':: character varying)::text, ('ENTREGUE':: character varying)::text, ('RESPOSTA_PENDENTE':: character varying)::text, ('RESPOSTA_RECEBIDA':: character varying)::text, ('ACEITO':: character varying)::text, ('RECUSADO':: character varying)::text])
+) ,
     id_empresa uuid        not null
         constraint fk5xy7gse5lcuygba8ilnxlu1u8
             references empresas
 );
 
-comment on constraint cotacao_status_check on cotacoes is '
+comment
+on constraint cotacao_status_check on cotacoes is '
 
 ';
 
@@ -76,12 +78,13 @@ alter table enderecos
 
 create table produtos
 (
-    id_produto uuid         not null
+    id_produto uuid        not null
         primary key,
-    categoria  varchar(50)  not null
+    categoria  varchar(50) not null
         constraint produtos_categoria_check
             check ((categoria)::text = ANY
-                   ((ARRAY ['MADEIRA'::character varying, 'ALIMENTOS'::character varying, 'LIMPEZA'::character varying, 'ELETRONICOS'::character varying, 'ROUPAS'::character varying, 'COSMETICOS'::character varying, 'UTENSILIOS'::character varying, 'FERRAMENTAS'::character varying, 'MATERIAIS_CONSTRUCAO'::character varying, 'OUTROS'::character varying])::text[])),
+        ((ARRAY ['MADEIRA':: character varying, 'ALIMENTOS':: character varying, 'LIMPEZA':: character varying, 'ELETRONICOS':: character varying, 'ROUPAS':: character varying, 'COSMETICOS':: character varying, 'UTENSILIOS':: character varying, 'FERRAMENTAS':: character varying, 'MATERIAIS_CONSTRUCAO':: character varying, 'OUTROS':: character varying])::text[])
+) ,
     descricao  varchar(100) not null,
     observacao varchar(100),
     sku        varchar(8)   not null,
