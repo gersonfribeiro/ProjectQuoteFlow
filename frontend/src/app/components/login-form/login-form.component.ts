@@ -104,11 +104,12 @@ export class LoginFormComponent {
           console.error('Erro ao fazer login:', error);
           console.log(credentials);
           this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
+          this.toastr.error(this.errorMessage);
         }
       );
     } else {
       this.loginForm.markAllAsTouched();
-      this.toastr.warning("Email ou senha incorretos. Tente novamente!")
+      this.toastr.warning("Erro ao fazer login. Tente novamente!")
       console.log('Formulário inválido:', this.loginForm.errors);
     }
   }

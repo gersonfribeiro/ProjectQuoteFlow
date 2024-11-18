@@ -86,8 +86,9 @@
           <i [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
         </button>
         <button
-          (click)="generatePassword()"
+          type="button"
           class="btn btn-outline-dark"
+          (click)="generatePassword()"
         >
           <i class="bi bi-dice-6-fill"></i>
         </button>
