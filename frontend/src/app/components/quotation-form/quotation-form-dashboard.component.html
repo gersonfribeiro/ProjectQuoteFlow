@@ -9,94 +9,186 @@
       </nav>
 
       <h1 class="px-5"><strong>Solicitar cotação:</strong></h1>
-      <div class="ps-5 pt-0">
-        <form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
+
+      <!-- Abas -->
+      <ul class="nav nav-tabs mt-3 px-5" style="border-bottom: none;">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#tab-quotation">Solicitar Cotação</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#tab-second">Enviar cotação</a>
+        </li>
+      </ul>
+
+      <div class="tab-content px-5">
+        <div class="tab-pane fade show active" id="tab-quotation">
           <div
             class="p-4 rounded"
-            style="
-                  background-color: #e8e8e8;
-                  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-                    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-                "
+            style="background-color: #e8e8e8; box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;"
           >
             <!-- Formulário de Cotações -->
-            <div class="d-flex flex-column">
-              <div class="d-flex flex-wrap gap-3 mb-3">
-                <div class="d-flex flex-column flex-grow-1 mb-3">
-                  <label class="form-label"
-                  ><strong> * </strong>Código SKU:</label
-                  >
-                  <input
-                    type="text"
-                    formControlName="skuCode"
-                    class="form-control mb-2"
-                    placeholder="YYY.Y.YY"
-                    mask="AAA.A.AA"
-                    (input)="onInputChange()"
-                    [disabled]="isQuotationStarted"
-                  />
-                  <div
-                    *ngIf="
-                          quotationForm.get('skuCode')?.touched &&
-                          quotationForm.get('skuCode')?.invalid
-                        "
-                    class="alert alert-danger alert-small"
-                    role="alert"
-                  >
-                    Código SKU é <strong>obrigatório</strong>.
+            <form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
+              <div class="d-flex flex-column">
+                <div class="d-flex flex-wrap gap-3 mb-3">
+                  <div class="d-flex flex-column flex-grow-1 mb-3">
+                    <label class="form-label"><strong> * </strong>Código SKU:</label>
+                    <input
+                      type="text"
+                      formControlName="skuCode"
+                      class="form-control mb-2"
+                      placeholder="YYY.Y.YY"
+                      mask="AAA.A.AA"
+                      (input)="onInputChange()"
+                      [disabled]="isQuotationStarted"
+                    />
+                    <div
+                      *ngIf="
+                        quotationForm.get('skuCode')?.touched &&
+                        quotationForm.get('skuCode')?.invalid
+                      "
+                      class="alert alert-danger alert-small"
+                      role="alert"
+                    >
+                      Código SKU é <strong>obrigatório</strong>.
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-grow-1 mb-3">
+                    <label class="form-label"><strong> * </strong>Quantidade:</label>
+                    <input
+                      type="number"
+                      min="1"
+                      formControlName="quantity"
+                      class="form-control mb-2"
+                      placeholder="100"
+                      [disabled]="isQuotationStarted"
+                    />
+                    <div
+                      *ngIf="
+                        quotationForm.get('quantity')?.touched &&
+                        quotationForm.get('quantity')?.invalid
+                      "
+                      class="alert alert-danger alert-small"
+                      role="alert"
+                    >
+                      Quantidade deve ser maior que zero.
+                    </div>
                   </div>
                 </div>
 
-                <div class="d-flex flex-column flex-grow-1 mb-3">
-                  <label class="form-label"
-                  ><strong> * </strong>Quantidade:</label
-                  >
-                  <input
-                    type="number"
-                    min="1"
-                    formControlName="quantity"
-                    class="form-control mb-2"
-                    placeholder="100"
+                <!-- Botões com Flexbox para ajustar -->
+                <div class="d-flex gap-3">
+                  <button
+                    type="button"
+                    class="btn btn-success d-flex align-items-center justify-content-center gap-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#openQuotationModal"
                     [disabled]="isQuotationStarted"
-                  />
-                  <div
-                    *ngIf="
-                          quotationForm.get('quantity')?.touched &&
-                          quotationForm.get('quantity')?.invalid
-                        "
-                    class="alert alert-danger alert-small"
-                    role="alert"
                   >
-                    Quantidade deve ser maior que zero.
-                  </div>
+                    <i class="bi bi-arrow-right-circle-fill"></i>
+                    Começar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-danger d-flex align-items-center justify-content-center gap-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#closeQuotationModal"
+                    [disabled]="!isQuotationStarted"
+                  >
+                    <i class="bi bi-x-circle-fill"></i>
+                    Finalizar
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="btn btn-success d-flex align-items-center justify-content-center gap-2"
+                    [disabled]="!isAddButtonEnabled"
+                  >
+                    <i class="bi bi-bag-plus-fill"></i>
+                    Adicionar produto
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-secondary d-flex align-items-center justify-content-center gap-2"
+                    [routerLink]="'/dashboard/quotations'"
+                    [disabled]="isQuotationStarted"
+                  >
+                    <i class="bi bi-arrow-left"></i>
+                    Voltar
+                  </button>
                 </div>
               </div>
+            </form>
+          </div>
+        </div>
 
-              <!-- Botões com Flexbox para ajustar -->
-              <div class="d-flex gap-3">
-                <button type="button" class="btn btn-success d-flex align-items-center justify-content-center gap-2" (click)="createQuotation()" [disabled]="isQuotationStarted">
-                  <i class="bi bi-arrow-right-circle-fill"></i>
-                  Iniciar cotação
-                </button>
+        <div class="tab-pane fade" id="tab-second">
+          <div
+            class="p-4 rounded"
+            style="background-color: #e8e8e8; box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;"
+          >
+            <!-- Menu Dropdown de Empresas -->
+            <div class="mb-3">
+              <label for="empresaDropdown" class="form-label"><strong>Selecione as empresas destinatárias:</strong></label>
+              <select id="empresaDropdown" class="form-select" [(ngModel)]="selectedEmpresa">
+                <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.nome }}</option>
+              </select>
+            </div>
 
-                <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center gap-2" (click)="stopQuotation()" [disabled]="!isQuotationStarted">
-                  <i class="bi bi-x-circle-fill"></i>
-                  Parar cotação
-                </button>
-
-                <button type="submit" class="btn btn-success d-flex align-items-center justify-content-center gap-2" [disabled]="!isAddButtonEnabled">
-                  <i class="bi bi-bag-plus-fill"></i>
-                  Adicionar
-                </button>
-
-                <button type="button" class="btn btn-success d-flex align-items-center justify-content-center gap-2" [routerLink]="'/dashboard/quotations'" [disabled]="isQuotationStarted">
-                  <i class="bi bi-arrow-left"></i>
-                  Voltar
-                </button>
-              </div>
+            <!-- Botão de Enviar -->
+            <div class="d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-success d-flex align-items-center justify-content-center gap-2"
+                (click)="inserirDestinatarioNaCotacao()"
+              >
+                <i class="bi bi-arrow-right-circle-fill"></i>
+                Enviar
+              </button>
             </div>
           </div>
-        </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação para abrir a cotação -->
+  <div class="modal fade" id="openQuotationModal" tabindex="-1" aria-labelledby="openQuotationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="openQuotationModalLabel">Atenção!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Certifique-se de que todos os produtos foram cadastrados antes de iniciar a cotação.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" (click)="openQuotation()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação para fechar a cotação -->
+  <div class="modal fade" id="closeQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="closeQuotationModalLabel">Atenção!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja parar a cotação?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="closeQuotation()">Confirmar</button>
+        </div>
       </div>
     </div>
   </div>

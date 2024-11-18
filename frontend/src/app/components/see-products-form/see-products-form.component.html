@@ -6,28 +6,29 @@
       style="background-color: #e8e8e8; box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;"
     >
       <form>
-
         <!-- Aplica *ngIf à tabela -->
-        <table *ngIf="products.length > 0" class="table table-striped table-bordered">
-          <thead>
-          <tr>
-            <th scope="col">SKU</th>
-            <th scope="col">Categoria</th>
-            <th scope="col" class="w-25">Variação</th>
-            <th scope="col" class="w-25">Descrição</th>
-            <th scope="col" class="w-25">Observação</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let product of products">
-            <td>{{ product.sku }}</td>
-            <td>{{ product.categoria }}</td>
-            <td>{{ product.variacao }}</td>
-            <td>{{ product.descricao }}</td>
-            <td>{{ product.observacao }}</td>
-          </tr>
-          </tbody>
-        </table>
+        <div class="d-flex justify-content-center align-items-center">
+          <table *ngIf="products.length > 0" class="table table-striped table-bordered text-center">
+            <thead>
+            <tr>
+              <th scope="col">Categoria</th>
+              <th scope="col">SKU</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Variação</th>
+              <th scope="col">Observação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products">
+              <td class="align-middle w-auto">{{ product.categoria }}</td>
+              <td class="align-middle w-auto">{{ product.sku }}</td>
+              <td class="align-middle w-auto">{{ product.descricao }}</td>
+              <td class="align-middle w-auto">{{ product.variacao }}</td>
+              <td class="align-middle w-auto">{{ product.observacao }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- Mensagem quando não há produtos -->
         <div *ngIf="products.length === 0" class="text-center">

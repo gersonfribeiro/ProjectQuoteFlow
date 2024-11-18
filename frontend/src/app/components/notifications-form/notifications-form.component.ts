@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ModalNotificationsComponent } from '../modal-notifications/modal-notifications.component';
+import {CommonModule} from '@angular/common';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {ModalNotificationsComponent} from '../modal-notifications/modal-notifications.component';
 
 @Component({
   selector: 'app-notifications-form',
@@ -17,7 +17,7 @@ export class NotificationsFormComponent implements OnInit {
 
   Dates: Array<string> = ['05/09/2024', '06/09/2024', '00/00/0000'];
   Notifications: Array<string> = [
-    'Para realizar cotações em nosso sistema, primeiro é necessário cadastrar o seu CNPJ no seu perfil.',
+    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est modi inventore libero nisi sunt rem nemo quaerat velit. ',
     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est modi inventore libero nisi sunt rem nemo quaerat velit. Expedita, ab impedit dolorum rem a adipisci magni minus mollitia nam maxime!',
     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est modi inventore libero nisi sunt rem nemo quaerat velit. ',
   ];

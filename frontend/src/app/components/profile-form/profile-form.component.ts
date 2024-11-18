@@ -96,7 +96,7 @@ export class ProfileFormComponent {
   // Função de validação customizada para o telefone
   validatePhone(control: AbstractControl): ValidationErrors | null {
     const phone = control.value?.replace(/[^\d]+/g, ''); // Remove caracteres especiais
-    if(!phone)
+    if (!phone)
       return null;
     if (phone?.length !== 10 && phone?.length !== 11) {
       return {invalidPhone: true};

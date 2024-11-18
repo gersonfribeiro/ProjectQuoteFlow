@@ -43,16 +43,9 @@ export class RegisterFormComponent {
     this.registerForm = this.fb.group({
       nome: ['', [Validators.required]],
       email: ['', [Validators.required, this.validateEmail]],
-      senha: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(12), // Validação de no mínimo 12 caracteres
-          this.passwordValidator,
-        ],
-      ],
-      confirmarSenha: ['', Validators.required],
-    }, {validators: this.passwordMatchValidator});
+      senha: ['', [Validators.required, Validators.minLength(12)]]
+    });
+
   }
 
   // Função de validação personalizada para e-mail
@@ -86,15 +79,42 @@ export class RegisterFormComponent {
     return null;
   }
 
-  // Validação para confirmar que as senhas são iguais
-  passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
-    const senha = form.get('senha')?.value;
-    const confirmarSenha = form.get('confirmarSenha')?.value;
-    return senha === confirmarSenha ? null : {passwordMismatch: true};
-  }
-
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  generatePassword(): void {
+    const upperCaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowerCaseChars = 'abcdefghijklmnopqrstuvwxyz';
+    const numericChars = '0123456789';
+    const specialChars = '!@#$%^&*(),.?":{}|<>';
+    const allChars = upperCaseChars + lowerCaseChars + numericChars + specialChars;
+
+    let password = '';
+
+    // Garante que pelo menos um caractere de cada tipo seja adicionado
+    password += upperCaseChars.charAt(Math.floor(Math.random() * upperCaseChars.length));
+    password += lowerCaseChars.charAt(Math.floor(Math.random() * lowerCaseChars.length));
+    password += numericChars.charAt(Math.floor(Math.random() * numericChars.length));
+    password += specialChars.charAt(Math.floor(Math.random() * specialChars.length));
+
+    // Completa o restante da senha até alcançar 12 caracteres
+    for (let i = 4; i < 12; i++) {
+      password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+    }
+
+    // Embaralha os caracteres para evitar previsibilidade
+    password = this.shuffleString(password);
+
+    // Preenche o campo de senha no formulário
+    this.registerForm.get('senha')?.setValue(password);
+
+    this.toastr.success("Senha gerada com sucesso");
+  }
+
+  // Função auxiliar para embaralhar a string
+  shuffleString(str: string): string {
+    return str.split('').sort(() => Math.random() - 0.5).join('');
   }
 
   register() {

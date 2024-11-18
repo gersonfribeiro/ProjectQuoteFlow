@@ -10,37 +10,8 @@
       "
     >
       <form [formGroup]="registerProductForm" (ngSubmit)="onSubmit()">
+        <!-- Linha com Categoria e SKU lado a lado -->
         <div class="row mb-3">
-          <div class="col-md-6">
-            <label class="form-label"><strong>*</strong> SKU:</label>
-            <div class="input-group mb-2">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="sku"
-                placeholder="YYY.Y.YY"
-                mask="AAA.A.AA"
-              />
-            </div>
-            <div
-              *ngIf="registerProductForm.get('sku')?.invalid && registerProductForm.get('sku')?.touched"
-              class="text-danger"
-            >
-              <div
-                class="alert alert-danger alert-small mb-2"
-                *ngIf="registerProductForm.get('sku')?.errors?.['required']"
-              >
-                O SKU é <strong>obrigatório.</strong>
-              </div>
-              <div
-                class="alert alert-danger alert-small mb-2"
-                *ngIf="registerProductForm.get('sku')?.errors?.['minlength']"
-              >
-                O SKU deve ter 6 caracteres.
-              </div>
-            </div>
-          </div>
-
           <div class="col-md-6">
             <label class="form-label"><strong>*</strong> Categoria:</label>
             <div class="input-group mb-2">
@@ -82,10 +53,54 @@
               </div>
             </div>
           </div>
+
+          <div class="col-md-6">
+            <label class="form-label"><strong>*</strong> SKU:</label>
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="sku"
+                placeholder="YYY.Y.YY"
+                mask="AAA.A.AA"
+              />
+            </div>
+            <div
+              *ngIf="registerProductForm.get('sku')?.invalid && registerProductForm.get('sku')?.touched"
+              class="text-danger"
+            >
+              <div
+                class="alert alert-danger alert-small mb-2"
+                *ngIf="registerProductForm.get('sku')?.errors?.['required']"
+              >
+                O SKU é <strong>obrigatório.</strong>
+              </div>
+              <div
+                class="alert alert-danger alert-small mb-2"
+                *ngIf="registerProductForm.get('sku')?.errors?.['minlength']"
+              >
+                O SKU deve ter 6 caracteres.
+              </div>
+            </div>
+          </div>
         </div>
 
-        <hr>
+        <!-- Descrição -->
+        <div class="col-md-12 mb-3">
+          <label class="form-label"><strong>*</strong> Descrição:</label>
+          <div class="input-group mb-2">
+            <textarea
+              class="form-control"
+              formControlName="description"
+              [maxlength]="100"
+              placeholder="Nome do produto"
+            ></textarea>
+          </div>
+        </div>
 
+        <hr/>
+
+        <!-- Variação -->
         <div class="col-md-12 mb-3">
           <label class="form-label">Variação:</label>
           <div class="input-group mb-2">
@@ -99,17 +114,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 mb-3">
-          <label class="form-label">Descrição:</label>
-          <div class="input-group mb-2">
-            <textarea
-              class="form-control"
-              formControlName="description"
-              [maxlength]="100"
-            ></textarea>
-          </div>
-        </div>
-
+        <!-- Observação -->
         <div class="col-md-12 mb-3">
           <label class="form-label">Observação:</label>
           <div class="input-group mb-2">
@@ -121,6 +126,7 @@
           </div>
         </div>
 
+        <!-- Botões -->
         <div class="d-flex gap-2">
           <button
             type="submit"

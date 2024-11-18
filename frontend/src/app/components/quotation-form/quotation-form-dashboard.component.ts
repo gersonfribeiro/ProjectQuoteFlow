@@ -1,5 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   FormBuilder,
   FormGroup,
@@ -12,32 +13,49 @@ import {ApiQuotationService} from "../../services/api-quotation.service";
 import {ApiUserService} from "../../services/api-user.service";
 import {ApiProductService} from "../../services/api-product.service";
 import {RouterLink} from "@angular/router";
+import {ApiCompanyService} from "../../services/api-company.service";
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-quotation-form-dashboard',
   standalone: true,
-  imports: [NgxMaskDirective, NgxMaskPipe, ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [NgxMaskDirective, NgxMaskPipe, ReactiveFormsModule, CommonModule, RouterLink, FormsModule],
   templateUrl: './quotation-form-dashboard.component.html',
   styleUrls: ['./quotation-form-dashboard.component.css'],
 })
 export class FormDashboardComponent implements OnInit {
   quotationForm: FormGroup;
-  showNotificationAlert: boolean = false;
   isQuotationStarted: boolean = false;
   isAddButtonEnabled: boolean = false;
   quotationId: string = '';
+  empresas: any[] = [];
+  selectedEmpresa: string = '';
 
-  @ViewChild('notificationAlert') notificationAlert!: ElementRef;
   productForm: any;
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService) {
+  constructor(private fb: FormBuilder, private toastr: ToastrService, private apiQuotationService: ApiQuotationService, private apiUserService: ApiUserService, private apiProductService: ApiProductService, private apiCompanyService: ApiCompanyService) {
     this.quotationForm = this.fb.group({
-      skuCode: [{ value: '', disabled: true}, [Validators.required]],
-      quantity: [{ value: null, disabled: true}, [Validators.required, Validators.min(1)]],
+      skuCode: [{value: '', disabled: true}, [Validators.required]],
+      quantity: [{value: null, disabled: true}, [Validators.required, Validators.min(1)]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadEmpresas();
+  }
+
+  loadEmpresas() {
+      this.apiCompanyService.getCompanies().subscribe(
+        (response) => {
+          this.empresas = response;
+          console.log('Empresas carregadas:', response);
+        },
+        (error) => {
+          this.toastr.error('Erro ao carregar as empresas.');
+        }
+      );
+  }
 
   showFormErrors() {
     this.quotationForm.markAllAsTouched();
@@ -50,50 +68,99 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
-  createQuotation() {
-    const confirmation = window.confirm('Certifique-se de que todos os produtos foram cadastrados antes de iniciar a cotação.');
+  openQuotation() {
+    this.isQuotationStarted = true;
+    localStorage.setItem('isQuotationStarted', 'true');
+    this.isAddButtonEnabled = true;
 
-    if (confirmation) {
-      this.isQuotationStarted = true;
-      this.isAddButtonEnabled = true;
+    this.quotationForm.get('skuCode')?.enable();
+    this.quotationForm.get('quantity')?.enable();
 
-      this.quotationForm.get('skuCode')?.enable();
-      this.quotationForm.get('quantity')?.enable();
+    const userId = localStorage.getItem('userId');
 
-      const userId = localStorage.getItem('userId');
+    this.apiUserService.getUserById(userId).subscribe(
+      response => {
+        const quotationData = {id_empresa: response.id_empresa};
 
-      this.apiUserService.getUserById(userId).subscribe(
-        response => {
-          const quotationData = {id_empresa: response.id_empresa};
+        this.apiQuotationService.requestQuotation(quotationData).subscribe(
+          response => {
+            console.log('Cotação iniciada!');
+            this.quotationId = response.id_cotacao;
 
-          this.apiQuotationService.requestQuotation(quotationData).subscribe(
-            response => {
-              console.log('Cotação iniciada!');
-              this.quotationId = response.id_cotacao;
-            },
-            error => {
-              console.log('Erro ao iniciar cotação.');
-            }
-          );
-        }
-      );
-    }
+            const modal = document.getElementById('openQuotationModal') as any;
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            modalInstance.hide();
+          },
+          error => {
+            console.log('Erro ao iniciar cotação.');
+          }
+        );
+      }
+    );
   }
 
   // Método para parar a cotação
-  stopQuotation() {
-    const confirmation = window.confirm('Tem certeza que deseja parar a cotação?');
+  closeQuotation() {
+//     const userId = localStorage.getItem('userId');
+//
+//      this.apiUserService.getUserById(userId).subscribe(
+//         response => {
+//             const updatedQuotationData = {
+//                 status: "RESPOSTA_PENDENTE",
+//                 id_empresa: response.id_empresa
+//               };
+//
+//             this.apiQuotationService.putQuotation(this.quotationId, updatedQuotationData).subscribe(
+//                 response => {
+//                     this.toastr.success('Cotação finalizada!');
+//                   }
+//               );
+//           }
+//        );
 
-    if (confirmation) {
-      this.isQuotationStarted = false;
-      this.isAddButtonEnabled = false;
+    this.isQuotationStarted = false;
+    localStorage.setItem('isQuotationStarted', 'false');
+    this.isAddButtonEnabled = false;
 
-      this.quotationForm.get('skuCode')?.disable();
-      this.quotationForm.get('quantity')?.disable();
+    this.quotationForm.get('skuCode')?.disable();
+    this.quotationForm.get('quantity')?.disable();
 
-       this.toastr.success('Cotação finalizada!');
-    }
+    const modal = document.getElementById('closeQuotationModal') as any;
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+
+    // Ativar a segunda aba
+      const secondTabLink = document.querySelector('a[href="#tab-second"]');
+      const firstTabLink = document.querySelector('a[href="#tab-quotation"]');
+
+      if (secondTabLink && firstTabLink) {
+        secondTabLink.classList.add('active');
+        firstTabLink.classList.remove('active');
+
+        // Alternar o conteúdo da aba
+        const firstTabContent = document.querySelector('#tab-quotation');
+        const secondTabContent = document.querySelector('#tab-second');
+        if (firstTabContent && secondTabContent) {
+          firstTabContent.classList.remove('show', 'active');
+          secondTabContent.classList.add('show', 'active');
+        }
+      }
   }
+
+  inserirDestinatarioNaCotacao() {
+      const destinatarioData = {
+          id_destinatario: this.selectedEmpresa
+        };
+
+      this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarioData).subscribe(
+          response => {
+              this.toastr.success("Cotação enviada para o destinatário");
+            },
+          error => {
+              this.toastr.error("Erro ao enviar cotação para o destinatário");
+            }
+        );
+    }
 
   onSubmit() {
     if (this.quotationForm.valid) {

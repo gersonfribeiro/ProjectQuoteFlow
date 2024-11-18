@@ -36,6 +36,18 @@ export class ApiQuotationService {
         );
     }
 
+  // Método para adicionar um produto à uma cotação
+  putQuotation(quotationId: string, updatedQuotationData: any): Observable<any> {
+      return this.http.put(`${this.apiUrlQuotation}/${quotationId}`, updatedQuotationData)
+          .pipe(
+              catchError(this.handleError)
+          );
+      }
+
+  insertDestinatarioInCotacao(quotationId: string, destinatarioData: any): Observable <any> {
+      return this.http.post(`http://localhost:8080/${quotationId}/destinatarios`, destinatarioData)
+    }
+
   // Função para tratamento de erro
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Erro desconhecido';
