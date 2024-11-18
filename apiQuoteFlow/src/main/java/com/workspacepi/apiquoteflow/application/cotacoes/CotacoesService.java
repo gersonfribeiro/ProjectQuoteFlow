@@ -55,14 +55,17 @@ public class CotacoesService {
         return findById(cotacoesDomain.getId_cotacao());
     }
 
-    public Cotacoes modificarCotacao(CotacoesUpdateCommand cotacoesUpdateCommand, UUID id_cotacao) throws Exception {
-        Cotacoes cotacoesDomain = cotacoesRepository.findById(id_cotacao);
+    public Cotacoes modificarCotacao(CotacoesUpdateCommand cotacaoUpdateCommand, UUID id_cotacao) throws Exception {
+        Cotacoes cotacaoDomain = cotacoesRepository.findById(id_cotacao);
 
-        if (cotacoesDomain == null) {
+
+        if (cotacaoDomain == null) {
             throw new CotacaoNaoEncontradaException(id_cotacao);
         }
 
-        cotacoesRepository.modificarCotacao(cotacoesUpdateCommand.toCotacao(id_cotacao));
+        cotacaoDomain.setStatus(cotacaoUpdateCommand.getStatus());
+
+        cotacoesRepository.modificarCotacao(cotacaoDomain);
         return findById(id_cotacao);
 
     }
