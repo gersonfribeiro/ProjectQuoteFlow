@@ -2,7 +2,6 @@ package com.workspacepi.apiquoteflow.application.respostas;
 
 import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaIdNaoEncontradaException;
 import com.workspacepi.apiquoteflow.domain.cotacoes.CotacoesRepository;
-import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.Destinatarios;
 import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import com.workspacepi.apiquoteflow.domain.produtos.ProdutosRepository;
 import com.workspacepi.apiquoteflow.domain.respostas.RespostaCotacao;

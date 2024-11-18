@@ -17,7 +17,10 @@ public class RespostaCotacaoSqlExpressions {
                     ced.id_cotacao,
                     c.status,
                     cp.id_produto,
+                    p.categoria,
                     p.descricao,
+                    p.observacao,
+                    p.variacao,
                     cp.quantidade
                 FROM
                     cotacao_empresa_destinataria ced

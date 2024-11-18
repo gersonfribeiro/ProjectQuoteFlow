@@ -4,6 +4,7 @@ import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.application.respostas.CotacaoComProdutosDTO;
 import com.workspacepi.apiquoteflow.application.respostas.ProdutoDTO;
 import com.workspacepi.apiquoteflow.domain.cotacoes.destinatarios.Destinatarios;
+import com.workspacepi.apiquoteflow.domain.produtos.CategoriaProduto;
 import com.workspacepi.apiquoteflow.domain.respostas.RespostaCotacao;
 import com.workspacepi.apiquoteflow.domain.respostas.RespostaCotacaoRepository;
 import org.slf4j.Logger;
@@ -122,14 +123,16 @@ public class RespostaCotacaoJDBCRepository implements RespostaCotacaoRepository 
             // Adiciona o produto
             ProdutoDTO produto = new ProdutoDTO();
             produto.setIdProduto((UUID) row.get("id_produto"));
+            produto.setCategoria((String) row.get("categoria"));
             produto.setDescricao((String) row.get("descricao"));
+            produto.setObservacao((String) row.get("observacao"));
+            produto.setVariacao((String) row.get("variacao"));
             produto.setQuantidade((Integer) row.get("quantidade"));
             cotacao.getProdutos().add(produto);
         }
 
         return new ArrayList<>(cotacaoMap.values());
     }
-
 
     @Override
     public List<RespostaCotacao> respostasCotacao(UUID id_empresa_resposta) {
