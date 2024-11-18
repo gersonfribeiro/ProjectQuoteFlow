@@ -12,7 +12,7 @@ public interface DestinatariosRepository {
 
     Destinatarios findEmpresaDestinatariaByCotacaoAndId(UUID id_cotacao, UUID id_destinatario);
 
-    Boolean inserirDestinatario(Destinatarios destinatario, UUID id_cotacao);
+    Boolean inserirDestinatario(List<Destinatarios> destinatario, UUID id_cotacao);
 
     Boolean modificarDestinatario(Destinatarios destinatario, UUID id_cotacao, UUID id_destinatario);
 

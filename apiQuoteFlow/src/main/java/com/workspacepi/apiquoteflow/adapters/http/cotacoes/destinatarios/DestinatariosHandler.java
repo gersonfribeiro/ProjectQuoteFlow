@@ -24,22 +24,39 @@ public class DestinatariosHandler {
     }
 
     public ResponseEntity<Destinatarios> findProdutoByCotacaoAndId(String id_cotacao, String id_produto) {
-        Destinatarios destinatarios = destinatariosService.findEmpresaDestinatariaByCotacaoAndId(UUID.fromString(id_cotacao), UUID.fromString(id_produto));
+        Destinatarios destinatarios = destinatariosService.findEmpresaDestinatariaByCotacaoAndId(
+                UUID.fromString(id_cotacao),
+                UUID.fromString(id_produto)
+        );
         return ResponseEntity.ok(destinatarios);
     }
 
-    public ResponseEntity<Destinatarios> inserirDestinatario(DestinatariosCreateCommand destinatario, String id_cotacao) {
-        Destinatarios destinatarios = destinatariosService.inserirDestinatario(destinatario, UUID.fromString(id_cotacao));
+    public ResponseEntity<List<Destinatarios>> inserirDestinatarios(List<DestinatariosCreateCommand> destinatarios,
+                                                                    String id_cotacao) {
+        List<Destinatarios> destinatariosInseridos = destinatariosService.inserirDestinatario(
+                destinatarios,
+                UUID.fromString(id_cotacao)
+        );
+        return ResponseEntity.ok(destinatariosInseridos);
+    }
+
+    public ResponseEntity<Destinatarios> modificarDestinatario(DestinatariosUpdateCommand destinatario,
+                                                               String id_destinatario,
+                                                               String id_cotacao) {
+        Destinatarios destinatarios = destinatariosService.modificarDestinatario(
+                destinatario,
+                UUID.fromString(id_destinatario),
+                UUID.fromString(id_cotacao)
+        );
         return ResponseEntity.ok(destinatarios);
     }
 
-    public ResponseEntity<Destinatarios> modificarDestinatario(DestinatariosUpdateCommand destinatario, String id_destinatario, String id_cotacao) {
-        Destinatarios destinatarios = destinatariosService.modificarDestinatario(destinatario, UUID.fromString(id_destinatario), UUID.fromString(id_cotacao));
-        return ResponseEntity.ok(destinatarios);
-    }
-
-    public ResponseEntity<String> removerDestinatario(String id_cotacao, String id_produto) {
-        destinatariosService.removerDestinatario(UUID.fromString(id_produto), UUID.fromString(id_cotacao));
+    public ResponseEntity<String> removerDestinatario(String id_cotacao,
+                                                      String id_produto) {
+        destinatariosService.removerDestinatario(
+                UUID.fromString(id_produto),
+                UUID.fromString(id_cotacao)
+        );
         return ResponseEntity.noContent().build();
     }
 
