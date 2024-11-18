@@ -3,7 +3,7 @@
 
 package com.workspacepi.apiquoteflow.adapters.jdbc.produtos;
 
-public class ProdutosSqlRepository {
+public class ProdutosSqlExpressions {
 //    implementação individual:
     public static String sqlSelectAllProdutos() {
         return """

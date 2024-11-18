@@ -1,6 +1,5 @@
 package com.workspacepi.apiquoteflow.application.produtos;
 
-import com.workspacepi.apiquoteflow.adapters.http.allErrors.ErrorHandler;
 import com.workspacepi.apiquoteflow.application.empresas.exceptions.EmpresaIdNaoEncontradaException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoNaoEncontradoException;
 import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuCadastradoException;
@@ -8,8 +7,6 @@ import com.workspacepi.apiquoteflow.application.produtos.exceptions.ProdutoSkuNa
 import com.workspacepi.apiquoteflow.domain.empresas.EmpresasRepository;
 import com.workspacepi.apiquoteflow.domain.produtos.Produtos;
 import com.workspacepi.apiquoteflow.domain.produtos.ProdutosRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,54 +17,10 @@ public class ProdutosService {
     private final  ProdutosRepository produtosRepository;
     private final EmpresasRepository empresasRepository;
 
-//    Implementação individual:
-
     public ProdutosService(ProdutosRepository produtosRepository, EmpresasRepository empresasRepository) {
         this.produtosRepository = produtosRepository;
         this.empresasRepository = empresasRepository;
     }
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
-/*
-//    public List<Produtos> findAll() { return produtosRepository.findAll(); }
-//
-//    public Produtos findById(UUID id_produto) throws Exception {
-//        Produtos produto = produtosRepository.findById(id_produto);
-//
-//        if (produto == null)
-//            throw new ProdutoNaoEncontradoException(id_produto);
-//
-//        return produto;
-//    }
-//
-//    public Produtos cadastrarProduto(ProdutosCreateCommand produtosCreateCommand) throws Exception {
-//        Produtos produtoDomain = produtosCreateCommand.toProduto();
-//        produtosRepository.cadastrarProduto(produtoDomain);
-//
-//        return findById(produtoDomain.getId_produto());
-//    }
-//
-//    public Produtos modificarProduto(ProdutosUpdateCommand produtosUpdateCommand, UUID id_produto) throws Exception {
-//        Produtos produtoDomain = produtosRepository.findById(id_produto);
-//
-//        if (produtoDomain == null)
-//            throw new ProdutoNaoEncontradoException(id_produto);
-//
-//        produtosRepository.modificarProduto(produtosUpdateCommand.toProduto(id_produto));
-//        return findById(id_produto);
-//    }
-//
-//    public void deleteProdutoById(UUID id_produto) throws Exception {
-//        Produtos produtoDomain = produtosRepository.findById(id_produto);
-//
-//        if (produtoDomain == null)
-//            throw new ProdutoNaoEncontradoException(id_produto);
-//
-//        produtosRepository.deleteProdutoById(id_produto);
-//    }
-*/
-
-//    Novas implementações (definitivas):
 
     public List<Produtos> findAllByEmpresa(UUID id_empresa) {
         if(empresasRepository.findById(id_empresa) == null)
@@ -148,5 +101,4 @@ public class ProdutosService {
 
         produtosRepository.deleteProdutoByIdAndEmpresa(id_produto, id_empresa);
     }
-
 }

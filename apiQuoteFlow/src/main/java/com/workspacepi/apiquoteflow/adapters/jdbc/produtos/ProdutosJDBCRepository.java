@@ -15,10 +15,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
- import java.util.NoSuchElementException;
- import java.util.UUID;
+import java.util.UUID;
 
-import static com.workspacepi.apiquoteflow.adapters.jdbc.produtos.ProdutosSqlRepository.*;
+import static com.workspacepi.apiquoteflow.adapters.jdbc.produtos.ProdutosSqlExpressions.*;
 
 
 // Nosso repositório que define os nossos métodos de query e de crud usando o JDBC
@@ -101,10 +100,8 @@ public ProdutosJDBCRepository(NamedParameterJdbcTemplate jdbcTemplate) {
 
     @Override
     public List<Produtos> findAll() {
-        List<Produtos> produtos = List.of();
         try {
-            produtos = jdbcTemplate.query(sqlSelectAllProdutos(), produtosRowMapper());
-            return produtos;
+            return jdbcTemplate.query(sqlSelectAllProdutos(), produtosRowMapper());
         } catch (Exception e) {
             LOGGER.error("Houver um erro ao consultar os usuários: " + e.getMessage());
             throw e;
