@@ -191,8 +191,8 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
-  exitQuotation() {
-      const modal = document.getElementById('exitQuotationModal') as any;
+  cancelQuotation() {
+      const modal = document.getElementById('cancelQuotationModal') as any;
       const modalInstance = bootstrap.Modal.getInstance(modal);
       modalInstance.hide();
 
