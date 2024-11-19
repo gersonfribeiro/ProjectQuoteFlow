@@ -41,17 +41,6 @@ public class RespostaCotacaoJDBCRepository implements RespostaCotacaoRepository 
         };
     }
 
-//    private RowMapper<Destinatarios> createDestinatariosRowMapper() {
-//        return(rs, rowNum) -> {
-//            UUID id =  UUID.fromString(rs.getString("id"));
-//            Timestamp data_envio = rs.getTimestamp("data_envio");
-//            UUID id_cotacao = UUID.fromString(rs.getString("id_cotacao"));
-//            UUID id_destinatario = UUID.fromString(rs.getString("id_destinatario"));
-//
-//            return new Destinatarios(id, data_envio, id_cotacao, id_destinatario);
-//        };
-//    }
-
     private RowMapper<CotacaoComProdutosDTO> createCotacaoComProdutosRowMapper() {
         return (rs, rowNum) -> {
             CotacaoComProdutosDTO cotacao = new CotacaoComProdutosDTO();
@@ -72,7 +61,6 @@ public class RespostaCotacaoJDBCRepository implements RespostaCotacaoRepository 
         };
     }
 
-
     private MapSqlParameterSource parameterSource(RespostaCotacao respostaCotacao) {
         MapSqlParameterSource params = new MapSqlParameterSource();
 
@@ -83,19 +71,6 @@ public class RespostaCotacaoJDBCRepository implements RespostaCotacaoRepository 
 
         return params;
     }
-
-//    @Override
-//    public List<Destinatarios> buscarRespostasPendentes(UUID id_empresa_resposta) {
-//        try {
-//            MapSqlParameterSource params = new MapSqlParameterSource();
-//            params.addValue("id_destinatario", id_empresa_resposta);
-//
-//            return jdbcTemplate.query(sqlBuscarRespostasPendentes(), params, createDestinatariosRowMapper());
-//        } catch (Exception e) {
-//            LOGGER.error(e.getMessage());
-//            throw e;
-//        }
-//    }
 
     @Override
     public List<CotacaoComProdutosDTO> buscarCotacoesComProdutos(UUID idDestinatario) {
