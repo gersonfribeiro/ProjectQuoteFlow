@@ -51,7 +51,7 @@ public class RespostaCotacaoController {
 
     @DeleteMapping("/deletar/{id_cotacao}")
     public ResponseEntity<String> deletarResposta(@PathVariable String id_empresa_resposta,
-                                                           @PathVariable String id_cotacao) {
+                                                  @PathVariable String id_cotacao) {
         return respostaCotacaoHandler.deletarResposta(id_empresa_resposta, id_cotacao);
     }
 }
