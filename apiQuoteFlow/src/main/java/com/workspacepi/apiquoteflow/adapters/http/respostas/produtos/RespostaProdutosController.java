@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos/{id_resposta}")
+@RequestMapping("/respostas/{id_resposta}/produtos")
 public class RespostaProdutosController {
     private final RespostaProdutosHandler respostaProdutosHandler;
 
