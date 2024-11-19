@@ -190,10 +190,10 @@
                 type="button"
                 class="btn btn-secondary d-flex align-items-center justify-content-center gap-2"
                 data-bs-toggle="modal"
-                data-bs-target="#cancelQuotationModal"
+                data-bs-target="#exitQuotationModal"
               >
                 <i class="bi bi-x-circle-fill"></i>
-                Cancelar
+                Sair
               </button>
             </div>
           </div>
@@ -244,21 +244,21 @@
   </div>
 </div>
 
-<!-- Modal de Confirmação para cancelar a cotação -->
-<div class="modal fade" id="cancelQuotationModal" tabindex="-1" aria-labelledby="closeQuotationModalLabel"
+<!-- Modal de Confirmação para sair da cotação -->
+<div class="modal fade" id="exitQuotationModal" tabindex="-1" aria-labelledby="exitQuotationModalLabel"
      aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cancelQuotationModalLabel">Atenção!</h5>
+        <h5 class="modal-title" id="exitQuotationModalLabel">Atenção!</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Tem certeza que deseja cancelar a cotação?</p>
+        <p>A cotação já foi iniciada. Tem certeza que deseja sair?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="cancelQuotation()">Confirmar</button>
+        <button type="button" class="btn btn-danger" (click)="exitQuotation()">Confirmar</button>
       </div>
     </div>
   </div>

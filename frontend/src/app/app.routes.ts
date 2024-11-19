@@ -15,6 +15,7 @@ import { SeeQuotationsPageComponent } from "./components/see-quotations-page/see
 import { authGuard } from './auth/auth.guard';
 import { companyGuard } from './auth/company.guard';
 import { quotationGuard } from './auth/quotation.guard';
+import { registeredCompanyGuard } from './auth/registered-company.guard';
 
 export const routes: Routes = [
   { path: '', component: RegisterPageComponent }, // Home
@@ -27,7 +28,7 @@ export const routes: Routes = [
   { path: 'dashboard/profile', component: DashboardProfileComponent, canActivate: [authGuard] }, // Página de perfil
   { path: 'dashboard/settings', component: DashboardSettingsComponent, canActivate: [authGuard] }, // Página de configurações
   { path: 'dashboard/panel', component: DashboardChartComponent, canActivate: [authGuard] }, // Página de painel
-  { path: 'dashboard/register-companies', component: RegisterCompanyPageComponent, canActivate: [authGuard] }, // Página de cadastro de empresas
+  { path: 'dashboard/register-companies', component: RegisterCompanyPageComponent, canActivate: [authGuard, registeredCompanyGuard] }, // Página de cadastro de empresas
   { path: 'dashboard/register-products', component: RegisterProductsPageComponent, canActivate: [authGuard, companyGuard] }, // Página de cadastro de produtos
   { path: 'dashboard/products', component: SeeProductsPageComponent, canActivate: [authGuard, companyGuard] }, // Página de produtos cadastrados
   { path: 'dashboard/quotations', component: SeeQuotationsPageComponent, canActivate: [authGuard, companyGuard] }, // Página de cotações cadastradas

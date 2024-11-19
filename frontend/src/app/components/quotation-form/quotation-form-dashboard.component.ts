@@ -113,22 +113,7 @@ export class FormDashboardComponent implements OnInit {
 
   // Método para parar a cotação
   closeQuotation() {
-//     const userId = localStorage.getItem('userId');
-//
-//      this.apiUserService.getUserById(userId).subscribe(
-//         response => {
-//             const updatedQuotationData = {
-//                 status: "RESPOSTA_PENDENTE",
-//                 id_empresa: response.id_empresa
-//               };
-//
-//             this.apiQuotationService.putQuotation(this.quotationId, updatedQuotationData).subscribe(
-//                 response => {
-//                     this.toastr.success('Cotação finalizada!');
-//                   }
-//               );
-//           }
-//        );
+
 
     this.isAddButtonEnabled = false;
 
@@ -170,10 +155,32 @@ export class FormDashboardComponent implements OnInit {
       // Chama o serviço passando o array de destinatários
       this.apiQuotationService.insertDestinatarioInCotacao(this.quotationId, destinatarios).subscribe(
         (response) => {
-          this.toastr.success("Cotação enviada para os destinatários selecionados");
-          this.isQuotationStarted = false;
-          localStorage.setItem('isQuotationStarted', 'false');
-          this.router.navigate(['/dashboard/quotations']);
+
+              const userId = localStorage.getItem('userId');
+
+               this.apiUserService.getUserById(userId).subscribe(
+                  response => {
+                      const updatedQuotationData = {
+                          status: "RESPOSTA_PENDENTE",
+                          id_empresa: response.id_empresa
+                        };
+
+                      this.apiQuotationService.putQuotation(this.quotationId, updatedQuotationData).subscribe(
+                          response => {
+                              this.toastr.success("Cotação enviada para os destinatários selecionados");
+                              this.isQuotationStarted = false;
+                              localStorage.setItem('isQuotationStarted', 'false');
+                              this.router.navigate(['/dashboard/quotations']);
+                          },
+                          (error) => {
+                              console.log("Erro ao atualizar cotação para RESPOSTA_PENDENTE");
+                          }
+                      );
+                    },
+                  error => {
+                      console.log("Erro ao obter dados do usuário");
+                    }
+               );
         },
         (error) => {
           this.toastr.error("Erro ao enviar cotação para os destinatários");
@@ -184,8 +191,8 @@ export class FormDashboardComponent implements OnInit {
     }
   }
 
-  cancelQuotation() {
-      const modal = document.getElementById('cancelQuotationModal') as any;
+  exitQuotation() {
+      const modal = document.getElementById('exitQuotationModal') as any;
       const modalInstance = bootstrap.Modal.getInstance(modal);
       modalInstance.hide();
 
