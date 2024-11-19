@@ -25,7 +25,7 @@ create table cotacoes
     status     varchar(50) not null
         constraint cotacao_status_check
             check ((status)::text = ANY
-                   (ARRAY [('PREENCHENDO'::character varying)::text, ('CONCLUIDO'::character varying)::text, ('ENVIADO'::character varying)::text, ('ENTREGUE'::character varying)::text, ('RESPOSTA_PENDENTE'::character varying)::text, ('RESPOSTA_RECEBIDA'::character varying)::text, ('ACEITO'::character varying)::text, ('RECUSADO'::character varying)::text])),
+                   (ARRAY [('CONCLUIDO'::character varying)::text, ('PREENCHENDO'::character varying)::text, ('ENVIADO'::character varying)::text, ('ENTREGUE'::character varying)::text, ('RESPOSTA_PENDENTE'::character varying)::text, ('RESPOSTA_RECEBIDA'::character varying)::text, ('ACEITO'::character varying)::text, ('RECUSADO'::character varying)::text])),
     id_empresa uuid        not null
         constraint fk5xy7gse5lcuygba8ilnxlu1u8
             references empresas
@@ -113,12 +113,15 @@ alter table cotacao_produtos
 
 create table resposta_cotacao
 (
-    id_resposta             uuid         not null
+    id_resposta         uuid         not null
         primary key,
-    data_resposta           timestamp(6) not null,
-    id_empresa_destinataria uuid         not null
-        constraint fkkr4h1g9v8bb9h1s4lwh5giu22
-            references cotacao_empresa_destinataria
+    data_resposta       timestamp(6) not null,
+    id_empresa_resposta uuid         not null
+        constraint resposta_cotacao_empresas_id_empresa_fk
+            references empresas,
+    id_cotacao          uuid
+        constraint resposta_cotacao_cotacoes_id_cotacao_fk
+            references cotacoes
 );
 
 alter table resposta_cotacao
@@ -126,14 +129,14 @@ alter table resposta_cotacao
 
 create table resposta_produto
 (
-    id_resposta_produto uuid           not null
+    id          uuid           not null
         primary key,
-    observacao          text,
-    preco               numeric(38, 2) not null,
-    id_produto          uuid           not null
+    observacao  text,
+    preco       numeric(38, 2) not null,
+    id_produto  uuid           not null
         constraint fk888p4ekdger6f4gqepr8nifuo
             references produtos,
-    id_resposta_cotacao uuid           not null
+    id_resposta uuid           not null
         constraint fkee14bncym89ry8mmmiu0q5xg6
             references resposta_cotacao
 );

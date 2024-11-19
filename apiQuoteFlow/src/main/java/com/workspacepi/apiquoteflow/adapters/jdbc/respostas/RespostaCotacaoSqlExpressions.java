@@ -2,13 +2,6 @@ package com.workspacepi.apiquoteflow.adapters.jdbc.respostas;
 
 public class RespostaCotacaoSqlExpressions {
 
-//    public static String sqlBuscarRespostasPendentes() {
-//        return """
-//                SELECT * FROM cotacao_empresa_destinataria
-//                WHERE id_destinatario = :id_destinatario
-//            """;
-//    }
-
     public static String sqlBuscarCotacoesComProdutos() {
         return """
                 SELECT
